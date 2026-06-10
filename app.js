@@ -106,7 +106,7 @@
       .slice(0, 4)
       .map((n) => n.id);
 
-    const flash = (remote.flash || []).slice(0, 10).map((f) => ({
+    const flash = (remote.flash || []).slice(0, 12).map((f) => ({
       time: new Date(f.ts || Date.now()).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" }),
       text: esc(f.text), // 远程文本统一转义(flash 渲染时按 HTML 插入)
       id: f.id || null, // 对应 news 的 id,点击站内打开详情

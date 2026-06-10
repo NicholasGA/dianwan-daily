@@ -7,8 +7,9 @@
 
 import { writeFileSync } from "node:fs";
 
-const MAX_TOTAL = 30;
-const CONCURRENCY = 5;
+const MAX_TOTAL = 60;
+const PER_SOURCE_CAP = 18; // 单一来源不挤占整个列表
+const CONCURRENCY = 6;
 const MAX_BLOCKS = 60;
 const MAX_TEXT = 7000;
 const MAX_IMGS = 12;
@@ -90,46 +91,62 @@ async function fetchRss(feed) {
   return out;
 }
 
-/* ---------- 元数据收集:游民星空(列表页解析,无 RSS) ---------- */
+/* ---------- 元数据收集:游民星空(无 RSS,走列表 AJAX 接口翻页) ---------- */
 
 async function fetchGamersky(feed) {
-  const html = await get("https://www.gamersky.com/news/");
-  const lis = [...html.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((m) => m[1]);
   const out = [];
   const seenUrl = new Set();
-  for (const li of lis) {
-    const a = li.match(/<a class="tt" href="(https:\/\/www\.gamersky\.com\/news\/\d{6}\/\d+\.shtml)"[^>]*>([\s\S]*?)<\/a>/);
-    if (!a) continue;
-    const url = a[1];
-    if (seenUrl.has(url)) continue;
-    seenUrl.add(url);
-    const title = stripTags(a[2]);
-    const img = li.match(/<img src="([^"]+)"/);
-    const txt = li.match(/<div class="txt">([\s\S]*?)<\/div>/);
-    const time = li.match(/<div class="time">([^<]+)<\/div>/);
-    // 列表时间为北京时间,如 "2026-06-10 18:41"
-    const ts = time ? Date.parse(time[1].trim().replace(" ", "T") + ":00+08:00") || Date.now() : Date.now();
-    out.push({
-      title,
-      summary: txt ? stripTags(txt[1]).slice(0, 110) : "",
-      source: feed.source,
-      url,
-      image: img ? decode(img[1]) : null,
-      isVideo: false,
-      ts,
-    });
-    if (out.length >= feed.max) break;
+  for (let page = 1; page <= (feed.pages || 1); page++) {
+    try {
+      const jsondata = JSON.stringify({
+        type: "updatenodelabel",
+        isCache: true,
+        cacheTime: 60,
+        nodeId: "11007", // 新闻频道
+        isNodeId: "true",
+        page,
+      });
+      const raw = await get(`https://db2.gamersky.com/LabelJsonpAjax.aspx?callback=cb&jsondata=${encodeURIComponent(jsondata)}`);
+      const jsonp = raw.match(/^\s*cb\(([\s\S]*)\)\s*;?\s*$/);
+      const html = jsonp ? JSON.parse(jsonp[1]).body || "" : "";
+      const lis = [...html.matchAll(/<li>([\s\S]*?)<\/li>/g)].map((m) => m[1]);
+      for (const li of lis) {
+        const a = li.match(/<a class="tt" href="(https:\/\/www\.gamersky\.com\/news\/\d{6}\/\d+\.shtml)"[^>]*>([\s\S]*?)<\/a>/);
+        if (!a) continue;
+        const url = a[1];
+        if (seenUrl.has(url)) continue;
+        seenUrl.add(url);
+        const title = stripTags(a[2]);
+        const img = li.match(/<img src="([^"]+)"/);
+        const txt = li.match(/<div class="txt">([\s\S]*?)<\/div>/);
+        const time = li.match(/<div class="time">([^<]+)<\/div>/);
+        // 列表时间为北京时间,如 "2026-06-10 18:41"
+        const ts = time ? Date.parse(time[1].trim().replace(" ", "T") + ":00+08:00") || Date.now() : Date.now();
+        out.push({
+          title,
+          summary: txt ? stripTags(txt[1]).slice(0, 110) : "",
+          source: feed.source,
+          url,
+          image: img ? decode(img[1]) : null,
+          isVideo: false,
+          ts,
+        });
+        if (out.length >= feed.max) return out;
+      }
+    } catch (err) {
+      console.error(`游民星空 第${page}页失败: ${err.message}`);
+    }
   }
   return out;
 }
 
 const FEEDS = [
-  { source: "游民星空", fetcher: fetchGamersky, max: 8 },
-  { source: "机核", fetcher: fetchRss, url: "https://www.gcores.com/rss", skip: /\/radios\//, max: 8 },
-  { source: "游研社", fetcher: fetchRss, url: "https://www.yystv.cn/rss/feed", max: 8 },
-  { source: "触乐", fetcher: fetchRss, url: "http://www.chuapp.com/feed", max: 8 },
-  { source: "IGN", fetcher: fetchRss, url: "https://feeds.ign.com/ign/games-all", max: 5 },
-  { source: "GameSpot", fetcher: fetchRss, url: "https://www.gamespot.com/feeds/game-news/", max: 5 },
+  { source: "游民星空", fetcher: fetchGamersky, pages: 2, max: 40 }, // 新闻频道第 1-2 页全量
+  { source: "机核", fetcher: fetchRss, url: "https://www.gcores.com/rss", skip: /\/radios\//, max: 15 },
+  { source: "游研社", fetcher: fetchRss, url: "https://www.yystv.cn/rss/feed", max: 15 },
+  { source: "触乐", fetcher: fetchRss, url: "http://www.chuapp.com/feed", max: 15 },
+  { source: "IGN", fetcher: fetchRss, url: "https://feeds.ign.com/ign/games-all", max: 8 },
+  { source: "GameSpot", fetcher: fetchRss, url: "https://www.gamespot.com/feeds/game-news/", max: 8 },
 ];
 
 /* ---------- 全文提取 ---------- */
@@ -251,6 +268,7 @@ const collected = await Promise.all(
 );
 
 const seen = new Set();
+const perSource = {};
 const news = collected
   .flat()
   .sort((a, b) => b.ts - a.ts)
@@ -258,7 +276,8 @@ const news = collected
     const k = n.title.slice(0, 24);
     if (seen.has(k)) return false;
     seen.add(k);
-    return true;
+    perSource[n.source] = (perSource[n.source] || 0) + 1;
+    return perSource[n.source] <= PER_SOURCE_CAP;
   })
   .slice(0, MAX_TOTAL)
   .map((n, i) => ({ id: i + 1, category: categorize(n.title + " " + n.summary), ...n, image: httpsImage(n.image) }));
@@ -282,7 +301,7 @@ await Promise.all(
 );
 console.log(`全文提取成功:${fullCount}/${news.length}`);
 
-const flash = news.slice(0, 10).map((n) => ({ ts: n.ts, text: n.title, id: n.id }));
+const flash = news.slice(0, 12).map((n) => ({ ts: n.ts, text: n.title, id: n.id }));
 
 writeFileSync(
   new URL("../news.json", import.meta.url),

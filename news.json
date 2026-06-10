@@ -1,73 +1,1376 @@
 {
- "generatedAt": "2026-06-10T12:19:39.476Z",
+ "generatedAt": "2026-06-10T15:57:27.167Z",
  "news": [
   {
    "id": 1,
-   "category": "业界",
-   "title": "30多岁人妻更让人心动 少女跑不过老太太的囧图",
-   "summary": "贪婪，焦虑，缺乏耐心，是韭菜三大共性素质。迎合贪婪，贩卖焦虑，速成承诺，是割韭菜的三大标准姿势",
-   "source": "游民星空",
-   "url": "https://www.gamersky.com/news/202606/2154751.shtml",
-   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101958108731.jpg",
+   "category": "主机",
+   "title": "PlayStation Plus Extra/Premium Games For June 2026 Revealed",
+   "summary": "Sony has revealed the latest games coming to the Game Catalog for PlayStation Plus Extra and Premium subscribe",
+   "source": "GameSpot",
+   "url": "https://www.gamespot.com/articles/playstation-plus-extra-premium-games-for-june-2026-revealed/",
+   "image": "https://www.gamespot.com/wp-content/uploads/2026/06/FF16.jpg?w=300",
    "isVideo": false,
-   "ts": 1781092200000,
+   "ts": 1781106492000,
    "content": null
   },
   {
    "id": 2,
    "category": "主机",
-   "title": "《鬼泣5》NS2版优化超神了！帧数爆表 画质喜人",
-   "summary": "在昨天的任天堂发布会上，《鬼泣5 恶魔猎人版》正式官宣将于6月23日登陆Nintendo Switch 2平台。",
+   "title": "索尼PS+会员二三档阵容公布！《最终幻想16》领衔",
+   "summary": "PlayStation今日公布了本月PS Plus二三档会员游戏库的新增名单。",
    "source": "游民星空",
-   "url": "https://www.gamersky.com/news/202606/2154742.shtml",
-   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101938284822.jpg",
+   "url": "https://www.gamersky.com/news/202606/2154856.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102338449474.jpg",
    "isVideo": false,
-   "ts": 1781091600000,
+   "ts": 1781106000000,
    "content": [
     {
      "t": "p",
-     "v": "在昨天的任天堂发布会上，《鬼泣5 恶魔猎人版》正式官宣将于6月23日登陆Nintendo Switch 2平台。"
+     "v": "PlayStation今日公布了本月PS Plus二三档会员游戏库的新增名单。"
     },
     {
      "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101938514794.jpg"
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102339084953.jpg"
     },
     {
      "t": "p",
-     "v": "卡普空今日进一步公开了本作的运行表现与全部新增内容。游戏在Switch 2的电视模式与掌机模式下均可稳定60帧运行，流畅画面将本作华丽爽快的战斗风格展现得淋漓尽致。"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101938572520.jpg"
+     "v": "二档具体内容如下："
     },
     {
      "t": "p",
-     "v": "玩法上，血宫连战、自动连招、拍照模式、练习场等功能全部收录，可满足玩家闯关挑战、招式练习、趣味截图等各类需求。"
+     "v": "《最终幻想16》"
     },
     {
      "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101939035341.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101939204246.png"
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102339136101.jpg"
     },
     {
      "t": "p",
-     "v": "本作整合了海量专属拓展内容：除丰富的角色配色、特色义手与专属武器外，还收录系列前四代经典战斗配乐、全新播报语音以及真人实拍过场动画。"
+     "v": "《索尼克×夏特 世代重启》"
     },
     {
      "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101939374919.jpg"
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102339192917.jpg"
     },
     {
      "t": "p",
-     "v": "游戏支持简繁体中文、英、日、韩多语言字幕，并配备日、英双语配音，适配不同地区玩家。"
+     "v": "《天国：拯救》"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102339255312.jpg"
+    },
+    {
+     "t": "p",
+     "v": "《奇异人生：双重曝光》"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102339319439.jpg"
+    },
+    {
+     "t": "p",
+     "v": "《模拟农场25》"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102339377427.jpg"
+    },
+    {
+     "t": "p",
+     "v": "《烈焰之刃》"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102339425013.jpg"
+    },
+    {
+     "t": "p",
+     "v": "《黑色沙漠》"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102339473925.jpg"
+    },
+    {
+     "t": "p",
+     "v": "三档会员的经典游戏库还将获得："
+    },
+    {
+     "t": "p",
+     "v": "《吉他小子》"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102339526320.jpg"
     }
    ]
   },
   {
    "id": 3,
+   "category": "业界",
+   "title": "苹果重磅产品全球多地下架！中国官网已断货",
+   "summary": "IT之家 6 月 10 日消息，MacRumors 发现，苹果 Vision Pro 旅行舱目前已在全球多个市场地区的线上商店中下架，至少包括英国、日本、…",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154853.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102316207145.jpg",
+   "isVideo": false,
+   "ts": 1781104620000,
+   "content": [
+    {
+     "t": "p",
+     "v": "IT之家 6 月 10 日消息，MacRumors 发现，苹果 Vision Pro 旅行舱目前已在全球多个市场地区的线上商店中下架，至少包括英国、日本、德国、法国、爱尔兰和中国香港。"
+    },
+    {
+     "t": "p",
+     "v": "这些地区的苹果 Vision Pro 配件页面已不再列出该旅行舱，此前包含该产品的页面也已被完全移除，表明苹果至少在以上市场已将其停产且暂无恢复计划。"
+    },
+    {
+     "t": "p",
+     "v": "IT之家注意到，在中国大陆和澳大利亚，其商品页面仍然存在，但产品处于灰色不可购买状态。不过，该产品仍在美国、加拿大和阿联酋正常销售。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102316561680.jpg"
+    },
+    {
+     "t": "p",
+     "v": "Vision Pro 旅行舱官方售价 199 美元（现汇率约合 1350 元人民币），国行版本 1699 元。下架后，贝尔金为 Apple Vision Pro 推出的旅行收纳包可作为替代品继续在国际市场销售。"
+    },
+    {
+     "t": "p",
+     "v": "MacRumors 指出，此次配件调整正值苹果缩减 Vision Pro 产品线投入之际。Vision Pro 在 2025 年 10 月迎来 M5 芯片升级，但此次更新未能重新激发消费者兴趣。"
+    },
+    {
+     "t": "p",
+     "v": "《The Information》报道称，苹果累计已售出超 60 万台 Vision Pro，但与苹果近期其他产品相比，该头显的退货率异常之高。"
+    },
+    {
+     "t": "p",
+     "v": "彭博社的 Mark Gurman 表示，M5 机型市场遇冷后，Vision Pro 团队已解散，成员被重新分配至其他项目。Vision 产品线负责人 Mike Rockwell 自 2025 年 3 月起开始执掌苹果 Siri 团队。更便宜、更轻便的“Vision Air”计划已在 2025 年 10 月被取消。他认为，即便新的头戴设备最终落地，考虑到苹果混合现实硬件人才已大量转岗，他预计至少也要再等约两年。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102317093089.jpg"
+    },
+    {
+     "t": "p",
+     "v": "苹果分析师郭明錤本月也提到，即将接任苹果 CEO 的 John Ternus 已签字取消第二代 Vision Pro 和 Vision Air 项目，苹果的重心已转向智能眼镜。"
+    },
+    {
+     "t": "p",
+     "v": "郭明錤透露，目前仍有两条产品线在研发中：搭载 AI 功能、对标 Meta Ray-Ban 的眼镜预计在 2027 年推出，而配备显示屏的 AR 眼镜最早可能要到 2029 年才会面世。"
+    },
+    {
+     "t": "p",
+     "v": "Gurman 则指出，更轻薄、更便宜的 Vision Pro 在远期仍有可能出现，但不太可能在 2028 年底或 2029 年之前到来。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102317323492.png"
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "category": "业界",
+   "title": "外媒质疑《剑星》新女主太幼！还担心战衣会更涩",
+   "summary": "外媒Kotaku近日发文点评《剑星：血雨》新主角伊薇（Evie）引发的争议，并对Shift Up CEO兼系列制作人金亨泰的回应提出质疑。",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154851.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102311401129.jpg",
+   "isVideo": false,
+   "ts": 1781104440000,
+   "content": [
+    {
+     "t": "p",
+     "v": "外媒Kotaku近日发文点评《剑星：血雨》新主角伊薇（Evie）引发的争议，并对Shift Up CEO兼系列制作人金亨泰的回应提出质疑。"
+    },
+    {
+     "t": "p",
+     "v": "在今年夏日游戏节公布首支预告后，《剑星：血雨》迅速成为玩家讨论焦点。除了部分玩家质疑预告片疑似使用生成式AI技术外，更多争议则集中在新主角伊薇的形象设计上。一些网友认为，伊薇相比前作主角伊芙看起来“太幼”，因此引发了大量讨论。"
+    },
+    {
+     "t": "p",
+     "v": "近日，金亨泰在接受IGN采访时回应了相关争议。他承认伊薇“更年轻、体型更娇小、身高也比伊芙矮”，但强调角色魅力并不只来自外貌。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102311258085.png"
+    },
+    {
+     "t": "p",
+     "v": "金亨泰表示：“是的，她更年轻，体型更小，身高也比伊芙矮。但她拥有更强烈的个性，也会经历更加艰苦的战斗。她属于一支特殊行动小队，负责追捕在城市各处发动恐怖袭击的恐怖分子。”"
+    },
+    {
+     "t": "p",
+     "v": "他进一步说道：“如果你真正玩到游戏，就不会这么认为了。我当然喜欢前作里伊芙的形象，但这一次，伊薇不仅仅是外表，她的性格、说话方式以及战斗风格等元素结合在一起，会让玩家意识到她是一个非常讨人喜欢的角色。”"
+    },
+    {
+     "t": "p",
+     "v": "针对这一回应，Kotaku评论认为，金亨泰并未正面回应伊薇的外貌问题，也没有解释预告中极具性暗示的姿势。"
+    },
+    {
+     "t": "p",
+     "v": "此外，在谈及《剑星：血雨》的服装系统时，金亨泰还透露，续作中伊薇将拥有更多服装选择。当被问及新服装风格时，他表示：“会更加有吸引力……目前我们只能透露这么多。”"
+    },
+    {
+     "t": "p",
+     "v": "而对于“更有吸引力”的服装，外媒则表示担忧：“希望这不是我理解的那个意思。预告片里的‘物理抖动’已经够让人不适了。”"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102311335876.png"
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "category": "主机",
+   "title": "Players Think Kingdom Hearts’ New Art Is AI-Generated",
+   "summary": "Yesterday's Nintendo Direct certainly got Kingdom Hearts players talking--but it's not the kind of discourse S",
+   "source": "GameSpot",
+   "url": "https://www.gamespot.com/articles/players-think-kingdom-hearts-new-art-is-ai-generated/",
+   "image": "https://www.gamespot.com/wp-content/uploads/2026/06/KH123.jpeg?w=215",
+   "isVideo": false,
+   "ts": 1781103736000,
+   "content": null
+  },
+  {
+   "id": 6,
+   "category": "业界",
+   "title": "Gears Of War: E-Day Modernizes Movement Without Going Full Parkour",
+   "summary": "Popping Locust heads and active reloading has never looked better than in Gears of War: E-Day , but this prequ",
+   "source": "GameSpot",
+   "url": "https://www.gamespot.com/articles/gears-of-war-e-day-modernizes-movement-without-going-full-parkour/",
+   "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Gears-E-Day.jpg?w=300",
+   "isVideo": false,
+   "ts": 1781103638000,
+   "content": null
+  },
+  {
+   "id": 7,
+   "category": "业界",
+   "title": "Fable’s 1,000 Romance Options Sounds Like The Ultimate Challenge For Completionists",
+   "summary": "Fable isn't just offering a grand fantasy adventure for players to embark on, but also a chance to catch their",
+   "source": "GameSpot",
+   "url": "https://www.gamespot.com/articles/fables-1000-romance-options-sounds-like-the-ultimate-challenge-for-completionists/",
+   "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Fable-Isabel.jpg?w=300",
+   "isVideo": false,
+   "ts": 1781103635000,
+   "content": null
+  },
+  {
+   "id": 8,
+   "category": "业界",
+   "title": "Fable Lets You Live A Second Life, Not Just Save The World",
+   "summary": "Fable is now arriving in February 2027 , but with some extra months to fine-tune the fantasy adventure, Playgr",
+   "source": "GameSpot",
+   "url": "https://www.gamespot.com/articles/fable-lets-you-live-a-second-life-not-just-save-the-world/",
+   "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Fable-Jack.jpg?w=300",
+   "isVideo": false,
+   "ts": 1781103628000,
+   "content": null
+  },
+  {
+   "id": 9,
+   "category": "主机",
+   "title": "Former Nintendo Staff Say The Legend of Zelda: Ocarina of Time Remake Reveal Should Have Been Changed to Show More, Following High-Profile Leak",
+   "summary": "Former Nintendo staff have suggested the company should have changed its plans to unveil its The Legend of Zel",
+   "source": "IGN",
+   "url": "https://www.ign.com/articles/former-nintendo-staff-say-the-legend-of-zelda-ocarina-of-time-remake-reveal-should-have-been-changed-to-show-more-following-high-profile-leak",
+   "image": "https://assets-prd.ignimgs.com/2026/06/09/nintendo-everything-blog-1781022109598.jpg",
+   "isVideo": false,
+   "ts": 1781103602000,
+   "content": null
+  },
+  {
+   "id": 10,
+   "category": "主机",
+   "title": "《神鬼寓言》游民前瞻：时隔十多年的华丽重生",
+   "summary": "感谢Xbox官方的邀请，我们在前不久举办的夏日游戏节中，提前观看了《神鬼寓言》最新的30分钟实机试玩，并现场听取了开发人员的讲解。",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154846.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102250335756.jpg",
+   "isVideo": false,
+   "ts": 1781103600000,
+   "content": [
+    {
+     "t": "p",
+     "v": "如果说Xbox旗下的第一方游戏中，哪款游戏最有成为一款伟大RPG的可能，那恐怕非《神鬼寓言》系列莫属了。即使放眼整个RPG品类，《神鬼寓言》也是相当独特的存在。早在20多年前，初代的《神鬼寓言》就已经拥有了极高的自由度。玩家不仅可以在游戏里扮演拯救世界的英雄，还可以经营店铺、购买房产、结交朋友、组建家庭。在游戏中度过自己的第二人生。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_xjy_586_2/1168_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "这套中世纪奇幻的“人生模拟系统”，也在之后的每一部《神鬼寓言》作品中得到了保留和进化。但由于开发方向的决策失误等原因，这个本可以成为又一个伟大IP的系列，在10年推出的3代后就没了下文。直到2020年，这个IP才由《极限竞速：地平线》系列的开发团队Playground工作室接手重启。"
+    },
+    {
+     "t": "p",
+     "v": "一个沉寂超过十年的老IP，和一个开发开放世界赛车游戏的团队，究竟能碰撞出怎样的火花？这些问题的答案，在今年10月都将正式得到解答。"
+    },
+    {
+     "t": "p",
+     "v": "感谢Xbox官方的邀请，我们在前不久举办的夏日游戏节中，提前观看了《神鬼寓言》最新的30分钟实机试玩，并现场听取了开发人员的讲解。在这次实机演示中，Playground重点展示了本作主线任务之外的特色，包括复杂的道德与声望系统，以及如何通过这个系统塑造出复杂的角色人格。同时还展示了玩家的行为如何影响游戏世界的运作，以及本作中独特的“人生模拟系统”。下面我们将为大家做出简单的介绍。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102237048815.jpg"
+    },
+    {
+     "t": "p",
+     "v": "PS：本次实机演示内容仍为开发中版本，我们对游戏的介绍也基于演示，不排除未来会出现与实际发售内容不符的情况。在挂观看演示的同时，我们也采访了本作的两位副总监，感兴趣的玩家可以 点击链接 跳转阅读。"
+    },
+    {
+     "t": "p",
+     "v": "在演示的开端，玩家来到了风景秀美的奥克莎地区。奥克莎是本作六片风格迥异的开放世界地区之一，这里的设计灵感源自英国乡村，有着连绵起伏的山丘、色彩缤纷的繁茂植被。大陆上分布着各式各样的聚落，每个地方都有本地居民与特色地标。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_xjy_586_2/1749_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "随着大片耕地出现在眼前，一座名为“银溪镇”的农业小镇映入眼帘。无论是当地的建筑风格、居民衣着和性格，都和小镇的农业特质高度关联。《神鬼寓言》提供了超过1000名精心设计、全程配音的独立NPC供玩家互动。每个人都有自己独特人际网和生活轨迹。他们会按时起床干活、完工后去酒馆放松、疲惫后回家休息。而玩家的行为很可能会永久地改变他们的人生。"
+    },
+    {
+     "t": "p",
+     "v": "例如在实机演示中，玩家遇到了一个在路边乞讨的乞丐杰克，并且对其慷慨解囊。之后玩家买下了一家酒馆需要员工，于是想起了本分的杰克并雇佣了他。杰克的乞讨人生就此迎来了改变，他也对玩家表达了自己的感激。"
+    },
+    {
+     "t": "p",
+     "v": "而在玩家与其他NPC交互的过程中，其所有行为都会影响到其他人对玩家的印象。相比很多RPG中以善恶两种维度简单划分的道德系统，《神鬼寓言》对玩家行为的评判方式要复杂很多。"
+    },
+    {
+     "t": "p",
+     "v": "玩家的每一种行为，都会生成对应的属性标签。在实机演示中，玩家救下了一只即将被屠宰的会说话的小猪，给当地人留下了正直、仁慈和精明的印象。而为乞丐慷慨解囊的行为则会给玩家打上善良的标签。之后的流程中玩家购入了一间酒馆，这让人们觉得他是个富有的实业家。这些标签组合起来，就构成了玩家独特的角色画像，并且这种印象完全由玩家的所有行动和选择共同决定。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_xjy_586_2/11276_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "同时这些印象，也会决定NPC对玩家的态度。但同一种行为，不同性格和立场的NPC往往会给出不同的评价。即使玩家做出的是善良的行为，也会有人对此不置可否。在演示中玩家想要和一位名为梅根的店主约会，其表现出的精明博得了梅根的好感，但她希望能和衣着华贵、有自己房产的实业家在一起。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102259373677.jpg"
+    },
+    {
+     "t": "p",
+     "v": "但当玩家在另一家服装店购买衣服时，那里的店主却对富有的人相当不感冒，认为这些人脱离了民众的生活，因此反而把衣服涨价了80%卖给玩家。如果玩家在城镇中做出犯罪的行为，还会引来居民的唾弃和通缉。这种复杂动态的评价体系，不仅有助于玩家构建出丰富多样的人物关系，也让游戏中的选择不存在明显的对错，让玩家可以真正按照自己的想法自由游玩。"
+    },
+    {
+     "t": "p",
+     "v": "除了道德和声望系统外，在试玩中还展示了相当丰富的人生模拟玩法。玩家不仅可以专注于推进主线剧情，还可以开店创业、买房置业。游戏地图中的所有商铺，面包店、酒馆、杂货店都可以被玩家收购。当玩家成为店铺的经营者后，还可以自主调整商品售价、员工薪资，统筹安排店内所有工作。每名员工都有专属的性格和工作能力。性格温和、待人热情的员工，能提升店铺人气和整体收益。合理雇佣和管理员工，是经营玩法的重要趣味点。就像前面说的那样，你可以主动邀请关系好的局面来为你工作，在获取收益的同时改变他们的人生轨迹。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_xjy_586_2/11833_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "即使你不想开店，也可以通过打工来赚取收入。在试玩演示中，玩家为了凑齐房款前往镇子上的铁匠铺打工，在完成打铁的小游戏后，就能获得对应的收入，同时也能提升自己打铁的技艺。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102242099315.jpg"
+    },
+    {
+     "t": "p",
+     "v": "房产玩法的自由程度同样很高。游戏地图里有各类住宅，从普通小平房到豪华庄园，玩家都可以购入。玩家买房后，可以选择自己入住，也可以对外出租，还能自由调整租金价格。玩家购入带有原住民的房屋时，可以选择直接赶走现有的住户，也可以花钱补偿住户。两种选择都会影响居民对玩家的看法和评价。玩家名下所有产业的收益，都会自动汇总到统一储物箱中，让你不用奔波各地收取收益，整体经营体验更加轻松顺畅。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102238261843.jpg"
+    },
+    {
+     "t": "p",
+     "v": "这些系统共同赋予了《神鬼寓言》足够的自由度和选择空间。你能以一个英雄的身份探索离奇事件、对抗邪恶势力，完成自己的冒险旅程。也能暂时放下主线任务，留在小镇开店经营、交友恋爱、安家落户，体验充满烟火气的日常。"
+    },
+    {
+     "t": "p",
+     "v": "作为一款RPG，《神鬼寓言》在任务和剧情发展上，也秉持了选择导向的策略。Playground在实机演示中前文提到过的一个简单的任务展现了这一点——玩家在镇子上遇到了一位向他求助的少年。他想从屠夫手中救下一头名为柯林的小猪。玩家可以选择放任猪被杀掉，也可以拯救下这头小猪。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_xjy_586_2/12360_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "如果你选择拯救柯林，也可以选择用武力让屠夫屈服，也能花钱把这头猪买下来。演示中的主角选择花钱买下了小猪，获得男孩酬谢的同时也顺势打听到了另一个任务的线索。当然，你的所有行为都会影响居民对你的看法。"
+    },
+    {
+     "t": "p",
+     "v": "即使是一个简单的任务，《神鬼寓言》就提供了相当丰富的选择。根据开发团队的介绍。他们为本作打造了数百段分支剧情对话，并且制作了超过两小时的、采用顶尖动捕技术制作的高品质过场动画。而具体呈现出的数量和质量如何，恐怕还要等正式版上线后才能窥得全貌。"
+    },
+    {
+     "t": "p",
+     "v": "从这次的实机演示中，我能看到Playground对于这个经典IP的巨大野心。对于RPG的爱好者来说，看到这个经典IP的重生无疑是令人兴奋的。但这帮从来没做过正统RPG的英国人能把本作打磨到一个怎样的地步，同样要等到正式版上线后才能见分晓。"
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "category": "业界",
+   "title": "How Will Capcom Address Alfred Ashford's Storyline in Resident Evil Veronica?",
+   "summary": "Capcom discusses how it will address Alfred Ashford's storyline in Resident Evil Veronica.",
+   "source": "IGN",
+   "url": "https://www.ign.com/articles/how-will-capcom-address-alfred-ashfords-storyline-in-resident-evil-veronica",
+   "image": "https://assets-prd.ignimgs.com/2026/06/10/ss-4473fa20d72b141595ddbe167bc40ff1a784189c-1920x1080-1781102841499.jpg",
+   "isVideo": false,
+   "ts": 1781103600000,
+   "content": null
+  },
+  {
+   "id": 12,
+   "category": "业界",
+   "title": "Resident Evil Veronica Is a Third-Person Game, Capcom Confirms",
+   "summary": "The teaser for Resident Evil Veronica at Summer Game Fest may well have been presented in first-person, but th",
+   "source": "IGN",
+   "url": "https://www.ign.com/articles/resident-evil-veronica-is-a-third-person-game-capcom-confirms",
+   "image": "https://assets-prd.ignimgs.com/2026/06/10/ss-5f574a15cb682397b7a03ff06a09969e65201c9d-1920x1080-1781101673669.jpg",
+   "isVideo": false,
+   "ts": 1781103600000,
+   "content": null
+  },
+  {
+   "id": 13,
+   "category": "业界",
+   "title": "Godzilla: Destroy All Monsters Melee Remastered Is Up for Preorder at Select Retailers, Out in November",
+   "summary": "Godzilla: Destroy All Monsters Melee Remastered is up for preorder at select retailers. We've broken down wher",
+   "source": "IGN",
+   "url": "https://www.ign.com/articles/godzilla-destroy-all-monsters-melee-remastered-where-to-preorder",
+   "image": "https://assets-prd.ignimgs.com/2026/06/10/godzilla-destroy-all-monsters-melee-remastered-1781094452489.jpg",
+   "isVideo": false,
+   "ts": 1781103600000,
+   "content": null
+  },
+  {
+   "id": 14,
+   "category": "业界",
+   "title": "Capcom Explains How Tifa From Final Fantasy 7 Came to Be a Street Fighter 6 DLC Character",
+   "summary": "Capcom has discussed the eye-catching inclusion of Tifa from Final Fantasy 7 came to be a guest DLC character ",
+   "source": "IGN",
+   "url": "https://www.ign.com/articles/capcom-explains-how-tifa-from-final-fantasy-7-came-to-be-a-street-fighter-6-dlc-character",
+   "image": "https://assets-prd.ignimgs.com/2026/06/10/tifa-1781096767643.jpg",
+   "isVideo": false,
+   "ts": 1781103600000,
+   "content": null
+  },
+  {
+   "id": 15,
+   "category": "业界",
+   "title": "Halo: Campaign Evolved – The Final Preview",
+   "summary": "",
+   "source": "IGN",
+   "url": "https://www.ign.com/articles/halo-campaign-evolved-the-final-preview",
+   "image": "https://assets-prd.ignimgs.com/2026/06/10/halo-campaign-evolved-blogroll-1781072910946.jpg",
+   "isVideo": false,
+   "ts": 1781103600000,
+   "content": null
+  },
+  {
+   "id": 16,
+   "category": "业界",
+   "title": "Fable Let Me Choose Whether a Talking Pig Should Live or Become Lunch | IGN Preview",
+   "summary": "After a 30-minute demo of Fable's life-sim elements specifically, I'm pretty sold on its \"game within a game,\"",
+   "source": "IGN",
+   "url": "https://www.ign.com/articles/fable-let-me-choose-whether-a-talking-pig-should-live-or-become-lunch-ign-preview",
+   "image": "https://assets-prd.ignimgs.com/2026/06/09/fable-sgf-preview-blogroll-1781036857254.jpg",
+   "isVideo": false,
+   "ts": 1781103600000,
+   "content": null
+  },
+  {
+   "id": 17,
+   "category": "主机",
+   "title": "Gears of War: E-Day Devs on Respecting the Lore, Game Length, New Movement Mechanics, and More",
+   "summary": "IGN interviews The Coalition to find out more on Xbox console exclusive Gears of War: E-Day.",
+   "source": "IGN",
+   "url": "https://www.ign.com/articles/gears-e-day-devs-on-gears-lore-game-length-new-movement-mechanics-and-ai",
+   "image": "https://assets-prd.ignimgs.com/2026/06/10/gears-of-war-eday-br-1781083823810.jpg",
+   "isVideo": false,
+   "ts": 1781103600000,
+   "content": null
+  },
+  {
+   "id": 18,
+   "category": "主机",
+   "title": "Gears Of War: E-Day Is Bigger, Bloodier, And More Ambitious Than We Expected",
+   "summary": "Gears of War: E-Day made a big splash during the Xbox Games Showcase, as The Coalition dropped an action-packe",
+   "source": "GameSpot",
+   "url": "https://www.gamespot.com/articles/gears-of-war-e-day-is-bigger-bloodier-and-more-ambitious-than-we-expected/",
+   "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Gears-E-Day_147a44.jpg?w=300",
+   "isVideo": false,
+   "ts": 1781103600000,
+   "content": null
+  },
+  {
+   "id": 19,
+   "category": "业界",
+   "title": "Gears of War: E-Day Happened Because Starting Over Sounded More Fun Than Gears 6",
+   "summary": "Gears of War: E-Day will once again see fan-favorite characters like Marcus Fenix and Dominic Santiago headlin",
+   "source": "GameSpot",
+   "url": "https://www.gamespot.com/articles/gears-of-war-e-day-happened-because-starting-over-sounded-more-fun-than-gears-6/",
+   "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Gears-Eday-2.jpg?w=300",
+   "isVideo": false,
+   "ts": 1781103600000,
+   "content": null
+  },
+  {
+   "id": 20,
+   "category": "业界",
+   "title": "Bloober Team Says It’s Humbled By The “Many Corpses” In The Horror Multiplayer Genre",
+   "summary": "The realm of asymmetrical horror multiplayer games grows a little bigger with Saw: Genesis , Bloober Team and ",
+   "source": "GameSpot",
+   "url": "https://www.gamespot.com/articles/bloober-team-says-its-humbled-by-the-many-corpses-in-the-horror-multiplayer-genre/",
+   "image": "https://www.gamespot.com/wp-content/uploads/2026/06/saw-genesis.jpg?w=300",
+   "isVideo": false,
+   "ts": 1781103600000,
+   "content": null
+  },
+  {
+   "id": 21,
+   "category": "业界",
+   "title": "《神鬼寓言4》调情台词太骚了：浑身酥麻、爽一下",
+   "summary": "《神鬼寓言4》将继续保留系列经典的恋爱系统，玩家依然可以与阿尔比恩世界中的村民发展感情关系。不过，期待类似《博德之门3》那样…",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154845.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102235319683.jpg",
+   "isVideo": false,
+   "ts": 1781102340000,
+   "content": [
+    {
+     "t": "p",
+     "v": "《神鬼寓言4》将继续保留系列经典的恋爱系统，玩家依然可以与阿尔比恩世界中的村民发展感情关系。不过，期待类似《博德之门3》那样恋爱演出的玩家可能要失望了。"
+    },
+    {
+     "t": "p",
+     "v": "据报道，根据最新公布的ESRB评级（M17+）信息显示，玩家可以在游戏中“与村民调情并发生性关系”，但相关行为不会被直接展示。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102235005927.png"
+    },
+    {
+     "t": "p",
+     "v": "事实上，这也延续了系列以往的传统。在过去的《神鬼寓言》作品中，玩家可以通过送礼、培养感情甚至结婚等方式与NPC建立关系，但涉及亲密行为时，游戏通常会采用淡出黑屏的方式处理，而不会直接呈现具体画面。此次新作似乎依然沿用了这一设计。"
+    },
+    {
+     "t": "p",
+     "v": "虽然不会出现露骨演出，但游戏中的部分台词依旧延续了系列一贯的英式幽默风格。"
+    },
+    {
+     "t": "p",
+     "v": "ESRB列举的部分示例台词包括："
+    },
+    {
+     "t": "p",
+     "v": "“我喜欢……好好爽一下。”"
+    },
+    {
+     "t": "p",
+     "v": "“我浑身都酥麻了。”"
+    },
+    {
+     "t": "p",
+     "v": "“你可真够坏的，不过我喜欢。”"
+    },
+    {
+     "t": "p",
+     "v": "“那个手印留在你屁股上可真好看。”"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102234551208.png"
+    },
+    {
+     "t": "p",
+     "v": "《神鬼寓言4》此前已确认延期，目前计划于2027年2月23日正式发售。"
+    }
+   ]
+  },
+  {
+   "id": 22,
+   "category": "主机",
+   "title": "《剑星》成了XBOX独不占！外媒很失望 无法接受",
+   "summary": "据Windows Central报道，随着续作《剑星：血雨》官宣，Shift Up正式公布《剑星》将登陆任天堂Switch 2平台，彻底打破了原本的PS5主…",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154844.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102228153025.jpg",
+   "isVideo": false,
+   "ts": 1781101740000,
+   "content": [
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102228366832.png"
+    },
+    {
+     "t": "p",
+     "v": "据Windows Central报道，随着续作《剑星：血雨》官宣，Shift Up正式公布《剑星》将登陆任天堂Switch 2平台，彻底打破了原本的PS5主机端独占壁垒。但此次跨平台拓展唯独缺席Xbox Series X|S，这一操作引发了大量Xbox玩家的不满与抗议。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102228428630.jpg"
+    },
+    {
+     "t": "p",
+     "v": "《剑星》最初为PS5独占作品，去年登陆PC平台后收获超高人气，在线玩家峰值数万，充分证明了这款硬核动作游戏的庞大市场潜力。此前开发商Shift Up早已释放出跨平台扩圈的信号，不少Xbox玩家满心期待本作登陆微软主机，奈何最终官宣结果令人失望。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102228482637.jpg"
+    },
+    {
+     "t": "p",
+     "v": "外媒分析了本作缺席Xbox的多重原因。一方面，索尼曾签订相关独占协议，限制游戏短期内登陆Xbox平台；另一方面，Xbox Series S仅有8GB内存，相较于原版适配的16GB内存开发门槛更高，移植优化成本与技术难度，让中小型团队Shift Up望而却步。"
+    },
+    {
+     "t": "p",
+     "v": "外媒认为，无论从游戏调性、云游戏适配还是掌机生态来看，《剑星》都十分适配Xbox平台，后续随着玩家声量持续扩大，本作未来登陆Xbox仍存在一定可能性，只是目前暂无任何官宣计划。"
+    }
+   ]
+  },
+  {
+   "id": 23,
+   "category": "业界",
+   "title": "谢苗《火遮眼》走向世界 被外媒称近十年最佳动作片",
+   "summary": "近日，《火遮眼》在北京举办首映礼，这部豆瓣开分8.5，烂番茄新鲜度100%的影片",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154842.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102219029890.jpg",
+   "isVideo": false,
+   "ts": 1781101200000,
+   "content": [
+    {
+     "t": "p",
+     "v": "据看电影报道，近日，《火遮眼》在北京举办首映礼，这部豆瓣开分8.5，烂番茄新鲜度100%的影片，被外媒称为“近十年最佳动作片”——凭借这部硬核动作片，谢苗真正以主角身份重新回归主流视野。"
+    },
+    {
+     "t": "p",
+     "v": "谢苗，1984年5月2日出生于北京。9岁被王晶一眼相中，搭档李连杰出演《洪熙官》，那个比洪熙官还酷的洪文定，让他一夜成名。之后在《给爸爸的信》再次搭档李连杰，观众叫他“李连杰接班人”。巅峰时他听从周润发的建议选择暂别，回家读书沉淀，厚积薄发后再重新归来。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_zy_red_164_13/1223_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "谢苗息影多年后从配角开始重新来过，从《大汉十三将》、《辛弃疾1162》，他步步稳打，一场戏一场戏地拼。近十年网络电影深耕，《东北警察故事》《目中无人》口碑飙升——拍《目中无人》时他闭着眼睛练了几个月刀法，只为演好那个盲眼捉刀人。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_zy_red_164_13/1340_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "这一次，《火遮眼》把谢苗推向世界舞台，导演谷垣健治（《浪客剑心》动作指导）集结五位全球实战高手，全程实打实肉搏。谢苗旧伤复发仍坚持手搓，这份赤诚，让中国功夫的血脉在他身上薪火相传。"
+    },
+    {
+     "t": "p",
+     "v": "动作片没落了？42岁的谢苗用拳头说：我还在打。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_zy_red_164_13/1458_S.jpg"
+    }
+   ]
+  },
+  {
+   "id": 24,
+   "category": "业界",
+   "title": "“鹅腿阿姨”希望给同学们道个歉 接受相应处罚",
+   "summary": "6月9日，在北大等高校附近摆摊走红的“鹅腿阿姨”卖的是鸭腿，引发热议。",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154841.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102215034904.jpg",
+   "isVideo": false,
+   "ts": 1781100900000,
+   "content": [
+    {
+     "t": "p",
+     "v": "据中国蓝新闻报道，6月9日，在北大等高校附近摆摊走红的“鹅腿阿姨”卖的是鸭腿，引发热议。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_zy_red_164_12/145_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "6月10日上午，“鹅腿阿姨”陈秀凤说，刚开始干的时候，确实卖的是鹅腿，但是后来进不到鹅腿食材了，所以就卖鸭腿了。同时陈秀凤透露，准备去市场监管局配合相关工作。"
+    },
+    {
+     "t": "p",
+     "v": "“鹅腿阿姨”承认卖的是鸭腿，而此前她曾多次在群聊中，说自家产品是鹅腿，这让支持她多年的大学生们清澈的信任碎了一地。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_zy_red_164_12/1186_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "陈女士说，“鹅腿阿姨”名字一直被学生们叫了近十年，所以没有改，自己确实曾考虑过明确说明烤的是鸭腿，但是“一直没找到合适的机会”。“如果有相应处罚我会接受，同时也希望给同学们道个歉。未来我还想叫‘鹅腿阿姨’，但是会和大家说清楚原材料。”"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_zy_red_164_12/1307_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "曾经，“鹅腿阿姨”是北大、人大、清华学子心头的“白月光”，2024年3月，其发布作品显示，北大曾邀请她去“2024青年创投女性发展论坛”开讲座。据悉，她曾讲授生意经：“一是讲规则，和同学们建立信任关系。好多同学信任我，才会在鹅腿群里直接转账付钱，大家形成良性的信任。二是保证做良心活，就是要有高品质，不能让顾客遇到食品安全的问题，这也是特别重要的。”"
+    },
+    {
+     "t": "p",
+     "v": "如果你吃过 “鹅腿阿姨”的饭，会接受她的道歉吗？"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_zy_red_164_12/1487_S.jpg"
+    }
+   ]
+  },
+  {
+   "id": 25,
+   "category": "业界",
+   "title": "《鬼武者：剑之道》团队游民采访：保留精髓并创新",
+   "summary": "我们采访了本作的导演二瓶贤与制作人门脇章人。针对游戏之前推出的试玩版和公开的信息进行了提问。",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154839.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102205365334.jpg",
+   "isVideo": false,
+   "ts": 1781100420000,
+   "content": [
+    {
+     "t": "p",
+     "v": "对很多动作游戏的爱好者来说，《鬼武者》系列就是白月光般的存在。像我玩过的第一款动作游戏，就是在朋友家笔记本电脑上的《鬼武者2》。当时它爽快的剑戟斩击手感、独特的一闪机制和取材自日本历史的设定，都给我幼小的心灵造成了不小的震撼。"
+    },
+    {
+     "t": "p",
+     "v": "但时过境迁，这个系列已经有20年未曾推出过正统续作。玩家们的游戏习惯和审美在这20年中也有了翻天覆地的变化。此时推出的《鬼武者：剑之道》，不仅要面对系列老玩家的审视，还要面对能否符合新玩家喜好的体验。面对着这些压力，这款时隔20年的老作品能否重振这个动作游戏巅峰系列的雄风？带着这些疑问，我们采访了本作的导演二瓶贤与制作人门脇章人。针对游戏之前推出的试玩版和公开的信息进行了提问。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102205016488.jpg"
+    },
+    {
+     "t": "p",
+     "v": "以下是具体采访内容："
+    },
+    {
+     "t": "p",
+     "v": "Q：试玩版里普通攻击不消耗体力，但连续格挡会失衡，这套设计的初衷是什么？是否有专属敌人会逼迫玩家放弃格挡、改用弹反或者其他招式？"
+    },
+    {
+     "t": "p",
+     "v": "A：游戏中确实存在这类敌人，会强制玩家不能单纯依赖格挡，必须使用弹反、闪避等其他操作。试玩版里也能体验到相关设计。"
+    },
+    {
+     "t": "p",
+     "v": "Q：试玩中 “一闪” 机制触发门槛很低，在玩家同时拥有弹反、闪避等能力的情况下，该机制显得用处不大。后续是否会推出强化一闪效果的技能？有没有仅限使用一闪通关的挑战模式、专属 BOSS 战？"
+    },
+    {
+     "t": "p",
+     "v": "A：本作没有必须依靠一闪才能击败的敌人或 BOSS，通关全程也不要求玩家精通该机制。一闪定位为高风险、高回报的玩法，偏向挑战向，玩家仅靠闪避和弹反也能顺利通关。部分杂兵可借助一闪一击秒杀，对 BOSS 使用则能大幅削减其血量。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_xjy_586_1/1656_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "Q：游戏里寄宿在腕甲当中的女性角色形象很特别，想了解她在主线故事里的定位是怎样的？她和主角武藏的关系会在剧情中如何变化？游戏是否存在剧情分支选项与多结局？"
+    },
+    {
+     "t": "p",
+     "v": "A：武藏并非自愿戴上这副腕甲，他一直想将其取下。护手之中寄宿着一位女性灵体，她一心想要脱离护手。故事初期，武藏和这位灵体彼此疏离、存在距离；随着剧情推进与武藏的成长，二人拥有了共同目标，关系会逐渐变得亲近。另外本作为线性剧情，没有分支选择与多结局。"
+    },
+    {
+     "t": "p",
+     "v": "Q：打空 BOSS 体力让其破防后，玩家可通过不同操作获得高额伤害或资源。后续还会增加其他操作吗？比如破坏部位封禁 BOSS 技能、改变其攻击方式等，是否有必须破坏指定部位才能击败的BOSS？"
+    },
+    {
+     "t": "p",
+     "v": "A：并非所有敌人都支持部位破坏，但部分 BOSS可以被破坏肢体等部位，能暂时封印其对应招式、削弱攻击与行动能力。举个例子，游戏中有一位多臂 BOSS，玩家可以破坏它的多处肢体来限制其能力。同时，本作没有强制要求玩家破坏特定部位才能推进流程的设定。"
+    },
+    {
+     "t": "p",
+     "v": "Q：本作剧情进行了大幅重构，登场角色混杂了战国时代、平安时代等不同时期的人物，世界观显得十分庞杂。请介绍本作主线故事、核心冲突，以及选择融合多个时代背景创作的原因？"
+    },
+    {
+     "t": "p",
+     "v": "A：本作主线舞台设定在江户时代，核心主角为宫本武藏，这是世界观的基础。 有关登场的不同时代角色的话，部分角色拥有特殊能力，得以长久存活，因此跨越了不同时代，出现在江户时代的舞台中，以此完成多时代人物共存的剧情设计。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_xjy_586_1/11278_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "Q：试玩版中弹反、闪避的判定窗口比较宽松，整体难度偏低。正式版会新增难度选项或硬核挑战模式吗？"
+    },
+    {
+     "t": "p",
+     "v": "A：目前暂无法透露详细内容，但我们为喜爱硬核挑战的玩家准备了专属内容，能够满足高难度游玩的需求。"
+    },
+    {
+     "t": "p",
+     "v": "Q：试玩版既有线性流程，也出现了类沙盒的探索内容，但官方此前表示本作并非开放世界。请问正式版整体关卡设计偏向线性还是沙盒？游戏是否包含解谜、隐藏区域？还会出现哪些日本知名地标场景？"
+    },
+    {
+     "t": "p",
+     "v": "A：本作主体为线性关卡设计，玩家沿着流程闯关、挑战 BOSS 推进主线。主线关卡之间设有开阔的探索区域，规模不及纯开放世界，玩家可在此自由探索、完成支线任务，也会遭遇专属 BOSS。 游戏部分关卡加入了解谜元素，但解谜并非贯穿全程的强制内容。 除已公开的场景外，游戏中还会出现京都多处知名地点，具体细节暂不便公开。"
+    },
+    {
+     "t": "p",
+     "v": "Q：时隔 20 年重启《鬼武者》后，开发团队针对当下玩家的游戏习惯做了哪些改动？又保留了哪些不可动摇的核心设计？"
+    },
+    {
+     "t": "p",
+     "v": "A：我们完整保留了系列核心玩法精髓。 在现代化改编上，依托当下的技术能力，重点打磨了自由斩击系统—— 实现 “斩到哪里、伤到哪里” 的真实切割效果，同时优化动作动画表现、完善背击等玩法细节，贴合现代玩家的游玩体验。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_xjy_586_1/11796_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "Q：主角武藏的面部形象参考了知名演员的样貌，这也是粉丝十分关注的亮点。除面部之外，角色的神态、肢体动作、战斗风格，是否也参考了该演员的影视作品？"
+    },
+    {
+     "t": "p",
+     "v": "A：制作团队不仅参考了面部样貌，还研究分析了该演员多部作品里的神态、肢体表现，并将这些细节融入到角色塑造当中，力求还原相关特质。"
+    },
+    {
+     "t": "p",
+     "v": "Q：最后想对中国玩家说些什么？"
+    },
+    {
+     "t": "p",
+     "v": "A：距离游戏发售已经不远，我们后续会全力推进宣传工作。希望中国玩家多多体验试玩版，耐心等待游戏正式上线，祝大家玩得开心！"
+    }
+   ]
+  },
+  {
+   "id": 26,
+   "category": "业界",
+   "title": "敖厂长复出被全网狂喷！到处都是“也够”之声",
+   "summary": "",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154837.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102200142606.jpg",
+   "isVideo": false,
+   "ts": 1781100120000,
+   "content": null
+  },
+  {
+   "id": 27,
+   "category": "业界",
+   "title": "粉丝韭菜的钱太好赚了？谢娜巡回演唱会被举报抵制",
+   "summary": "6月6日，谢娜官宣开启《快乐万岁，我们的青春》2026谢娜巡回演唱会，却引发部分网友投诉。",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154833.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102143296148.jpg",
+   "isVideo": false,
+   "ts": 1781098980000,
+   "content": [
+    {
+     "t": "p",
+     "v": "6月6日，谢娜官宣开启《快乐万岁，我们的青春》2026谢娜巡回演唱会，却引发部分网友投诉。"
+    },
+    {
+     "t": "p",
+     "v": "今年5月，谢娜在成都连开两场个人演唱会，对外宣称是“圆自己的歌手梦”，强调可能赔本、成本难以回收，收获了大量路人善意，1.5万张门票迅速售罄。然而仅过一个月，她便在《乘风2026》直播中高调宣布启动暑假全国巡演，首站定于7月11日北京。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_zy_red_164_9/1166_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "这种从“情怀圆梦”到“商业变现”的急速转弯，让许多原本支持的路人感到“被欺骗”。当初“只办一场”“赔钱做演出”的说辞被质疑只是收割好感的营销话术，如今巡演铺开，被直指收割情怀、把梦想当外衣快速圈钱。有网友调侃：“什么梦这么难圆，要全国巡演才能圆？”"
+    },
+    {
+     "t": "p",
+     "v": "北京演唱会当地文旅部门回应，演出内容已通过审批，“如果说艺人有问题，研判没通过，我们是肯定不会受理的”。第三方数据显示，截至目前，谢娜北京演唱会想看人数3.8万，许愿加场人数尚未过万，其短视频平台近期持续掉粉。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_zy_red_164_9/1400_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "谢娜非专业歌手出身，现场表现被普遍评价为“大白嗓、不专业、KTV水准”。出圈代表作主要是一首《菠萝菠萝蜜》式的儿歌作品，被指“每一首都唱出了儿歌的感觉”。乐评和大量观众认为她的原创作品数量和现场稳定度，难以支撑起一场专业级巡演。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_zy_red_164_9/1518_S.jpg"
+    },
+    {
+     "t": "p",
+     "v": "北京站定价380元至1180元，与众多实力派歌手持平甚至更高，而唱功与作品储备却不匹配。网友质疑：“花高价听跑调现场，还不如去看专业歌手”。这种“实力配不上票价”的错位，被批评为典型的“割韭菜”。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/image2026/06/20260610_zy_red_164_9/1621_S.jpg"
+    }
+   ]
+  },
+  {
+   "id": 28,
+   "category": "业界",
+   "title": "29岁确诊癌症晚期！玩家感谢PS游戏陪他熬过化疗",
+   "summary": "近日，一位Reddit网友分享了自己的抗癌经历，引发大量玩家关注。",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154829.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102125506787.jpg",
+   "isVideo": false,
+   "ts": 1781098020000,
+   "content": [
+    {
+     "t": "p",
+     "v": "近日，一位Reddit网友分享了自己的抗癌经历，引发大量玩家关注。"
+    },
+    {
+     "t": "p",
+     "v": "这位名为Anas的玩家表示，自己在29岁时被确诊为四期癌症，并伴有肝转移。自那以后，他的生活几乎被手术、化疗、住院、疼痛与恐惧填满。而在最艰难的日子里，PlayStation游戏成为了他逃离现实的重要方式。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102125294500.png"
+    },
+    {
+     "t": "p",
+     "v": "Anas在帖子中写道：“我只是想对PlayStation以及所有创造这些游戏的人说一声谢谢。”他表示，在接受化疗以及情绪最黑暗的阶段，自己经常沉浸在《战神》《对马岛之魂》《最后生还者》《神秘海域》等PlayStation游戏中。因此，他特别感谢所有开发者创造出这些难忘的角色、故事与世界。"
+    },
+    {
+     "t": "p",
+     "v": "这些作品对他而言早已不只是游戏，而是一段段能够暂时忘记病痛与压力的旅程。“有那么几个小时，我不用再去想检查结果、治疗方案、生存概率或者恐惧。我感觉自己终于又变回了一个普通人。”"
+    },
+    {
+     "t": "p",
+     "v": "Anas坦言，最让他难过的并不是治疗过程本身，而是想到自己或许没有机会再体验未来那些尚未问世的PlayStation作品。他认为，对于很多玩家来说，游戏远不只是娱乐。“有时候，它会成为安慰、力量、陪伴、分散注意力的方式，甚至是希望本身。”"
+    },
+    {
+     "t": "p",
+     "v": "这篇帖子很快打动了无数玩家。有网友留言："
+    },
+    {
+     "t": "p",
+     "v": "“祝你早日康复，希望未来能在家里的沙发上，一边吃着披萨，一边玩到《战神：劳菲》。”还有很多玩家写道：“愿你战胜病魔，一切顺利。”“坚持下去，兄弟（Endure and Survive 引用最后生还者台词）！”"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102125394371.png"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102125406176.png"
+    }
+   ]
+  },
+  {
+   "id": 29,
+   "category": "业界",
+   "title": "《最终幻想7：启示》试玩马上来！玩家不用担心",
+   "summary": "《最终幻想7：启示》是「最终幻想7重制版」三部曲的完结篇，将以系列史上最大的规模，描绘壮阔的冒险。驾驶飞空艇翱翔天际，探索广…",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154824.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102119336956.jpg",
+   "isVideo": false,
+   "ts": 1781097540000,
+   "content": [
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102121114381.jpg"
+    },
+    {
+     "t": "p",
+     "v": "《最终幻想7：启示》是「最终幻想7重制版」三部曲的完结篇，将以系列史上最大的规模，描绘壮阔的冒险。驾驶飞空艇翱翔天际，探索广阔世界，与伙伴们一同挑战全面进化的战斗。未知的旅程，终将抵达终点。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102121219152.jpg"
+    },
+    {
+     "t": "p",
+     "v": "今日，据Fami通报道，《最终幻想7：启示》总监滨口直树在采访中回应了玩家关心的后续情报与线下试玩相关问题。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102121422070.jpg"
+    },
+    {
+     "t": "p",
+     "v": "他透露，科隆游戏展、PAX游戏展、东京电玩展等多项大型展会即将接踵而至，官方计划在短期内推出线下试玩内容，让玩家能够亲手体验游戏。也请各位继续期待官方后续消息。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102121528211.jpg"
+    }
+   ]
+  },
+  {
+   "id": 30,
+   "category": "主机",
+   "title": "《剑星：血雨》不涨配置！美术、画质继续进化",
+   "summary": "韩国开发商Shift Up新游《剑星：血雨》官方近日透露，此次将重点放在了优化表现上，希望游戏能够在当前世代主机以及主流配置PC上稳…",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154817.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102104578349.jpg",
+   "isVideo": false,
+   "ts": 1781097000000,
+   "content": [
+    {
+     "t": "p",
+     "v": "韩国开发商Shift Up新游《剑星：血雨》官方近日透露，此次将重点放在了优化表现上，希望游戏能够在当前世代主机以及主流配置PC上稳定运行。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102104481627.png"
+    },
+    {
+     "t": "p",
+     "v": "在接受Inven Global采访时，Shift Up CEO金亨泰表示，之所以不打算进一步提高硬件门槛，是因为近年来PC硬件和游戏设备价格持续上涨。他认为，单纯依赖更昂贵硬件推动技术进步的发展模式已经接近极限。"
+    },
+    {
+     "t": "p",
+     "v": "金亨泰表示：“我认为，无论是PC还是主机，建立在不断涨价基础上的技术进步终究是有极限的。因此我们的首要目标，是让当前世代主机和主流PC用户都能顺畅体验游戏。同时，我们依然需要展现出明显的技术进步，所以会把重点放在线性关卡中的细节密度，以及各种城市场景的独特魅力上。”"
+    },
+    {
+     "t": "p",
+     "v": "根据官方说法，《剑星：血雨》的画面提升将不会依赖更高的硬件负载，而是通过更加精细的美术设计、更高密度的场景细节以及全面优化来实现。"
+    },
+    {
+     "t": "p",
+     "v": "这意味着，许多使用旧配置电脑的玩家依然有机会流畅运行本作。按照开发团队的说法，即便是《剑星》初代所支持的基础配置，例如NVIDIA GTX 1060级别显卡，也有望满足续作运行需求。"
+    }
+   ]
+  },
+  {
+   "id": 31,
+   "category": "主机",
+   "title": "NS2完全独占新游开预购！299港币就能带回家 9月见",
+   "summary": "《轨道双子星》是一款由Shapefarm开发，Kepler Interactive发行的双人合作冒险游戏，将于2026年9月3日在Switch 2上独占推出。",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154815.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102105273005.jpg",
+   "isVideo": false,
+   "ts": 1781096760000,
+   "content": [
+    {
+     "t": "p",
+     "v": "《轨道双子星》是一款由Shapefarm开发，Kepler Interactive发行的双人合作冒险游戏，将于2026年9月3日在Switch 2上独占推出。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102106177381.jpg"
+    },
+    {
+     "t": "p",
+     "v": "今日，本作的预购已经正式开启。游戏标准版售价299港币，豪华版售价349港币。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102106252802.jpg"
+    },
+    {
+     "t": "p",
+     "v": "官方介绍： 我们融为一体！和好友一同游玩《轨道双子星》，在这款怀旧动画风格的双人合作冒险游戏里，开启奔赴银河的旅程！"
+    },
+    {
+     "t": "p",
+     "v": "你将扮演麻希与尾村这对配合默契、但经验尚浅的探险搭档。二人的家园被诡异的宇宙风暴围困，唯有冲破风暴、寻求援助，才能觅得生机。"
+    },
+    {
+     "t": "p",
+     "v": "两人必须穿越风暴，踏入未知疆域，展开一场放手一搏的求生之旅。单打独斗行不通，唯有齐心协力……"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102105485261.jpg"
+    },
+    {
+     "t": "p",
+     "v": "游戏截图："
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102105537427.jpg"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102105585361.jpg"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102106033571.jpg"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102106076045.jpg"
+    }
+   ]
+  },
+  {
+   "id": 32,
+   "category": "PC",
+   "title": "由“吹哥” Jonathan Blow 领衔打造的《沉星之序》，将于 Steam 6月新品节首次推出试玩 Demo",
+   "summary": "知名 AA 与独立游戏发行商 Arc Games，以及 Thekla 今日宣布，由屡获殊荣的传奇游戏设计师“吹哥”Jonathan Blow 领衔打造、备受期待的大型解谜冒险游戏《沉星之序》，将在 6 月 16 日至 2",
+   "source": "机核",
+   "url": "https://www.gcores.com/articles/215710",
+   "image": "https://image.gcores.com/04ba6704a4b5782610ce7bfcd6a335f6-1768-988.jpg?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
+   "isVideo": false,
+   "ts": 1781096400000,
+   "content": [
+    {
+     "t": "p",
+     "v": "知名 AA 与独立游戏发行商 Arc Games，以及 Thekla 今日宣布，由屡获殊荣的传奇游戏设计师“吹哥”Jonathan Blow 领衔打造、备受期待的大型解谜冒险游戏《沉星之序》，将在 6 月 16 日至 23 日举行的 Steam 6月新品节期间，于 Steam 限时开放试玩 Demo。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/b7df0252358a6eae83827d2023561633-1768-988.jpg"
+    },
+    {
+     "t": "p",
+     "v": "《沉星之序》专为渴望沉浸式氛围探索与巧妙谜题的玩家打造，将带领玩家踏入一个庞大而神秘的世界。在层层交织的谜题与线索之中，隐藏的秘密与真相正等待你逐步揭开。本次Steam新品节的试玩Demo将呈现游戏体验中相当有分量的一部分——足以带来挑战、惊喜，甚至引发玩家对游戏整体谜团的各种猜想。据传，Demo 的首次发布仅仅是个开始……更多细节将在未来揭晓！"
+    },
+    {
+     "t": "p",
+     "v": "Thekla, Inc.创始人、《时空幻境》与《见证者》的获奖游戏设计师“吹哥”Jonathan Blow 表示："
+    },
+    {
+     "t": "p",
+     "v": "“这款大型游戏是我职业生涯中最具野心的项目。此次 Demo 将让玩家提前感受到完整游戏的规模与设计深度。经过 10 年的开发，我非常高兴终于能让玩家亲自体验它了。”"
+    },
+    {
+     "t": "p",
+     "v": "《沉星之序》的 Steam 新品节 Demo 将于北京时间 6 月 16 日（周二）凌晨1点全球上线，并持续开放至 6 月 23 日（周二）凌晨1点。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/3a279725966f8446b485c67d4252d80c-2478-1370.jpg"
+    },
+    {
+     "t": "p",
+     "v": "游戏特色"
+    },
+    {
+     "t": "p",
+     "v": "数千谜题，交织成篇 - 踏上这场创意十足的谜题冒险，体验数十种游戏机制与数百小时的独特玩法。每一个谜题都承前启后，引入全新机制，回报你的好奇心与坚持。"
+    },
+    {
+     "t": "p",
+     "v": "自由探索，随心漫游 - 探索四个庞大而神秘的世界，每个世界都有专属的角色、规则、险境和等你揭开的秘密。来去随心，按自己的节奏应对眼前的一切谜题。"
+    },
+    {
+     "t": "p",
+     "v": "化身风格迥异的英雄 - 女王、盗贼、战士、巫师、乃至一艘会说话的小船，都将是这段传奇的英雄。每位角色都拥有相辅相成的能力与引人入胜的故事。"
+    },
+    {
+     "t": "p",
+     "v": "破解史诗级的谜团 - 随着角色相遇、世界相互碰撞，谜团逐渐揭晓。通过谜题与收集散落的笔记，你将一步步深入了解这个神秘国度。借助每一条线索、每一片拼图，最终揭开《沉星之序》的终极秘密。"
+    }
+   ]
+  },
+  {
+   "id": 33,
+   "category": "PC",
+   "title": "同时在线玩家数超16万：《命运 2》最终更新上线后登顶 Steam 畅销榜",
+   "summary": "2026 年 6 月 10 日，《命运 2》在迎来最终更新「凯旋纪念碑」后，玩家数量大幅回升。 <内嵌内容，请前往机核查看> Steam 数据显示，该游戏已升至全球畅销榜第一名，同时在线玩家数达到 167,867 人，超",
+   "source": "机核",
+   "url": "https://www.gcores.com/articles/215728",
+   "image": "https://image.gcores.com/c1e0e17dbf288052588a7cdfcfffd612-1280-720.jpg?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
+   "isVideo": false,
+   "ts": 1781095425000,
+   "content": [
+    {
+     "t": "p",
+     "v": "2026 年 6 月 10 日，《命运 2》在迎来最终更新「凯旋纪念碑」后，玩家数量大幅回升。"
+    },
+    {
+     "t": "p",
+     "v": "Steam 数据显示，该游戏已升至全球畅销榜第一名，同时在线玩家数达到 167,867 人，超过该作 Steam 历史最高在线纪录的一半。此外，扩展包「终焉之形」和「宿命边缘」也分别位列畅销榜第三和第五位。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/ed6962fa27fce324afdef903c5f2af52-909-1200.jpg"
+    },
+    {
+     "t": "p",
+     "v": "最终更新「凯旋纪念碑」标志着 Bungie 对《命运 2》近九年开发工作的收尾。报道称，大量回归玩家和核心玩家涌入，甚至导致服务器出现负载问题。这些数字仅基于 PC 平台（Steam），若加上 PlayStation 5 和 Xbox Series X|S 平台的玩家，总在线人数将进一步增加。部分玩家社群希望这股热度能够传导至索尼，促使其加大对 Bungie 和《命运》系列的投入。不过，截至目前索尼和 Bungie 尚未就此公开发表评论。"
+    },
+    {
+     "t": "p",
+     "v": "《命运 2》于 2017 年发售，是 Bungie 旗下的科幻第一人称射击 MMO 游戏。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/8d47dbc22f566293270ea8bdfb565e15-843-760.png"
+    }
+   ]
+  },
+  {
+   "id": 34,
+   "category": "业界",
+   "title": "凤凰女变大妈！《漫威金刚狼》因SBI参与遭质疑",
+   "summary": "近日，臭名昭著的顾问团队Sweet Baby Inc（SBI）与《漫威金刚狼》的合作再次引发关注。",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154794.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102036126311.jpg",
+   "isVideo": false,
+   "ts": 1781095260000,
+   "content": [
+    {
+     "t": "p",
+     "v": "近日，臭名昭著的顾问团队Sweet Baby Inc（SBI）与《漫威金刚狼》的合作再次引发关注。"
+    },
+    {
+     "t": "p",
+     "v": "事实上，SBI参与本作开发并不是什么新消息，相关合作关系早已公开。但随着这则信息再次传播，围绕这家叙事咨询公司的争议也被重新点燃。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102035058198.png"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102035065519.png"
+    },
+    {
+     "t": "p",
+     "v": "SBI主要从事剧情与叙事顾问工作，近年来曾与多家大型游戏发行商和开发团队合作，协助处理剧本、角色塑造以及叙事设计等内容。不过，其参与项目的经历也经常成为部分玩家争论的焦点。"
+    },
+    {
+     "t": "p",
+     "v": "对于《漫威金刚狼》这款新作，部分玩家对此持负面态度，担心外部顾问可能会影响游戏剧情方向和整体风格，例如游戏中首曝的琴·格雷形象，就被怀疑是SBI指导下的产物。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102035177916.png"
+    },
+    {
+     "t": "p",
+     "v": "而另一部分玩家则认为，仅凭顾问团队参与开发这一点，并不能判断游戏质量如何，在正式展示更多内容之前下结论为时尚早。"
+    }
+   ]
+  },
+  {
+   "id": 35,
+   "category": "PC",
+   "title": "Steam 实体礼品卡将停止新库存补充，2026 年底从零售店消失",
+   "summary": "Valve 于近日更新了 Steam 钱包帮助页面，宣布停止向实体零售店补充 Steam 礼品卡库存。 Valve 于 2012 年推出实体 Steam 礼品卡，2017 年开始提供数字版本。 尽管多年来采取多种措施防范",
+   "source": "机核",
+   "url": "https://www.gcores.com/articles/215727",
+   "image": "https://image.gcores.com/35142c5a111789100dc84992334e990e-1600-900.jpg?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
+   "isVideo": false,
+   "ts": 1781094764000,
+   "content": [
+    {
+     "t": "p",
+     "v": "Valve 于近日更新了 Steam 钱包帮助页面，宣布停止向实体零售店补充 Steam 礼品卡库存。 Valve 于 2012 年推出实体 Steam 礼品卡，2017 年开始提供数字版本。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/c515af350c374f04d432a47f1607d7f1-1039-831.jpg"
+    },
+    {
+     "t": "p",
+     "v": "尽管多年来采取多种措施防范诈骗，但诈骗行为仍然屡禁不止，最终导致 Valve 做出这一决定。Valve 称这是一个“艰难的决定”。"
+    },
+    {
+     "t": "p",
+     "v": "值得注意的是，Steam 数字礼品卡将继续正常销售，用户仍可通过数字方式向好友赠送礼品。 消息最早由 Steam 非官方数据库 SteamDB 于 2026 年 6 月 10 日在 X 平台披露，随后引发社区关注。目前 Valve 官方尚未发布正式公告。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/6fccba5812243952a01405385a989c2e-840-1261.jpg"
+    }
+   ]
+  },
+  {
+   "id": 36,
+   "category": "业界",
+   "title": "被举报卖的是鸭腿！鹅腿阿姨儿子怒怼:不吃滚出去",
+   "summary": "日前，“鹅腿阿姨卖的是鸭腿”登上热搜，起因是多位学生、消费者发帖称，此前在北大等高校附近摆摊走红的“鹅腿阿姨”称被举报，在…",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154774.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102023519657.jpg",
+   "isVideo": false,
+   "ts": 1781094300000,
+   "content": [
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102023365105.png"
+    },
+    {
+     "t": "p",
+     "v": "日前，“鹅腿阿姨卖的是鸭腿”登上热搜，起因是多位学生、消费者发帖称，此前在北大等高校附近摆摊走红的“鹅腿阿姨”称被举报，在配合相关部门工作，并表示原材料是鸭腿。"
+    },
+    {
+     "t": "p",
+     "v": "有网友发出6月5日的聊天记录，面对网友的质疑，“标的鹅腿为什么卖的鸭腿？这不是欺骗么，就是冲着鹅腿才买的。要是这样为什么不直接标清楚是鸭腿？”头像为哆啦A梦的用户“凉与”发了多条言论回怼，“你上了俩天班上迷糊了吗？话都说不清楚了？”“与人为善就是与己为善，没人教过你？”“不吃滚出去，给你惯的坏毛病。”有网友质疑称，“欺骗消费者还这么有理，事实就是卖的鸭腿。”“凉与”回复称：“你直接去联系阿姨呗。”"
+    },
+    {
+     "t": "p",
+     "v": "东方财经 在其中一个鹅腿阿姨所在的群聊里发现，“凉与”群昵称为“鹅腿阿姨儿子兼助手”。"
+    }
+   ]
+  },
+  {
+   "id": 37,
+   "category": "PC",
+   "title": "Epic新游让外媒玩爽了！实在太好玩 突破认知",
+   "summary": "据ComicBook报道，在本届夏日游戏节活动现场，Epic Games展出了两款风格截然不同的全新作品，两款游戏凭借独特设计与玩法，成为现场…",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154769.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606102021482787.jpg",
+   "isVideo": false,
+   "ts": 1781094180000,
+   "content": [
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102022139961.jpg"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102022207914.jpg"
+    },
+    {
+     "t": "p",
+     "v": "据ComicBook报道，在本届夏日游戏节活动现场，Epic Games展出了两款风格截然不同的全新作品，两款游戏凭借独特设计与玩法，成为现场亮眼的存在。ComicBook编辑也亲自进行了约半小时的实机试玩，对游戏内容给出了高评价。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102022287905.jpg"
+    },
+    {
+     "t": "p",
+     "v": "第一款是由Section 9打造的生存恐怖游戏《End of Abyss》。作品融合类银河战士恶魔城设计，同时借鉴《小小梦魇》《黑暗之魂》等作品的特色，整体难度偏高。游戏舞台设定在阴森的地下设施，遍布菌类变异怪物，固定视角与昏暗环境持续烘托惊悚氛围。本作拥有完整的资源管理、存档、武器升级与合成系统，硬核的生存玩法搭配专属战斗体系，在同类题材中显得格外突出。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102022311231.jpg"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102022382242.jpg"
+    },
+    {
+     "t": "p",
+     "v": "另一款合作平台游戏《Out of Words》同样备受关注。本作由WiredFly与Kong Orange联合开发，游戏世界采用纯手绘结合定格动画打造，美术风格极具辨识度。故事围绕两名失去语言能力的少年展开，全程对白稀少，十分考验玩家之间的线下沟通。游戏核心玩法围绕双人协作展开，玩家需要相互配合、把握时机完成闯关、跨越障碍，独特的关卡设计与出色的音效表现，让这段奇幻冒险体验感十足。"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606102022447087.jpg"
+    }
+   ]
+  },
+  {
+   "id": 38,
    "category": "主机",
    "title": "Xbox CEO 表示不确定动视暴雪收购是否物有所值",
    "summary": "据 Game Developer 报道，Xbox CEO Asha Sharma 在 Bloomberg Tech 2026 的现场访谈中被问及微软收购动视暴雪（Activision Blizzard）是否物有所值。尽管",
@@ -104,214 +1407,249 @@
    ]
   },
   {
-   "id": 4,
-   "category": "PC",
-   "title": "Steam弹幕射击游戏节 2700+游戏特卖 大促开启！",
-   "summary": "Steam弹幕射击游戏节 2700+游戏特卖 大促开启！",
-   "source": "游民星空",
-   "url": "https://www.gamersky.com/news/202606/2154741.shtml",
-   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101934367982.jpg",
+   "id": 39,
+   "category": "业界",
+   "title": "触乐怪话：乘坐火箭去喵星",
+   "summary": "触乐怪话，每天胡侃和游戏有关的屁事、鬼事、新鲜事。 托帕在喵星上盯着我们…… 图/小罗 我家有两只猫，一只猫叫拖（托）帕，另一只叫橘子，合在一起就叫“托橘之家”。很长一段时间，这四个字取代了“蓝莓果皮”这样的滑稽称呼，成",
+   "source": "触乐",
+   "url": "http://www.chuapp.com/article/291411.html",
+   "image": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-10%2F6a292c8adaa22.jpg%3FimageView2%2F2%2Fw%2F700",
    "isVideo": false,
-   "ts": 1781091240000,
-   "content": null
-  },
-  {
-   "id": 5,
-   "category": "主机",
-   "title": "《王国之心合集》预购开启！PS5版不是568港币",
-   "summary": "《王国之心合集1-3》是将系列三部核心作品集于一体，为玩家完整呈现《王国之心》系列的主线叙事的匠心之作。",
-   "source": "游民星空",
-   "url": "https://www.gamersky.com/news/202606/2154740.shtml",
-   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101920061297.jpg",
-   "isVideo": false,
-   "ts": 1781090460000,
+   "ts": 1781088148000,
    "content": [
     {
-     "t": "p",
-     "v": "《王国之心合集1-3》是将系列三部核心作品集于一体，为玩家完整呈现《王国之心》系列的主线叙事的匠心之作。"
-    },
-    {
-     "t": "p",
-     "v": "今日，本作的预购已在PS5平台正式开启。游戏售价558港币。"
-    },
-    {
      "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101918235792.jpg"
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-10%2F6a292c8adaa22.jpg%3FimageView2%2F2%2Fw%2F700"
     },
     {
      "t": "p",
-     "v": "游戏介绍： 该合集收录了《王国之心HD1.5+2.5ReMIX》《王国之心HD 2.8Final Chapter Prologue》以及《王国之心3 + Re Mind（DLC）》三部核心作品，完整覆盖系列主线剧情。"
+     "v": "触乐怪话，每天胡侃和游戏有关的屁事、鬼事、新鲜事。"
     },
     {
      "t": "p",
-     "v": "语言支持方面，前两部作品仅支持日文，而《王国之心3+ Re Mind》则包含日、英、中、韩等多语言版本。预购玩家可获得48小时抢先游玩资格，以及《王国之心3》专属特典“午夜蓝”键刃。"
+     "v": "我家有两只猫，一只猫叫拖（托）帕，另一只叫橘子，合在一起就叫“托橘之家”。很长一段时间，这四个字取代了“蓝莓果皮”这样的滑稽称呼，成为了我所玩游戏家园岛的热门称呼。而就在最近，六一节的前夕，托帕离开了。"
+    },
+    {
+     "t": "img",
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-10%2F5886a292bf539ba9.jpg%3FimageView2%2F2%2Fw%2F700"
     },
     {
      "t": "p",
-     "v": "官方同时提醒，套装内的游戏也可单独购买，玩家需注意避免重复购买。"
+     "v": "在最近一次送托帕去医院时，医生对我们说：“它这种情况很危险。”接着，她就递来了一份需要家人签署的病危通知书。我有些不以为意，毕竟从2025年12月托帕确诊糖尿病后，这样的通知书，我大概已经签了四份。原因大多是高血糖导致的电离子紊乱、酮酸中毒。每次进医院前，它一定会盯着装水的碗一动不动。进医院后，托帕会偶尔低温、低血压、呼吸急促，但最后总是能化险为夷，再变为“野人”状态。"
     },
     {
      "t": "p",
-     "v": "游戏截图："
+     "v": "“你要相信中华田园猫的生命力。”家人总这么说。但这次有些不同，5月31日下午，它的双眼开始涣散，晚上就躺上了手术台。"
+    },
+    {
+     "t": "p",
+     "v": "时间总在飞速流逝，和生命流逝的速度一样快。我到医院时，托帕的肚子上夹有检测仪，口腔内塞着氧气管，腹腔在急剧膨胀和收缩着，一旁的呼吸泵也随着呼吸上下起伏。后来，当我们希望让它不要那么痛苦时，这些塑料管与金属仪器被一点点撤离。再后来，托帕离开了，它的脑袋垂了下去，身体变得很软，像突然失去弹性的泡泡糖，没有了支撑。但它的身体依旧温热。"
+    },
+    {
+     "t": "p",
+     "v": "整个过程就像梦一样。来不及做准备，情绪与理智也很难协调，毕竟，在能够划上句号前，还需要做各种决定（谢谢小王老师），比如为托帕安排它的去处。我想起了很久以前爷爷去世前的深夜和清晨，那时，长辈们也在病房里讨论着爷爷的归宿。似乎大家都不难过，一切都那么井井有条。"
+    },
+    {
+     "t": "p",
+     "v": "想了想，我决定将托帕留在家中。在宠物医院的推荐下，第二天下午带托帕去宠物殡葬处火化。纪念馆位于郊区，坐了一小时车，一栋伫立于农田旁的纯白色建筑出现在眼前。托帕从箱子内被抱出，放在桌上，开始由善终师为它梳理毛发。托帕在放有冰袋的箱子里待了一晚上，眼部肌肉有些歪斜，无论怎么整理都无法恢复以前那样可爱的模样。一束光从屋顶照下来，洒在它的肚子上，恍惚间看见那里好像因呼吸而起伏着。"
     },
     {
      "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101920306602.jpg"
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-10%2F4136a292c1767f0d.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "在告别仪式中，托帕身上盖着毯子，它的背后放有一些假花。善终师告诉我们，可以在这个空间里为小猫写一封信。我头脑发木地写了很长一段话，接着来到托帕身旁，跟随一份“告别指南”的指引开始在脑袋里搜索、保存它的记忆。像是它的名字来源于它最初被放在拖把产品的盒子中，它最喜欢玩的激光灯游戏。我们待了很长时间，以至于工作人员催促了两次。"
+    },
+    {
+     "t": "p",
+     "v": "告别仪式后，托帕被放在推车上，送进了布置为火箭的火化间，门再缓缓落下来。当天天气很好，阳光将世界照得很明亮。一层玻璃门隔开了死亡与声响，也隔开了高温，我们开始相信它真的在乘坐火箭，出发前往喵星，整段旅程需要30分钟，我们挥手向它道别。但有一瞬间，我又回过神来，心想，小动物或许不懂这些，它只是每天专心地睡觉、吃饭、晒太阳和玩耍。我会不会为它的离开赋予太多自以为是的情绪？"
     },
     {
      "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101920353317.jpg"
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-10%2F1466a292c31272dc.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "我提醒自己不要太沉浸其中，说到底，这或许只是一场安慰自己的送别仪式。当我带着托帕离开时，它已经在一个白瓷罐中，现在被放在家里的拐角处，我在上面贴了一张“保龄球状汤姆“的贴纸。"
+    },
+    {
+     "t": "p",
+     "v": "一个星期过去，到了托帕的“头七”。很喜欢托帕的医院护士突然加了我的微信，她说，她请朋友为托帕用塔罗牌占卜，托帕抱怨吃的太少了。于是，我在白瓷罐前放了一个罐头，橘子过来舔了舔。护士说，女巫通过塔罗牌听到托帕说，这是“臭罐头”。罐头是托帕生病控血糖吃的，之前吃了太多。我很无奈地放了另一种它不能吃的罐头，橘子又过来舔了舔。护士告诉我：“女巫感觉连接断开了，现在应该在你那里。”"
+    },
+    {
+     "t": "p",
+     "v": "后来护士对我说，托帕告诉我们不要太想念它，至少有弟弟陪我们。接着托帕又说：“别太宠弟弟，我吃醋了，我正在抢名额，抢到了就回来了。”"
     },
     {
      "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101920396680.jpg"
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-10%2F7696a292c3ea50f9.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "“托帕现在正在喵星称王称霸。”护士说。我很感激她说的这些话，这些真真假假的话，如果愿意相信，也有一些念想。它们带给我一种奇妙的感觉，托帕的确正在准备回到拖橘之家，而托橘之家也会一直存在。"
     },
     {
      "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101920437911.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101920471777.jpg"
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-10%2F6726a292c5617614.jpg%3FimageView2%2F2%2Fw%2F700"
     }
    ]
   },
   {
-   "id": 6,
+   "id": 40,
    "category": "业界",
-   "title": "情趣十足！蒂法睡美人等身人偶身材太顶 姿势任意摆",
-   "summary": "近日，德国的等身真人偶品牌Game Lady Doll推出了一款以蒂法为原型打造的等身人偶——“Tifa Sex Doll 167CM D Cup”。",
-   "source": "游民星空",
-   "url": "https://www.gamersky.com/news/202606/2154735.shtml",
-   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101902062514.jpg",
+   "title": "不停服还是推出陪伴版？游戏“体面离开”有多难",
+   "summary": "最近几年，我们见证了大量游戏的集体死亡。光是2024年，就有超过114款国产游戏停运或停服，其中过半运营时间不足两年。 不仅是中小厂承担着巨大的停运风险，大厂也采取了明显的收缩策略。2025年1月，网易对旗下游戏进行了大",
+   "source": "触乐",
+   "url": "http://www.chuapp.com/article/291410.html",
+   "image": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-10%2F4566a28c8d99a87e.jpg%3FimageView2%2F2%2Fw%2F700",
    "isVideo": false,
-   "ts": 1781089380000,
+   "ts": 1781088143000,
    "content": [
     {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101901263408.png"
+     "t": "p",
+     "v": "最近几年，我们见证了大量游戏的集体死亡。光是2024年，就有超过114款国产游戏停运或停服，其中过半运营时间不足两年。"
     },
     {
      "t": "p",
-     "v": "近日，德国的等身真人偶品牌Game Lady Doll推出了一款以蒂法为原型打造的等身人偶——“Tifa Sex Doll 167CM D Cup”。"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101901284032.png"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101901309218.png"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101901315950.png"
+     "v": "不仅是中小厂承担着巨大的停运风险，大厂也采取了明显的收缩策略。2025年1月，网易对旗下游戏进行了大刀阔斧的“合并同类项”，停运了5款游戏；腾讯也在自己被长期视为“不擅长”的二游赛道放弃了广受瞩目的新游。"
     },
     {
      "t": "p",
-     "v": "据介绍，该品牌长期以高度还原热门游戏女性角色而受到关注，其产品多采用TPE（热塑性弹性体）或硅胶材质制作，力求呈现接近真实肌肤的触感与外观效果。"
+     "v": "但如何处理这些“死去”的游戏，对厂商和玩家来说都是一桩需要解决的难题。厂商面临着“断腕”的后续成本问题，而玩家则需要安置自己在长线运营的游戏中所投入的金钱与感情。在这种情况下，“停运不停服”或者推出备用方案，似乎就成为了一种更适合双方的中间选择。"
     },
     {
      "t": "p",
-     "v": "官方称在进入生产流程前，模型会在制模阶段反复精修打磨。以纯手工方式1:1复刻角色的妆容与标志性服饰。采用优质食品级硅胶，塑造出柔软逼真的肌肤质感，带来真实的视觉与触觉体验。"
+     "v": "所谓“停运不停服”，通常指制作团队停止内容更新，也不再接受新玩家注册和充值，仅保持或干脆停止日常的运营与维护工作。一些游戏会将玩家集中到少量服务器中，另一些游戏则会关闭服务器，推出特别的离线版本，让想要继续游玩的玩家仍然能留个念想。每个游戏的具体措施不同，但最终都在试图达成一种“体面的告别”。"
+    },
+    {
+     "t": "p",
+     "v": "■ 难以告别"
+    },
+    {
+     "t": "p",
+     "v": "《云裳羽衣》的“中止停服”很可能是“停运不停服”这类处理方法的一个先例。《云裳羽衣》是2018年6月正式上线的一款3D恋爱换装手游，于2022年2月20日宣布停止运营。触乐曾经报道过 围绕这个游戏展开的一系列风波 。当时，最大的争议点之一在于，因为运营方决定在停服后删除游戏的所有数据，让许多养了4年“虚拟女儿”的玩家根本无法接受。"
+    },
+    {
+     "t": "p",
+     "v": "对停服和删除数据不满的玩家一度将游戏运营方投诉到了中国消费者协会，并在当年3月18日真的引起了消费者协会的关注和介入。停服公告发出6天后，游戏运营方宣布“中止停服”，让玩家可以继续上线做日常任务，只是不再更新，对于出现的各种Bug也不再维护。这是国内首例手游玩家抗争关服成功的例子。"
+    },
+    {
+     "t": "p",
+     "v": "2023年，运营2年的古风乙女手游《掌门太忙》的玩家以此为榜样，同样使得项目组“中止停服”。然而，在暂时性胜利维持了3年后，《云裳羽衣》最终以代理协议到期为由，于2025年7月19日正式停服。"
     },
     {
      "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101901175836.png"
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-10%2F4566a28c8d99a87e.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "《食物语》也是一出玩家针对停服维权的著名案例。2019年上线时，它作为市面上少见的美食拟人女性向产品一度登顶iOS免费榜，首月流水破亿，可谓成绩斐然。但2024年6月，因为代理协议到期和项目营收不佳等原因，它宣告停运停服，同时删除数据。"
+    },
+    {
+     "t": "p",
+     "v": "这同样引起了玩家的强烈反弹。他们的抗争取得了阶段性胜利——《食物语》的开发商最终推出了一个免费的离线陪伴版，代价仍然是无法保留原有数据。"
+    },
+    {
+     "t": "p",
+     "v": "只不过，《食物语》这个IP在许多人心目中仍然活着。官方账号仍然会偶尔更新内容，尤其是在周年庆等节点，内容多为周边上新和发送美食小日常。玩家们即使心存遗憾和不满，也仍然会怀念那个《食物语》在女性向市场大放异彩的时代，甚至会想象，如果它当初活了下来，现在的女性向产品生态会不会都不一样？"
+    },
+    {
+     "t": "p",
+     "v": "《摇光录：乱世公主》也经历了从“停运”到“停服”的拉扯。2024年12月，项目组宣布将停止更新；2025年1月，游戏彻底停服，此时距离游戏公测不满两年。当时这件事也激起了大量玩家、尤其是重氪玩家的维权声浪，游戏目前也以保留数据、离线版的形式存续。但离线版因为阉割了太多功能，“相当于只剩下剧情播片了”，也让一些玩家颇为不满。"
+    },
+    {
+     "t": "p",
+     "v": "而一些运营时间较短的新游戏，退场得相对来说更加顺畅。《白夜极光》作为一款因美术“出圈”、被寄予厚望的二游，在运营不满两年后于2025年1月24日停止运营。停服的同时，项目组推出了离线特别版本，保留全部用户数据和基础功能。在这个过程中，绝大多数言论都是对这个游戏的惋惜，没有引发玩家太多的维权倾向和不满。"
+    },
+    {
+     "t": "p",
+     "v": "在差不多时间宣布停运的《新月同行》的命运类似。作为一款同样在公测前被看好的新怪谈题材二游，《新月同行》仅上线14个月便告停更。在此期间，项目组尽量“体面告别”，承诺更新完最后一个大版本剧情。停更过后，游戏服务器保留，玩家仍可正常登录。"
     },
     {
      "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101901183836.png"
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-10%2F8726a28c96e92a87.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "还有一些大厂、中厂里资历比较老的游戏，产品接近生命周期的末端，也会采用“停运不停服”的方式作为“缓慢死亡”的过渡，同时也能一定程度上把老玩家引流到类似的新产品中。并且，因为这些厂商大多资源比较充裕，较少出现小厂那样经历突然腰斩或者项目组解散的事情，所以游戏在停运后往往能保持最低限度的可用性。"
+    },
+    {
+     "t": "p",
+     "v": "比如，《阴阳师：百闻牌》在运营6年之后宣布，于2026年1月1日之后停止新内容开发。但游戏服务器仍然保持开启，玩家可以正常登录游戏。只是没有新内容之后，玩家的活跃度肯定会下跌，玩家们也时刻担忧着游戏会彻底关服的那一天。硬核动作武侠手游《流星群侠传》在运营7年后，从2025年3月24日起停止新内容开发，关闭部分服务器；同时官方推出福利，鼓励玩家到同一品类的《永劫无间》中游玩。"
+    },
+    {
+     "t": "p",
+     "v": "《暖暖环游世界》在2013年上线，从2019年11月27起宣布停止更新，但服务器保留，限时活动循环复刻，玩家仍然可以登录游玩。虽然老玩家常常称自己“因为心痛不想打开游戏”，或者称这个游戏已经成为“时代的眼泪”，但“暖暖”这个IP仍然非常活跃。"
     },
     {
      "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101901185907.png"
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-10%2F6086a28cacfb2916.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "■ 争论不休的数字消费权益"
+    },
+    {
+     "t": "p",
+     "v": "如果从一个更直接的方面去看，游戏停运后是否停服、停服后是否保留离线版本，很多时候是玩家与厂商针对投入的沉没成本进行拉扯的过程。这中间牵扯到很多老生常谈的问题，比如围绕虚拟产品消费后的具体归属、如何维护消费者权益等等。"
+    },
+    {
+     "t": "p",
+     "v": "对厂商来说，摆在天平一端的是无力或不愿意继续承担的运营成本；对于玩家来说，则是已经花钱购买的“服务”或“虚拟商品”在停运停服后突然蒸发。一些因为不可抗力、资金链出问题等原因突然“被砍”的游戏，尤其容易陷入这样的漩涡。"
+    },
+    {
+     "t": "p",
+     "v": "目前国内对游戏的监管要求是，“网络游戏运营企业终止运营网络游戏，或者网络游戏运营权发生转移的，应当提前60日予以公告。网络游戏用户尚未使用的网络游戏虚拟货币及尚未失效的游戏服务，应当按用户购买时的比例，以法定货币退还用户或者用户接受的其他方式进行退换。……网络游戏因停止服务接入、技术故障等网络游戏运营企业自身原因连续中断服务超过30日的，视为终止。”"
+    },
+    {
+     "t": "p",
+     "v": "现在大部分厂商都能做到“提前60日通知”，但游戏内虚拟资产“以用户能接受的方式进行退换”往往引起争议。《云裳羽衣》和《摇光录：乱世公主》当年在宣布停服后引起如此巨大的维权声浪，很大程度上也在于此。"
+    },
+    {
+     "t": "p",
+     "v": "比如，当年《云裳羽衣》的玩家们维权的重点除了希望游戏不删除数据之外，还针对很多当时的运营和补偿方案里被视为“不合规”的地方。比如，在通知充值停止的2天前游戏还在复刻大活动，许多玩家已经课金；新购买的皮肤没有任何补偿；游戏内货币不能退款，只能兑换成其他竞品换装游戏的礼包等等。"
+    },
+    {
+     "t": "p",
+     "v": "《摇光录：乱世公主》当初则公布过两套退款方案。第一种是仅退代币余额，账号不受影响，之后可以登录离线版；另一种则是除了退余额外，也可对曾购买的礼包、皮肤、月卡等进行折价退款。但因为回收道具会导致游戏数据异常，游戏账号将无法继续使用。对游戏中的重课玩家来说，这些方案都会造成巨大损失；之后，因为离线版几乎只剩下看剧情的播片功能，玩家更加不满。但此时游戏的项目组已经解散，玩家线下维权也没有结果。"
+    },
+    {
+     "t": "img",
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-10%2F8036a28c8cc3e6bb.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "除了国内玩家，近期，海外玩家也维权动作频繁。2024年，育碧宣布旗下运营10年的游戏《飙酷车神》停服后，直接把游戏从玩家的库里移除了。这引起了极大的负面舆论，因为这意味着哪怕是买断制游戏，玩家在付费后仍然不等于拥有游戏，只是购买了对游戏内容的临时访问权。厂商随时可以单方面撤销这种访问权，从消费者角度来说不可接受。"
+    },
+    {
+     "t": "p",
+     "v": "甚至有玩家为此创立了一项名为“停止杀死游戏”（Stop Killing Games）的欧盟公民倡议。倡议希望欧盟委员会能通过立法，禁止游戏发行商在未提供可玩版本（通常指离线模式或私服）的情况下禁用游戏访问权限。"
+    },
+    {
+     "t": "p",
+     "v": "《我的世界》创始人Notch甚至在相关讨论中提出了一个非常激进的观点：“如果买游戏不等于拥有，那么盗版就不算盗窃。”"
+    },
+    {
+     "t": "img",
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-10%2F2536a28c8e1865c9.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "目前最新的情况是，2026年5月底，美国加利福尼亚州议会通过了《Protect Our Games Act》（保护我们的游戏法案）第一阶段投票。法案的诉求和国内比较类似，包括游戏停服需提前至少60天通知、提供替代游玩方式或者向玩家退款。"
+    },
+    {
+     "t": "p",
+     "v": "只不过，每个游戏的商业逻辑和付费模式都不一样，这类大面上的规定可能仍然很难解决具体的退款方案无法获得玩家认同的问题。“当我在游戏里花钱时，到底是在租赁服务还是购买数字资产”这个根本问题也仍然没有得到法律意义上的回答。"
+    },
+    {
+     "t": "p",
+     "v": "考虑到国内游戏大多数为必须全程联网的长线服务型游戏，“租赁服务”似乎是更常见的说法。在游戏除了游玩本身，也越来越和玩家们的回忆、情感投入乃至社交关系绑定在一起的时代，如何体面地离开确实是一个问题。这些“停运不停服”或者留下陪伴版的游戏，作为一个又一个先例，仍然在探索最合适的方式。"
     }
    ]
   },
   {
-   "id": 7,
-   "category": "主机",
-   "title": "任天堂也在强调独占！索尼老任大独占时代回来了",
-   "summary": "",
-   "source": "游民星空",
-   "url": "https://www.gamersky.com/news/202606/2154733.shtml",
-   "image": "https://img1b.gamersky.com/users/recommend/2026/06/10/origin_1912903_2146370.jpg",
-   "isVideo": false,
-   "ts": 1781089080000,
-   "content": null
-  },
-  {
-   "id": 8,
-   "category": "业界",
-   "title": "小岛秀夫与杰夫“复婚”！共饮香槟全网庆祝",
-   "summary": "游戏制作人小岛秀夫与TGA创始人杰夫·基斯利终于同框",
-   "source": "游民星空",
-   "url": "https://www.gamersky.com/news/202606/2154599.shtml",
-   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101744462922.jpg",
-   "isVideo": false,
-   "ts": 1781084760000,
-   "content": [
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101741517758.png"
-    },
-    {
-     "t": "p",
-     "v": "在长时间的“冷战”传闻后，游戏制作人小岛秀夫与TGA创始人杰夫·基斯利终于同框，二人举杯共饮的照片在社交平台迅速刷屏，被粉丝戏称为“年度最佳复合”。"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101741521748.png"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101744167758.png"
-    },
-    {
-     "t": "p",
-     "v": "事件的起因可以追溯到2025年12月的TGA颁奖典礼。小岛秀夫执导的《死亡搁浅2》入围7项提名，最终颗粒无收，而黑马《光与影：33号远征队》横扫多项大奖。此后，小岛与杰夫在社交媒体上几乎再无互动，小岛缺席了2026年的夏日游戏节，杰夫多次在小岛推文下留言均未获回复。海外玩家社区由此衍生出大量“离婚”“冷战”的梗图与调侃。"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101744186180.png"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101744198801.png"
-    },
-    {
-     "t": "p",
-     "v": "然而，随着这张香槟合照的发布，一切“不和”传闻似乎烟消云散。评论区瞬间涌入数千条“恭喜复婚”“最甜爱情故事”“情侣重聚”等留言。有网友调侃：“他们不是情侣，胜似情侣。”也有粉丝感叹：“小岛真的回来了，最好的爱情故事。”"
-    }
-   ]
-  },
-  {
-   "id": 9,
-   "category": "业界",
-   "title": "Does That Space Marine Have an Extra Finger? Yes, but Games Workshop Insists It's Not AI",
-   "summary": "Games Workshop has issued an official response denying the use of AI after fans spotted a Space Marine with an",
-   "source": "IGN",
-   "url": "https://www.ign.com/articles/does-that-space-marine-have-an-extra-finger-yes-but-games-workshop-insists-its-not-ai",
-   "image": "https://assets-prd.ignimgs.com/2026/06/10/space-marine-finger-1781082245310.jpg",
-   "isVideo": false,
-   "ts": 1781082828000,
-   "content": null
-  },
-  {
-   "id": 10,
-   "category": "业界",
-   "title": "Capcom Responds to Concern the Onimusha: Way of the Sword Demo Feels \"Too Easy\"",
-   "summary": "The final game will be tougher, clarifies producer Akihito Kadowaki.",
-   "source": "IGN",
-   "url": "https://www.ign.com/articles/capcom-responds-to-concern-the-onimusha-way-of-the-sword-demo-feels-too-easy",
-   "image": "https://assets-prd.ignimgs.com/2025/08/21/onimusha-oo-1755786734745.png",
-   "isVideo": false,
-   "ts": 1781076901000,
-   "content": null
-  },
-  {
-   "id": 11,
+   "id": 41,
    "category": "业界",
    "title": "零售商页面显示：《王国之心 4》或将于 2027 年发售",
    "summary": "据TheGamer报道，澳大利亚两家零售商为即将推出的《王国之心 1-3 合集》编写的产品描述中，提到该合集可以让玩家“在 2027 年《王国之心 4》发售前”体验整个系列。 不过，这里也提醒读者，在 Square En",
@@ -340,7 +1678,7 @@
    ]
   },
   {
-   "id": 12,
+   "id": 42,
    "category": "主机",
    "title": "《王国之心》系列Nintendo Switch云版本已于6月9日停售",
    "summary": "Square Enix宣布，《王国之心》系列Nintendo Switch Cloud Version已于2026年6月9日23:59停止销售。已购买该云版本的用户仍可在2027年6月9日23:59之前继续游玩。 同时，",
@@ -389,7 +1727,7 @@
    ]
   },
   {
-   "id": 13,
+   "id": 43,
    "category": "业界",
    "title": "DC巨制《超级少女》发布中国独家海报 史诗对决引爆暑期大银幕",
    "summary": "DC影业全新力作《超级少女》（Supergirl）即将于6月26日在中国内地与北美同步上映，自官宣定档以来，全网热度一路走高，观众期待值持续升温，今日影片特别发布中国独家海报，五大角色集结亮相，带观众提前解锁高燃热血的超",
@@ -426,7 +1764,7 @@
    ]
   },
   {
-   "id": 14,
+   "id": 44,
    "category": "业界",
    "title": "《BanG Dream! Our Notes》6月26日举办事前登录纪念特番，将公开新情报",
    "summary": "2026年6月10日，Bushiroad宣布将于2026年6月26日播出“Our Notes 事前登录开始纪念特番”。 该特番将邀请《BanG Dream! Our Notes》中登场的全5支乐队的声优参与，公布游戏新情",
@@ -463,7 +1801,7 @@
    ]
   },
   {
-   "id": 15,
+   "id": 45,
    "category": "主机",
    "title": "《卧龙：苍天陨落 完全版》Switch2版将于2026年9月3日发售",
    "summary": "光荣特库摩于2026年6月10日宣布，《卧龙：苍天陨落 完全版》的Nintendo Switch 2版本将于2026年9月3日发售，售价7480日元（含税）。本作由Team NINJA开发，是一款暗黑三国动作RPG。 <",
@@ -484,7 +1822,7 @@
    ]
   },
   {
-   "id": 16,
+   "id": 46,
    "category": "PC",
    "title": "《虚空潜者：逃出深渊》确认参加 Steam 夏季新品节，将带来全新试玩内容",
    "summary": "由 STUDIO NEMO 开发、Boltray Games发行的《虚空潜者：逃出深渊》（VOID DIVER: Escape from the Abyss）将参加 2026 Steam 夏季新品节，并提前在 2026 ",
@@ -541,7 +1879,7 @@
    ]
   },
   {
-   "id": 17,
+   "id": 47,
    "category": "主机",
    "title": "刺绣风中世纪叙事新作《红鹿旅馆》确认将于7月21日正式发售",
    "summary": "中国独立游戏发行商 Aurakenn Games携 捷克独立游戏团队 Attu Games 今日正式宣布，旗下新作《红鹿旅馆（Scarlet Deer Inn）》将于2026年7月21日正式登陆 Steam 平台，主机版",
@@ -630,79 +1968,307 @@
    ]
   },
   {
-   "id": 18,
-   "category": "业界",
-   "title": "Fire Emblem: Fortune's Weave Sets Standard Physical Price at $80",
-   "summary": "A launch date for Fire Emblem: Fortune's Weave has finally been revealed – and so has its USD $80 price tag.",
-   "source": "IGN",
-   "url": "https://www.ign.com/articles/fire-emblem-fortunes-weave-sets-standard-physical-price-at-80",
-   "image": "https://assets-prd.ignimgs.com/2026/06/09/fire-emblem-fortunes-weave-price-1781047441209.png",
-   "isVideo": false,
-   "ts": 1781057411000,
-   "content": null
-  },
-  {
-   "id": 19,
-   "category": "业界",
-   "title": "Deltarune Chapter 5 Release Date Revealed as Toby Fox Offers Promising Update for the Future",
-   "summary": "Deltarune Chapter 5 finally has a release date, and Undertale mastermind Toby Fox has used the opportunity to ",
-   "source": "IGN",
-   "url": "https://www.ign.com/articles/deltarune-chapter-5-release-date-revealed-as-toby-fox-offers-promising-update-for-the-future",
-   "image": "https://assets-prd.ignimgs.com/2026/06/09/deltarune-chapter-5-key-art-by-temmie-1781039360555.png",
-   "isVideo": false,
-   "ts": 1781041330000,
-   "content": null
-  },
-  {
-   "id": 20,
+   "id": 48,
    "category": "主机",
-   "title": "If You’re Not Ready For A Showcase, Nintendo, Don’t Force It",
-   "summary": "Nintendo's decision to host a Nintendo Direct this June befuddles me. The virtual showcase wasn't terrible, bu",
-   "source": "GameSpot",
-   "url": "https://www.gamespot.com/articles/if-youre-not-ready-for-a-showcase-nintendo-dont-force-it/",
-   "image": "https://www.gamespot.com/wp-content/uploads/2026/06/nintendo.png?w=300",
+   "title": "《轨道双子星》将于2026年9月3日正式登陆Nintendo Switch 2",
+   "summary": "正如在今日的任天堂直面会中所公布的，由位于东京的独立游戏开发团队 Shapefarm 倾力打造、Kepler Interactive 发行的复古动漫风双人合作冒险游戏《轨道双子星》，将于 2026年9月3日正式发售 ，并",
+   "source": "机核",
+   "url": "https://www.gcores.com/articles/215689",
+   "image": "https://image.gcores.com/175d349a07d7dc16ff2f855279700dbf-2450-1360.jpg?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
    "isVideo": false,
-   "ts": 1781036596000,
-   "content": null
+   "ts": 1781062946000,
+   "content": [
+    {
+     "t": "p",
+     "v": "正如在今日的任天堂直面会中所公布的，由位于东京的独立游戏开发团队 Shapefarm 倾力打造、Kepler Interactive 发行的复古动漫风双人合作冒险游戏《轨道双子星》，将于2026年9月3日正式发售，并独占登陆 Nintendo Switch™ 2。"
+    },
+    {
+     "t": "p",
+     "v": "此外，玩家从即日起即可预购该游戏。玩家可以选择购买游戏标准版，或是包含独占特典的高级豪华版。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/a37d987b16937e8b579701814bdf3e31-2510-1406.jpg"
+    },
+    {
+     "t": "p",
+     "v": "《轨道双子星》"
+    },
+    {
+     "t": "p",
+     "v": "内含："
+    },
+    {
+     "t": "p",
+     "v": "《轨道双子星》游戏本体"
+    },
+    {
+     "t": "p",
+     "v": "《轨道双子星》—— 豪华版"
+    },
+    {
+     "t": "p",
+     "v": "内含："
+    },
+    {
+     "t": "p",
+     "v": "《轨道双子星》游戏本体"
+    },
+    {
+     "t": "p",
+     "v": "数字画册：收录了大量充满复古动漫灵感的原创概念画与插图"
+    },
+    {
+     "t": "p",
+     "v": "数字原声带"
+    },
+    {
+     "t": "p",
+     "v": "两套角色专属外观（真希和尾村各一套）"
+    },
+    {
+     "t": "p",
+     "v": "两套飞船独特涂装：用于自定义冲破“风暴墙”之后的冒险旅程"
+    },
+    {
+     "t": "p",
+     "v": "*可通过游戏主菜单查看"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/11cd7874baf5f503f2f771111d51d5bd-2450-1360.jpg"
+    },
+    {
+     "t": "p",
+     "v": "在今年晚些时候，粉丝们还可以期待《轨道双子星》带来的全球语音本地化支持，包括：简体中文、英语、日语、法语、西班牙语、拉美西班牙语、德语以及巴西葡萄牙语。关于本作的国际配音阵容相关信息将于稍后公布。"
+    },
+    {
+     "t": "p",
+     "v": "《轨道双子星》将于9月3日独占登陆Nintendo Switch™2，并于今日起开启预购。"
+    }
+   ]
   },
   {
-   "id": 21,
+   "id": 49,
    "category": "主机",
-   "title": "Kingdom Hearts Cloud Versions Shut Down Today, And You’ll Have To Buy New Versions To Keep Playing",
-   "summary": "Prior to this week, the only options that Switch owners had to play the Kingdom Hearts franchise was via the c",
-   "source": "GameSpot",
-   "url": "https://www.gamespot.com/articles/kingdom-hearts-cloud-versions-shut-down-today-and-youll-have-to-buy-new-versions-to-keep-playing/",
-   "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Kingdom-Hearts.jpg?w=300",
+   "title": "《吸血鬼幸存者》制作团队新作《咒术回战 激斗：幸存潮汐》正式公布",
+   "summary": "集英社游戏宣布，由 poncle（英国）开发、以《咒术回战》的世界为舞台的生存大逃杀游戏《咒术回战 激斗：幸存潮汐》正式公开。本作于6月9日播出的“Nintendo Direct 2026.6.9”节目中，通过游戏影像的",
+   "source": "机核",
+   "url": "https://www.gcores.com/articles/215687",
+   "image": "https://image.gcores.com/d620a7c5df0e3e9ada23f4d6b48c62ad-2456-1372.jpg?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
    "isVideo": false,
-   "ts": 1781033509000,
-   "content": null
+   "ts": 1781061968000,
+   "content": [
+    {
+     "t": "p",
+     "v": "集英社游戏宣布，由 poncle（英国）开发、以《咒术回战》的世界为舞台的生存大逃杀游戏《咒术回战 激斗：幸存潮汐》正式公开。本作于6月9日播出的“Nintendo Direct 2026.6.9”节目中，通过游戏影像的介绍视频首次亮相。"
+    },
+    {
+     "t": "p",
+     "v": "此外，伴随本作的发表，同步公开了游戏的预告片："
+    },
+    {
+     "t": "p",
+     "v": "本作中，玩家将化身《咒术回战》的登场角色，与众多咒灵和咒术师对手们展开竞争。"
+    },
+    {
+     "t": "p",
+     "v": "目标是与咒灵战斗，通过战斗提升实力，并在与对手的竞争中胜利到最后。"
+    },
+    {
+     "t": "p",
+     "v": "预定于 2026 年在 Nintendo Switch™2、PlayStation®5、Xbox X|S 以及 Steam® 平台发售。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/7682757b8bd1ad9ba9697256d4d512df-2456-1372.jpg"
+    },
+    {
+     "t": "h",
+     "v": "祓除、竞争、通向巅峰"
+    },
+    {
+     "t": "p",
+     "v": "《咒术回战 激斗：幸存潮汐》是一款大逃杀游戏，玩家将化身《咒术回战》的登场角色，与众多咒灵和咒术师对手们展开竞争。"
+    },
+    {
+     "t": "p",
+     "v": "与咒灵战斗，通过战斗提升实力，在与对手的竞争中胜利到最后吧。"
+    },
+    {
+     "t": "p",
+     "v": "※在线游戏最多可进行8人对战。包含单人游戏模式。"
+    },
+    {
+     "t": "h",
+     "v": "赚取分数，超越对手！"
+    },
+    {
+     "t": "p",
+     "v": "打倒铺天盖地袭来的咒灵，赚取分数，和对手进行激烈争夺！"
+    },
+    {
+     "t": "p",
+     "v": "操作简单，只需要移动角色即可。"
+    },
+    {
+     "t": "p",
+     "v": "自动攻击，命中并打倒敌人就能累计分数。"
+    },
+    {
+     "t": "p",
+     "v": "如何移动、如何与敌人周旋，以及运用能改变游戏走向的“额外规则”，是获得胜利的关键。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/4c1b7df1602132a472df1463b74067e1-1342-738.jpg"
+    },
+    {
+     "t": "p",
+     "v": "每获得100分，就能发动一次“额外规则”。"
+    },
+    {
+     "t": "p",
+     "v": "从其他玩家处夺取分数，或是妨碍对手，提升自己的排名吧。"
+    },
+    {
+     "t": "p",
+     "v": "最后将由排名前二的玩家进行1对1的决斗——只有一个人能胜利到最后。最后将由排名前二的玩家进行1对1的决斗——只有一个人能胜利到最后。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/fd5d6b1479875ca7ba5b5756addb59a5-1340-734.jpg"
+    },
+    {
+     "t": "h",
+     "v": "丰富多彩的《咒术回战》角色！参战角色20名以上！"
+    },
+    {
+     "t": "p",
+     "v": "可操作角色共有20名以上。"
+    },
+    {
+     "t": "p",
+     "v": "每名角色都有各自的专属技能和战斗风格。完成特定条件解锁角色，找到适合自己的角色吧。"
+    },
+    {
+     "t": "p",
+     "v": "另外，战斗中还会出现强大的首领。"
+    },
+    {
+     "t": "p",
+     "v": "从咒术师、诅咒师、咒灵的大混战中脱颖而出吧！"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/7bbb39c931b84cef8ca22987feee4bf2-2460-1378.jpg"
+    },
+    {
+     "t": "h",
+     "v": "用专属必杀技赢过对手！"
+    },
+    {
+     "t": "p",
+     "v": "计量槽随着战斗积攒至满格后，就可以发动威力巨大的技能。"
+    },
+    {
+     "t": "p",
+     "v": "例如极具代表性的《咒术回战》独有的“领域展开”“黑闪”，就是角色的专属必杀技。"
+    },
+    {
+     "t": "p",
+     "v": "并且，许多必杀技可以对附近玩家进行干扰，甚至在必杀技发动时间内能攻击范围内的玩家。看准时机发动必杀技吧！"
+    },
+    {
+     "t": "h",
+     "v": "你的选择决定一切，千变万化的技能组合"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/79747992ce344ef8e6915173cdf6f7c3-1428-786.jpg"
+    },
+    {
+     "t": "p",
+     "v": "打倒咒灵，拾取掉落的经验，可以升级角色。"
+    },
+    {
+     "t": "p",
+     "v": "升级时，将随机出现数个技能，你可以自由选择。"
+    },
+    {
+     "t": "p",
+     "v": "既可以强化已有的技能，也可以获得新的技能。"
+    },
+    {
+     "t": "p",
+     "v": "每次游玩时，随机出现的技能都会不同。自由组合，构筑“最强”的技能搭配吧。"
+    }
+   ]
   },
   {
-   "id": 22,
-   "category": "业界",
-   "title": "Destiny 2 Player Count Soars Above Marathon’s Highest Ever As Guardians Log On For Final Update",
-   "summary": "The Monument of Triumph update is the final content update for Destiny 2 . When I first began playing the game",
-   "source": "GameSpot",
-   "url": "https://www.gamespot.com/articles/destiny-2-player-count-soars-above-marathons-highest-ever-as-guardians-log-on-for-final-update/",
-   "image": "https://www.gamespot.com/wp-content/uploads/2026/06/2024_Vespers_Host_Press_Kit_Locations_COMPRESSED_007.jpg?w=300",
+   "id": 50,
+   "category": "主机",
+   "title": "《龙之信条2》3.1版本更新上线，新增永久传送石等改动",
+   "summary": "卡普空现已面向 PlayStation 5 / Xbox Series X|S / Steam 平台推送《龙之信条2》3.1版本更新，此次更新聚焦多项游戏体验改进，为即将于 10 月推出的资料片《龙之信条2：黑暗觉者》做",
+   "source": "机核",
+   "url": "https://www.gcores.com/articles/215685",
+   "image": "https://image.gcores.com/963234f83d5b8fa9c026c6df640270df-2560-1440.jpg?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
    "isVideo": false,
-   "ts": 1781030984000,
-   "content": null
+   "ts": 1781059489000,
+   "content": [
+    {
+     "t": "p",
+     "v": "卡普空现已面向 PlayStation 5 / Xbox Series X|S / Steam 平台推送《龙之信条2》3.1版本更新，此次更新聚焦多项游戏体验改进，为即将于 10 月推出的资料片《龙之信条2：黑暗觉者》做准备。"
+    },
+    {
+     "t": "p",
+     "v": "本次更新的主要内容包括：新增永久传送石“永恒传送石”，在梅维、检查站休息镇和火山岛营地新增传送基石，为任务“怪物讨伐”增加传送基石奖励；新增牛车站点，缩短牛车打盹功能所需时间，延长牛车运营时段；降低非战斗状态下冲刺的体力消耗；调整部分探索装备属性等。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/22811da06e0c8c767d7992f5905ab225-2240-1114.jpg"
+    },
+    {
+     "t": "p",
+     "v": "此外，更新还增加了照片模式自由视角选项、头部防具显示开关、强化装备纹路显示开关等；新增随从“守护者”专长，可防止牛车遇袭；降低部分旅店住宿费和理发服务费；调整了部分道具价格，如油灯价格从 1000G 降至 800G，正常模式传送石价格从 10000G 降至 5000G等。"
+    },
+    {
+     "t": "p",
+     "v": "官方表示，第二次大型更新将于 8 月底推出，届时将带来性能改进和“动作调整”等内容。资料片《龙之信条2：黑暗觉者》将于 10 月 9 日正式发售。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/3a27add197be604abc9b63a2040fcd75-1920-1080.jpg"
+    }
+   ]
   },
   {
-   "id": 23,
-   "category": "业界",
-   "title": "I Didn’t Care About The New Star Fox Until I Found Out Who’s Making It",
-   "summary": "I never played much Star Fox as a kid. Save for maybe a few minutes here and there at a friend or cousin's hou",
-   "source": "GameSpot",
-   "url": "https://www.gamespot.com/articles/i-didnt-care-about-the-new-star-fox-until-i-found-out-whos-making-it/",
-   "image": "https://www.gamespot.com/wp-content/uploads/2026/06/NintendoSwitch2_StarFox_scrn_20.webp?w=300",
+   "id": 51,
+   "category": "手游",
+   "title": "《饥荒：联机版》移动版将于7月21日推出，iOS/Android版开启预注册",
+   "summary": "发行商 Playdigious 宣布，《饥荒：联机版》移动版将于7月21日登陆 iOS 和 Android 平台。目前游戏已在 App Store 和 Google Play 开启预注册。 本作是《饥荒》的独立多人扩展包",
+   "source": "机核",
+   "url": "https://www.gcores.com/articles/215683",
+   "image": "https://image.gcores.com/97249b4efeac2f36b8cb1ad924320d6f-1000-562.jpeg?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
    "isVideo": false,
-   "ts": 1781028924000,
-   "content": null
+   "ts": 1781056937000,
+   "content": [
+    {
+     "t": "p",
+     "v": "发行商 Playdigious 宣布，《饥荒：联机版》移动版将于7月21日登陆 iOS 和 Android 平台。目前游戏已在 App Store 和 Google Play 开启预注册。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/dfffdbb36795ee92c38e3c1ffea91679-802-720.jpg"
+    },
+    {
+     "t": "p",
+     "v": "本作是《饥荒》的独立多人扩展包，支持最多4人在线合作或本地联机。移动版针对触屏操作进行了界面优化，并支持云存档和控制器操作，方便玩家在不同设备间同步进度。《饥荒：联机版》原版于2016年在 PC 平台推出，此次移动版由发行商 Playdigious 负责移植。更多详情可查看商店页面。"
+    }
+   ]
   },
   {
-   "id": 24,
+   "id": 52,
    "category": "主机",
    "title": "主动标注“使用AI技术”，《疯狂出租车》新作仍然逃不过被指责的命运",
    "summary": "虽然如今AI技术已经逐渐被应用到不同种类的游戏中，也确实显现了它在开发效率提升上的作用，但如果从玩家的角度看，“AI”标签一旦和游戏联系到一块，依旧是负面印象居多。 6月7日在微软举办的Xbox Games Showca",
@@ -791,7 +2357,7 @@
    ]
   },
   {
-   "id": 25,
+   "id": 53,
    "category": "主机",
    "title": "初代NS发售9年后，任天堂因手柄缺陷被罚3500万欧元",
    "summary": "当地时间6月8日，法国竞争、消费与反欺诈总局（DGCCRF）宣布，任天堂欧洲公司因初代Nintendo Switch的Joy-Con手柄故障问题，被处以3500万欧元罚款。 该机构认为，任天堂未能充分告知消费者部分Joy",
@@ -852,7 +2418,7 @@
    ]
   },
   {
-   "id": 26,
+   "id": 54,
    "category": "业界",
    "title": "这几年最出圈的独立动画，死在了电影院里",
    "summary": "“我最初只是想做一部动画。” 2023年秋冬的时候，在B站或微博上很容易刷到一个\"认清现实\"的meme。画面里的小丑坐在人群中间，伴着交响乐背景一脸扭曲的表情，被迫接受了自己往后悲惨的命运。 后面你还能看到这段演出被做成",
@@ -1105,19 +2671,273 @@
    ]
   },
   {
-   "id": 27,
-   "category": "主机",
-   "title": "Dragon’s Dogma 2: Dark Arisen Lets You Explore The Snowy Region Of Norgan",
-   "summary": "Capcom and Nintendo have revealed Dragon's Dogma 2: Dark Arisen for Nintendo Switch 2, bringing the epic actio",
-   "source": "GameSpot",
-   "url": "https://www.gamespot.com/articles/dragons-dogma-2-dark-arisen-lets-you-explore-the-snowy-region-of-norgan/",
-   "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Screenshot-2026-06-09-151439.jpg?w=300",
+   "id": 55,
+   "category": "业界",
+   "title": "一名外派的摸鱼脱敏计划",
+   "summary": "故事从栗子毕业后找不到合适的工作、开始在大厂做驻场外派说起。 ■ 好学生的“滑铁卢” 我叫栗子。2024年大学毕业时，我没想到找一份工作会这么难。我投了几百份简历，绝大多数都石沉大海。我也拿到过一些机会，但每次对方一看是",
+   "source": "触乐",
+   "url": "http://www.chuapp.com/article/291402.html",
+   "image": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-06%2F3926a23a88b61b4d.jpg%3FimageView2%2F2%2Fw%2F700",
    "isVideo": false,
-   "ts": 1781016280000,
-   "content": null
+   "ts": 1780997458000,
+   "content": [
+    {
+     "t": "p",
+     "v": "故事从栗子毕业后找不到合适的工作、开始在大厂做驻场外派说起。"
+    },
+    {
+     "t": "p",
+     "v": "■ 好学生的“滑铁卢”"
+    },
+    {
+     "t": "p",
+     "v": "我叫栗子。2024年大学毕业时，我没想到找一份工作会这么难。我投了几百份简历，绝大多数都石沉大海。我也拿到过一些机会，但每次对方一看是应届生就不要了。后来我狗急跳墙，先后去了两家不怎么靠谱的初创公司，一家上演了“欠薪跑路搬空”一条龙，另一家不到一个月，就把我裁了。"
+    },
+    {
+     "t": "p",
+     "v": "我哪经历过这个呀。在学校里，只要认真学，就能拿到和付出相符的成绩。但职场好像不是这样的。我在一所双一流高校读游戏设计，学历不差，专业也对口。在校期间，我争分夺秒地为求职做准备。到毕业时，我有三段游戏文案策划的实习经历，也有一些文字和游戏Demo作品。我原本对自己的履历还挺满意的，觉得只要不执著于大厂，找份不错的工作应该问题不大。但结果是在一次次被拒绝当中，我陷入了自我怀疑，对工作的要求一再降低。"
+    },
+    {
+     "t": "p",
+     "v": "求职时，我才听说外派岗——也就是作为外包员工被派遣到甲方公司工作。刚开始我根本不考虑外派，觉得就算落魄一点，也是去小公司做正式岗。但实际体验过两次小公司后，我发现自己不太能接受这样动荡不安的生活。2025年夏初，我在心灰意冷中接到了一个大厂外派配置岗位的投递邀请，待遇好到让我觉得有点不可思议：月薪1万5，外加每天餐补60元。并且，由于工作内容不涉及写作，笔试也免了。那就试一试吧，反正也不会有什么损失。抱着这个想法，我参与了线上面试。"
+    },
+    {
+     "t": "p",
+     "v": "■ 从不敢摸鱼到第一次尝试"
+    },
+    {
+     "t": "p",
+     "v": "之前每次面试，面试官总是会问一些很难的问题，比如“你怎么看待当代文学”“假如让你独立负责一个活动剧情，你打算如何安排”“怎样搭建工作管线”。但那次，面试官只是让我简单自我介绍了一下，随后问了问相关工作内容，整个面试时间加起来还不到3分钟。"
+    },
+    {
+     "t": "p",
+     "v": "我果然接到了Offer。入职后，我开足马力完成了前5天的工作，顺利通过了试岗。没过两天，组长突然塞过来一个人，让我带他一下。那是我第一次见到阿奇，他扎着两个羊角辫，顶着一头绿色的头发，看上去很年轻。但阿奇告诉我，他已经快30岁了，而我只有23岁，真不知道由我来带他是否合适。"
+    },
+    {
+     "t": "p",
+     "v": "阿奇从入职的第一天就开始摸鱼。当时距离午休还有十来分钟，我在工位上工作。他很自然地走过来，跟我说：“下去吃饭吧。”"
+    },
+    {
+     "t": "p",
+     "v": "“吃饭？”我抬眼看了看电脑屏幕上的时钟，“还没到时间呢，不怕被人抓？”我环顾了一下周围，前后排的同事全都循规蹈矩地坐在工位上，于是对他说：“你还在试岗期里，还是等午休时间到了再走吧。”"
+    },
+    {
+     "t": "p",
+     "v": "“可是我都站起来了。”阿奇看上去不打算采纳我的建议，“现在就去吧？不会有事的。”但这显然不足以打消我的顾虑，我摇了摇头，问他：“要不你等等我？”阿奇有点好笑地看着我，但还是点点头，慢悠悠地回到自己的座位上玩起了手机。"
+    },
+    {
+     "t": "p",
+     "v": "到了午休时间，我们一起走出办公室，看到三五位其他组的同事拎着外卖迎面走来。“你看，别人都已经拿好饭回来了。”阿奇顺势开启话题，“都跟你说了，差这几分钟根本不要紧。”我没有搭话，但心里对于摸鱼的担忧似乎减弱了一分。"
+    },
+    {
+     "t": "p",
+     "v": "之后，阿奇每天中午都会提前10分钟左右来找我。起初的几天里，我还是不敢走。他会先去做一些自己的事情——接水、上洗手间、玩手机，午休时间到了，再去办公室门口和我会合。但不知道从哪一天开始，他突然把等我的地点转移到了我座位旁，站着玩手机，时不时抬头瞄我两眼，同时报出当下的时间，问我“是不是差不多可以走了”，这一度让我感到非常紧张和尴尬。"
+    },
+    {
+     "t": "img",
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-06%2F3926a23a88b61b4d.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "我第一次“摸鱼”就是在那样的处境下诞生的。被阿奇磨了两三天后，他在座位旁等待我的显眼程度，已经超过了我对提前下楼取餐的担忧。一天中午，当我再次看见他从工位起身，准备过来“蹲”我的时候，我也跟着他站了起来，径直往办公室大门的方向走。阿奇没说什么，只是蹦蹦跳跳跟了上来，冲我轻轻摇晃了一下脑袋。"
+    },
+    {
+     "t": "p",
+     "v": "正午的阳光洒下来的时候，远处的地面被照得亮晶晶的，特别好看。走到楼梯口时，我往下看了一眼，发现只有零星的几位同事在大厅里走动，心里顿时感到有些毛毛的……我想掉头逃回我的工位，但最终还是硬着头皮，跟阿奇一起走出了大楼。到了外面，我发现人还挺多的，并且越靠近外卖柜人越多，我的顾虑也随之消减。"
+    },
+    {
+     "t": "p",
+     "v": "拿完饭回来时，办公室的餐区里还没有什么人。我们在众多空位中挑了张桌子，面对面坐了下来。“今天还挺早的。”拆餐盒的时候，阿奇忽然感叹了一句，听上去心情不错。他冲我笑了一下，打趣地开口：“还得是我，终于给你劝通了。”"
+    },
+    {
+     "t": "p",
+     "v": "我没理他，因为知道不管说什么，都只会让他更得意。但我其实感到有些不服气，因为在我看来，我真正做出这次尝试的原因并不在他，而是想要摆脱一直以来萦绕在心里的那种不安感觉——我很难说清楚它为什么存在，或许是因为小时候爸妈总拿“成绩不好就会完蛋，成绩好了皆大欢喜”来刺激我全自动学习；最后，我只要发现自己没在做“有用的事”，就会感到焦虑不已。"
+    },
+    {
+     "t": "p",
+     "v": "我自顾自地吃起了碗里的食物。让我惊喜的是，食材的爽脆口感没有像往常那样被水汽软化。我感觉自己抢到了宝贵的几分钟时间，享用到了更加新鲜的饭菜。耳边传来邻桌同事交流八卦的话语，我意识到已经进入了午休时间。那一刻，我彻底放松了下来。"
+    },
+    {
+     "t": "p",
+     "v": "■ 觉醒与出师"
+    },
+    {
+     "t": "p",
+     "v": "和阿奇一起摸鱼逐渐成了我的工作日常。我们一起把提前午休的时长慢慢增加到20分钟，再后来超过了半小时——先到楼下散个步，再去取餐、上楼吃饭。一星期以后，我已经可以完全脱离阿奇的陪伴，独自摸点小鱼了。"
+    },
+    {
+     "t": "p",
+     "v": "那个时候，我已经入职将近1个月，逐渐认识到了外派的“灵活用工”性质。交到我手上的任务很明显是之前积攒下来的，我们这堆人在上线前夕被临时招进来，只有一个目的：赶工。游戏上线之后，这样的工作量便不复存在，需要的人力自然也不会像现在那么多了。"
+    },
+    {
+     "t": "p",
+     "v": "既然我总归是要被裁掉的，就算认真工作也没有晋升的机会、得不到想要的回报，那我又何必卖命呢？一种“豁出去”的想法油然而生。我当即为自己安排了一项更大胆的摸鱼活动——利用午休去游泳。之前我曾经试图劝过阿奇，想让他陪我，但他是旱鸭子。这一次，我决定独自去做这件事。"
+    },
+    {
+     "t": "p",
+     "v": "现在回想起第一次去游泳的那一天，我仍然会感到有些割裂。原本只是个被工作填满的平淡无奇的日子，而我却在午休前的20分钟，背上硕大的泳包从后门偷溜了出来，又在游泳馆里换上泳装，游完以后我还去洗了个头，这才返回公司。我有种不真切的感觉，仿佛那已经不再是一个工作日，而是自由、愉快的假期。"
+    },
+    {
+     "t": "img",
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-06%2F6976a23a48fa722c.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "按部就班干活的日子并没有持续太长，裁员便如我所料开始了。游戏上线1个月后，因为数据表现不好，我们参与制作的内容被砍了。不过公司一开始只裁了我们的上游部门。这倒是挺奇怪的：前面环节生产的资源都没了，我们还能干什么呢？"
+    },
+    {
+     "t": "p",
+     "v": "但总之，公司保留了我们一段时间，只是把我们的工位从之前宽敞明亮的楼层，换去了隔壁一幢不见天日的大楼，和项目组其他部门远远隔开。每天没有任何新的工作进来，也不会有人来工区检查我们在做什么。同事们就这么坐在自己的工位上，戴着耳机打游戏、看直播。整个区域像一家网吧，每个人心知肚明，只等待宣告被裁。"
+    },
+    {
+     "t": "p",
+     "v": "也就是从那时起，我开始把对摸鱼“脱敏”，当作一项正式的计划，苦修似的给自己安排了很多“任务”：早上在地铁站打完卡后，骑车去一家中医馆抓药；午休结束后不回公司，继续利用下午的时间逛商场……每一天，我都在不断尝试提高自己的“摸鱼KPI”。我的不安在这个过程中再次被激活，但我很快发现那是没有必要的——在全员划水的情况下，摸鱼甚至是正当的。最后，我可以消失一整个下午去滑冰，没有人在乎。"
+    },
+    {
+     "t": "p",
+     "v": "■ 化不爽为摸鱼"
+    },
+    {
+     "t": "p",
+     "v": "我的第一份外派工作没能挺过那个夏天。“退场”后不久，外派公司又帮我对接了一个合适的岗位——同样是大厂，继续做配置，薪资比起上一份有增无减。后来入职，我才发现那是一款知名游戏的项目组。顺带一提，“退场”是驻场员工被甲方公司裁员清退后，外派公司对眼下这块“烫手山芋”的委婉称呼。"
+    },
+    {
+     "t": "p",
+     "v": "我一直在这个项目组里工作到现在，工位布置也随着时间的推移变得越来越丰富——配了补光灯的花花草草，特殊造型的鼠标、键盘，各种护肤品、保健品……每份工作，我都会把全部家当带过来。一方面我比较高敏感，确实对外设和装饰有需要；另一方面，我把它们视作对整齐划一格子间的一种抵抗。我的私人物品帮我保留了一条让我舒适的边界，同时也提醒着我，在这每天8小时被出售的时间里，我仍然是我自己。"
+    },
+    {
+     "t": "p",
+     "v": "这一次的“工位装修”比以往都要顺利，因为做了这么多份不稳定的工作以后，我吸取教训、总结出了一套方法论：先尽量把轻便、必要的物品带来，等到确认安全以后，再逐渐搬运其他。"
+    },
+    {
+     "t": "p",
+     "v": "带教我的丽姐也是一名外派，比我早来1年。记得刚入职的那段时间，凡是我接触不超过2次的工作内容，丽姐都会帮我复查一遍。"
+    },
+    {
+     "t": "p",
+     "v": "我与丽姐的工位，和正编同事隔着一条窄窄的走廊，就像两颗并排的卫星。但正编同事每次在组里分发零食，从来不会忘记也绕过来给我们一份。因为之前一些不好的工作经历，再加上自己容易不安的性格，我常常有一些警铃大作的时刻：发现我有东西搞错了，会不会有人拿这件事做文章？别的同事失误了，会不会甩锅给我？毕竟我是外派，对背锅这类事情毫无反抗能力……然而这些担忧全都没有真正发生过。"
+    },
+    {
+     "t": "p",
+     "v": "做了差不多1年外派，我也体会过不少被“差别对待”的瞬间。简单来说就是“伤害性没有，但侮辱性极高”。去年圣诞，我隐约感觉办公室里好像憋着什么喜事。结果到了晚饭时间，座位前后的正编员工全都“呼”地一下子站了起来，有说有笑、连蹦带跳地离开了办公室。整个工作区域瞬间就只剩下了我和丽姐。我们这才知道，那天是组里的团建。后来有一位正编同事折返回来，问丽姐去不去，可能是出于怕麻烦，她不去，那我自然也不会去。"
+    },
+    {
+     "t": "p",
+     "v": "前两天，公司举办了一个内部的创作小活动，我很感兴趣。但不用多想，我就知道外派根本没有参与的资格。于是我把个性签名改成了一个跟活动相关的梗，试图用这种方式假装自己参与了。当我去线下和正编同事沟通工作的时候，我跟她分享了自己这个“超幽默”的新签名，不过没有提签名诞生的缘由。她哈哈大笑，随后发来了那个内部活动的投票链接，让我帮她投票。我欣然同意，好奇她极力推荐的作品会是什么模样。然而刚点进链接，一行冷漠的小字就出现在眼前“您没有参与投票的权限”。我们瞬间尴尬地愣在了原地。"
+    },
+    {
+     "t": "img",
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-06%2F7346a23a5ecbf38e.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "转折点发生某一天的清晨，那天我因为没睡好，非常疲惫。到了公司，我发现大厅又排起了里三圈外三圈的等电梯队伍。我感到两眼一黑，但还是无奈地加入了队伍，缓缓跟随人流朝前挪动。我为什么要每天面对这样的事情呢？我烦躁地在心里吐槽。"
+    },
+    {
+     "t": "p",
+     "v": "一个念头忽然涌了上来：所有由公司方面造成的不便，后果都应该由公司承担。我当即离开队伍，去大厅的沙发上落坐休息。过了一段时间，队伍渐渐散去，我这才起身去搭电梯。从那以后，电梯排起长队的早上，成了我的专属摸鱼时光。我成了沙发区域的常客，有时也会出去逛逛便利店，甚至吃一碗酸辣粉。"
+    },
+    {
+     "t": "p",
+     "v": "这套“外耗”的理念，也被我逐渐运用到日常工作当中。等待IT来帮我开主机笼子、接外设的时候，我顺势开启了忙里偷闲。事情做到一半发现没有权限，我便心安理得地放下手里的任务，等有人来询问时，再假装无奈地向对方说明情况。不得不说，这很让人心情舒畅。我将外派身份每一次带来的微妙不爽，都换算为等量的摸鱼时间——公司花70%的成本，造成10%的不便，得到一个60%的劳动力。"
+    },
+    {
+     "t": "p",
+     "v": "■ 外派就是出路"
+    },
+    {
+     "t": "p",
+     "v": "我不是个乐观的人，毕业3到5年后，行情没起来，职业生涯的天花板就已经在那里了。游戏是这样的行业，你被放在什么位置，看到和参与了什么，被寄予什么样的期待，交以什么样的工作，你就成为能做这件事的人。反之，很多学习都是纸上谈兵的徒劳。"
+    },
+    {
+     "t": "p",
+     "v": "再过一段时间，我打算去跟外派公司谈谈调薪的事。我并不知道成功的几率有多高，但实际上，就算他们不给我涨薪，我也没打算换工作。每天10点半打卡，11点到工位上倒水、上厕所、更新电脑文件，12点午休去游泳或者滑冰，下午2点半回到工位开始干活，6点吃饭，回来后给工作收个尾或者摸摸鱼，7点半下班回家，实在没什么可抱怨的。"
+    },
+    {
+     "t": "p",
+     "v": "我也不是很担心失业问题。全行业劳动市场现在普遍陷入一种病态，企业不敢冒险，只求维持，既不愿意投入资源培养新人，也不愿意支付随着工龄逐年递增的工资，最受偏好的就是3至5年经验、有独立完成一块业务能力的人。也就是说，这样的人才在市场上只会越来越少，因为没人给应届生机会了。反过来说，能取代我的人就不会大量出现。当然，如果未来行情回暖，那有经验的我也会先抓住机会。"
+    },
+    {
+     "t": "p",
+     "v": "我已经不是好学生了，我是职场环境亲手打造的老油条、划水高手。但是生活一切太平，我并不想抱怨什么。甚至对于容易焦虑的我而言，在刚毕业时就四处碰壁，导致不得不停下脚步，重新审视自己究竟想要和需要什么，是一个很好的机会。许多人终其一生，也没有得到或抓住这样的机会。"
+    },
+    {
+     "t": "p",
+     "v": "所以，外派就是我的出路了。努力了这么久，最后做了全职配表的螺丝钉，不再用写作能力吃饭，多少会有一些失落。但我不喜欢现在的文字工作环境，更不喜欢被过度压榨——实际上，游戏文案很难真的“下班”。稿子没写出来，脑子就还留在工位上焦虑地打转。但外派配置岗位却能用30%的工作精力来换80%的工资，而我不缺剩下那20%的钱……这就是我的“版本答案”。"
+    },
+    {
+     "t": "p",
+     "v": "（文中人物均为化名，插图为AI生成。）"
+    }
+   ]
   },
   {
-   "id": 28,
+   "id": 56,
+   "category": "业界",
+   "title": "触乐怪话：原来这就是情感本……吗？",
+   "summary": "触乐怪话，每天胡侃和游戏有关的屁事、鬼事、新鲜事。 图/小罗 熟悉“触乐怪话”这个栏目的读者朋友，可能读过 祝思齐老师前段时间写的“情感本”体验 。不知道是幸运还是不幸，我也是编辑部“车队”里的一员，而祝老师描述的情况，",
+   "source": "触乐",
+   "url": "http://www.chuapp.com/article/291409.html",
+   "image": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-09%2F6a27cc048c373.jpg%3FimageView2%2F2%2Fw%2F700",
+   "isVideo": false,
+   "ts": 1780997454000,
+   "content": [
+    {
+     "t": "img",
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-09%2F6a27cc048c373.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "触乐怪话，每天胡侃和游戏有关的屁事、鬼事、新鲜事。"
+    },
+    {
+     "t": "p",
+     "v": "熟悉“触乐怪话”这个栏目的读者朋友，可能读过 祝思齐老师前段时间写的“情感本”体验 。不知道是幸运还是不幸，我也是编辑部“车队”里的一员，而祝老师描述的情况，我基本上都符合：以前从来没玩过情感本，只玩过一些推理本，并且有一定的跑团经验。这就导致，祝思齐老师组“车队”的时候，我只记住了“要准时来”这一项要求，对本子名称、人员配置、事前准备等内容一无所知。"
+    },
+    {
+     "t": "p",
+     "v": "这也不能完全怪我。因为确实没做什么功课，所以我想当然地把“情感本”理解成了“案件比较简单，只是故事情节由情感驱动，凶手、死者以及各个角色之间的关系更复杂狗血”的意思。而在我的印象中，剧本杀还是在玩之前知道得越少越好，如果提前调查，还容易“开天眼”，影响别人的游戏体验。"
+    },
+    {
+     "t": "img",
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-09%2F5466a27bb59ca975.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "总之，就算各种巧合凑在一起吧，我的确是以完全零基础、零认知的状态进入情感本的。因此，坐下来读本的时候，我很难不把以前玩推理本的一些经验代入进来：这一本都快读完了，死者呢？密室呢？我们什么时候能开始调查？"
+    },
+    {
+     "t": "p",
+     "v": "虽然祝思齐老师和DM后来提醒了我，这个本里没有死者，也不需要调查，但我的思路一时半会还是绕不过来。每当剧情里DM给了什么道具，我总会怀疑里面藏着小纸条，找到机会就要打开看看有没有线索。"
+    },
+    {
+     "t": "p",
+     "v": "不过话又说回来，既然叫情感本，我必须承认，我们体验的那个本里的“情感”还是相当激烈的，什么世界末日啦，天崩地裂啦，国仇家恨啦，事故失忆啦……一切能够催人泪下的桥段差不多全了。而我这种平时泪点就超低的人更是毫不意外地为故事中角色的命运痛哭流涕——眼泪，就是该在这种时候用呀！"
+    },
+    {
+     "t": "p",
+     "v": "当然，流泪归流泪，另外一边，我还是忍不住要吐槽：虽然故事塑造了许多天坤倒悬的背景，但这些背景似乎没有对角色的性格、生活方式，以及他/她的选择产生特别明确的影响。这也意味着，“情感”在这里变成了一种有点悬浮、有点单薄、为了演出和观看而存在的“奇观”。可能这么说有点刻薄，但在我看来，越是危机四伏、颠簸动荡的背景，人物做出的一些凡庸行为才越能打动人；越是“不平凡”的背景，越需要一些“俗事”去消解——玩过这个本，我回家之后又把《倾城之恋》翻出来看了一遍……"
+    },
+    {
+     "t": "img",
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-09%2F5036a27bd9ad61e9.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "但是——重要的话要放在“但是”后面——我的本意并不是批评这个本，实际上，对于一款让人在线下亲身体验的游戏来说，这种悬浮反而意味着安全。毕竟，读《倾城之恋》那种复杂的哀伤和无力感，“后劲”相当大。但在情感本里，架空的世界和国家、架空的灾难和矛盾，这些东西一定程度上保证了让人“出戏”（作为当代中国玩家，类似的情形不可能在我们身边发生），因此也就更让人“入戏”——除了这些带有奇观性质的情感之外，玩家完全不用思考任何与真实、合理有关的事物，此时此刻，你只需要关注眼前这一小块空间里的情感，它足够激烈，足够投入，也足够安全。离开了这个环境，不会有任何后顾之忧。就像40℃夏天喝到的第一口冰可乐，清爽，解暑，放松身心。如果情感本给人带来的是这样的作用，那我有点理解它为什么能火起来了。"
+    },
+    {
+     "t": "img",
+     "v": "https://wsrv.nl/?url=img.chuapp.com%2Fwp-content%2FPicture%2F2026-06-09%2F9656a27bcd497fcc.jpg%3FimageView2%2F2%2Fw%2F700"
+    },
+    {
+     "t": "p",
+     "v": "总的来说，有了这次玩情感本的体验，我觉得——如果一定要去线下玩点什么，我的首选肯定还是跑团，其次可能是桌游，然后是推理本。要是某个朋友想玩情感本又实在缺人，我也不是不能顶上……但坦白说，我确实对情感本不那么了解，也不那么感兴趣。这应该也是一种“口味差异”吧。"
+    }
+   ]
+  },
+  {
+   "id": 57,
    "category": "业界",
    "title": "第八届游戏安全行业峰会落幕，《2025游戏安全白皮书》发布",
    "summary": "游戏安全的故事，正在被重新书写。6月8日，第八届游戏安全行业峰会在深圳举办。本届峰会由腾讯游戏安全与腾讯云联合主办，广东省游戏产业协会担任指导单位，汇聚来自中国、美国、英国、韩国的20位行业代表，覆盖游戏研发、发行、安全",
@@ -1218,7 +3038,7 @@
    ]
   },
   {
-   "id": 29,
+   "id": 58,
    "category": "业界",
    "title": "英特尔“锐炫”G3系列处理器：专为掌机设计的新一代SoC",
    "summary": "在COMPUTEX 2026英特尔主题演讲结束后不久，英特尔组织了一场面向媒体的掌机技术分享会，主题是刚刚正式发布的锐炫G3和锐炫G3 Extreme两款处理器。与演讲台上的快节奏亮相不同，这场分享会详细解释了两个问题：",
@@ -1343,68 +3163,380 @@
    ]
   },
   {
-   "id": 30,
+   "id": 59,
    "category": "业界",
-   "title": "日本“二次元圣地”沦为风情街 用游戏能救秋叶原吗？",
-   "summary": "",
-   "source": "游民星空",
-   "url": "https://www.gamersky.com/news/202606/2154249.shtml",
-   "image": "https://img1b.gamersky.com/users/recommend/2026/06/09/origin_8042051_2142855.jpg",
+   "title": "3D格斗游戏的鼻祖，做了个颠覆类型的“单人模式”",
+   "summary": "采访：阴阳 编辑：Lushark 在夏日游戏节期间，颇受瞩目的《VIRTUA FIGHTER》（国内俗称《VR战士》）系列最新作公开了全新的影像，并正式定名为《VIRTUA FIGHTER CROSSROADS》（暂译《",
+   "source": "游研社",
+   "url": "https://www.yystv.cn/p/14040",
+   "image": "https://alioss.yystv.cn/doc/14040/0da7d3fa4ab17fe383bee82d36092424.appmsg_mw680water",
    "isVideo": false,
-   "ts": 1780977600000,
-   "content": null
+   "ts": 1780934400000,
+   "content": [
+    {
+     "t": "p",
+     "v": "采访：阴阳"
+    },
+    {
+     "t": "p",
+     "v": "编辑：Lushark"
+    },
+    {
+     "t": "p",
+     "v": "在夏日游戏节期间，颇受瞩目的《VIRTUA FIGHTER》（国内俗称《VR战士》）系列最新作公开了全新的影像，并正式定名为《VIRTUA FIGHTER CROSSROADS》（暂译《VR战士：命运交锋》）。"
+    },
+    {
+     "t": "p",
+     "v": "想必出乎大多数人意料：一个格斗游戏系列的最新作，尤其是作为3D格斗游戏鼻祖的《VIRTUA FIGHTER》，宣传影片里几乎80%的画面都更像是一款单人RPG，足以让人一度怀疑“难道这是《如龙》的新作？”"
+    },
+    {
+     "t": "p",
+     "v": "直到出现战斗画面，看角色施展拳脚时那种一板一眼的节奏和交互，才让人确信这确实是一款格斗游戏。"
+    },
+    {
+     "t": "p",
+     "v": "其实在游戏最初公布的宣传片中，就有出现角色在城市中游荡的场景，只不过大家当时都默认这应该是某种“概念宣传”。但现在可以确认的是，《VIRTUA FIGHTER CROSSROADS》的实机画面就是如此——开发团队正致力于打造一部完全颠覆了传统格斗游戏“单人玩法”的作品。"
+    },
+    {
+     "t": "p",
+     "v": "该作品现由世嘉旗下的RGG工作室（俗称“如龙工作室”）负责开发，由曾深度参与《如龙》系列开发的山田理一郎担任制作人兼创意总监。同时也有一直留在世嘉AM2研究部（原《VIRTUA FIGHTER》系列的部门）的老员工参与，比如游戏的艺术总监柴崎和战斗总监武田都是如此。"
+    },
+    {
+     "t": "p",
+     "v": "可说是汇集了世嘉在这两方面的重要积累。"
+    },
+    {
+     "t": "p",
+     "v": "我们在较早些时候对本作制作人兼创意总监山田理一郎进行了采访，在交流过程中，看得出他对于这个系列以及格斗游戏在过去和当下的发展，都有着非常深的思考。"
+    },
+    {
+     "t": "p",
+     "v": "官方也上传了一则长达25分钟的视频，详细介绍了这个项目的更多幕后"
+    },
+    {
+     "t": "p",
+     "v": "他在采访中多次强调，这次《VIRTUA FIGHTER CROSSROADS》里的单人模式内容量将非常足，会有四个主角，有许多如龙工作室风格的冒险桥段——和大家以往印象中格斗游戏的那种“故事模式”完全不同，称得上前所未有的“格斗冒险类”作品。"
+    },
+    {
+     "t": "p",
+     "v": "在他看来，作为街机游戏诞生的《VIRTUA FIGHTER》长久以来都没能真正地完成“主机化”，更像是街机游戏的移植。"
+    },
+    {
+     "t": "p",
+     "v": "其中一个重要因素，就是游戏的剧情情境和战斗始终没能有机结合起来。但对于玩家来说，单纯重复1对1的战斗是很容易乏味的。"
+    },
+    {
+     "t": "p",
+     "v": "这显然不只是发生在《VIRTUA FIGHTER》系列身上的事。尽管格斗游戏放到如今来看其实也不算小众，但“学习曲线”陡峭仍然是其中大部分作品的痛点，如果一个玩家耐不住和AI反复切磋来提升自我的枯燥过程，几乎就不可能体验到其中的真正乐趣。"
+    },
+    {
+     "t": "p",
+     "v": "《VIRTUA FIGHTER CROSSROADS》给出的一个新方向，就是用类似RPG一样丰富的体验型内容，让玩家在不知不觉中磨练格斗技艺，而不再是“干练”。"
+    },
+    {
+     "t": "p",
+     "v": "山田说他们花了大量的时间，来研究到底如何能将符合剧情情境的战斗组合起来。又如何与基础的格斗系统相融合，为此绞尽脑汁。其中的困难也确实不难想象，毕竟至今没人成功做出过这样的改造尝试。"
+    },
+    {
+     "t": "p",
+     "v": "好在VIRTUA FIGHTER系列也有一个得天独厚的优势，就在于这是一款从一开始就非常强调“真实感”的格斗游戏。游戏里每一次按键都对应一个动作，就像是玩家直接控制角色的手脚一样自然，不存在“搓招”之类反直觉的操作、不需要玩家去记各种指令。"
+    },
+    {
+     "t": "p",
+     "v": "山田将这形容为“回归原点”——玩家不需要什么事前学习，就能体验到这样的动作游戏的乐趣，进而了解角色、经历故事……最后再将1v1真人对决作为游戏的终局内容，让已经对这套玩法产生兴趣并且逐渐上手的玩家，踏入到传统格斗游戏的无限乐趣之中。"
+    },
+    {
+     "t": "p",
+     "v": "另外就像山田所提到的，因为终究是视作一款格斗游戏来打造，每个角色招式量高达百余种，与敌人也会有非常细致的交互——这是传统的ARPG所不可能打磨到精度。"
+    },
+    {
+     "t": "p",
+     "v": "换句话说，如果将《VIRTUA FIGHTER CROSSROADS》看做一款RPG，那就同样算是为动作冒险游戏这个类型，注入了一种全新的体验。"
+    },
+    {
+     "t": "p",
+     "v": "诚心地说，现在的《VIRTUA FIGHTER》新作所呈现这套“格斗+RPG”的愿景，我曾经真的想象过，也经常在游戏社区里看人讨论说“为什么不能把格斗游戏做成这样。”我相信在行业内也不止一个人有过这样的灵感。"
+    },
+    {
+     "t": "p",
+     "v": "但这个点子做起来明显要比想着难——要想做好，几乎只能由两套有着不同类型开发经验的班子合在一起各取所长。不说厂商增加成本和风险去做这样的事的意愿，光是有能力做这种加法的就没几家。"
+    },
+    {
+     "t": "p",
+     "v": "没人知道这样的尝试究竟能打开怎样的道路，但终于有人愿意实践这样的事，来为发展得有些刻板化的格斗游戏类型带来新的刺激，也算是不辱这个系列曾经的辉煌。"
+    },
+    {
+     "t": "p",
+     "v": "以下为采访正文，为便于阅读做了一定删减与调整："
+    },
+    {
+     "t": "p",
+     "v": "Q：就本次播片的内容而言，感觉本作最重视部分的似乎是故事模式。请问本作故事的体量以及通关大约需要多长时间呢？"
+    },
+    {
+     "t": "p",
+     "v": "A：说其是“故事模式”可能稍微有点误导，我在视频里也提到过，准确地说是“单人游戏（Single Play）”。因为不仅仅是故事，作为单人游戏的体量，游玩时间将会相当长。由于目前还处于开发阶段，很难给出具体的数字，不过仅仅是阅读剧本就需要花费大量时间。加上由于是如龙工作室（RGG工作室）主导开发的作品，因此故事中的冒险部分体量很大，而且我们还提供了其他内容，因此单人游戏的整体分量会非常足。"
+    },
+    {
+     "t": "p",
+     "v": "Q：能请您介绍一下身为主角的新角色吗？"
+    },
+    {
+     "t": "p",
+     "v": "A：我来聊聊主角“西洛（Cielo）”。他出身于巴拉圭，父亲是美国人，移居美国后，因故失去父母。在身边只有生病的祖父和伙伴的情况下，他来到格斗之街试图以此谋生。他拥有格斗天赋，但目前处于靠打假赛输球拿钱的状态，在故事中他将抓住机会不断成长。我们并没有把他设定为超级英雄，而是设定为一个重视伙伴、具有人情味的普通人。"
+    },
+    {
+     "t": "p",
+     "v": "Q：在播片中看到本作设置了4名主人公，请问这样做的理由和意图是什么？"
+    },
+    {
+     "t": "p",
+     "v": "A：原本的《VIRTUA FIGHTER》虽然有背景设定，但在游戏内并没有详细讲述故事。 从本作开始，我们认为必须深刻描绘角色们的背景以及他们为何而战。当时我觉得很重要的一点是“角色也会随时间老去”。 在保留那些随年月增长的老角色的同时，我们也希望创造出能成为游戏“新面孔”的角色。至于选择4个人，是因为我们觉得3人或4人在平衡性上比较好。比起单人，多位主角可以展现出各自物语相互交错的样子。"
+    },
+    {
+     "t": "p",
+     "v": "Q：既然有4位主人公，那么故事本身是否包含多结局等要素？"
+    },
+    {
+     "t": "p",
+     "v": "A：现阶段请大家先发挥想象力。我希望通过这款游戏实现与《如龙》不同的叙事体验。虽然具体玩法请保持期待，但即使是一条主线的故事，我们也想让玩家在其中获得多种体验，系统也会随之发生变化。"
+    },
+    {
+     "t": "p",
+     "v": "Q：故事模式内的战斗系统，会与传统的PK战做出区别吗？"
+    },
+    {
+     "t": "p",
+     "v": "A：这部分确实非常辛苦。《VIRTUA FIGHTER》最初是街机游戏，然后才慢慢移植到家用机的。我觉得以往的移植作品还达不到家用机游戏的标准。我认为对于家用机玩家来说，通常的流程是先玩单人模式，在其中熟悉操作和乐趣，然后再去尝试对战。如果只是单纯重复1对1的战斗会很乏味，因此我们花了很多时间研究如何将符合剧情情境的战斗组合起来。正如视频中所展示的多人混战等要素，如何将这些与基础系统融合，正是我们费尽心思的部分。"
+    },
+    {
+     "t": "p",
+     "v": "Q：当下的格斗游戏在维持复杂的经典操作的同时，也开始逐渐重视简单易上手的现代操作模式，您如何看待这一趋势？"
+    },
+    {
+     "t": "p",
+     "v": "A：对《VIRTUA FIGHTER》熟悉的人都明白，“《VIRTUA FIGHTER》原本就是‘现代’的”。在2D格斗游戏因复杂的指令输入（如升龙拳等）而变得门槛极高的历史背景下，无需复杂指令就能玩的格斗游戏正是《VIRTUA FIGHTER》。虽然随着系列的发展，它看起来变复杂了，但我觉得应该回归原点，重新审视操作系统，让玩家即使没有复杂指令也能使出招式，仅仅通过简单的操作就能感受到乐趣。我们首先以“手柄的易玩性”为起点，针对不同水平的玩家准备相应的操作形态。在以拳、脚、防守这三键操作为根基的同时，让觉得格斗游戏很难的玩家也能玩得开心。"
+    },
+    {
+     "t": "p",
+     "v": "Q：请问本作的地图场景在战斗中会有互动或是变化吗？你们认为这些要素对于一个格斗游戏的平衡性究竟是否有影响？？"
+    },
+    {
+     "t": "p",
+     "v": "A：“掉出场外（Ring Out）”是《VIRTUA FIGHTER》的固有机制，我们认为应该提供利用场景的玩法。毕竟很多核心玩家最爱用的地图还是Training Room。在提供让普通玩家觉得有趣的要素的基础上，给玩家选择权是很重要的。"
+    },
+    {
+     "t": "p",
+     "v": "Q：您认为《VIRTUA FIGHTER》系列最核心的个性或关键词是什么？"
+    },
+    {
+     "t": "p",
+     "v": "A：正如我多次强调的，是“真实感（Reality）”，还有就是靠三个按键即能畅玩的“现代感”。在本作中，我们正在深挖“我们现在应该描绘的真实感标准”是什么。虽然是虚构的故事，但以描绘出能让人感到“现实中可能存在的人”为目标。就像《如龙》中的春日一番那样，我们更倾向于描绘让人感到亲切、富有真实感的主角形象。不过战斗方面我们并不想做一款MMA（综合格斗）游戏，而是作为格斗游戏，追求一种“能感受到真实感”的平衡。"
+    },
+    {
+     "t": "p",
+     "v": "Q：新作开发团队成员的资历如何？另外，有多少以前作品的成员参与其中？"
+    },
+    {
+     "t": "p",
+     "v": "A：视频中出现的艺术总监柴崎和战斗总监武田，都是一直留在世嘉AM2研（负责制作《VIRTUA FIGHTER》的部门）的老员工。 战斗团队的核心成员大多都是长期参与《VIRTUA FIGHTER》系列的人。 武田的经历很有趣，他最初负责音效，但因为想做《VIRTUA FIGHTER》而转行成了程序员。 这种设计师学习程序并转岗的情况在以前的世嘉很常见，他给人一种“老牌世嘉人”的感觉。他们从铃木裕先生（系列创始人）时期就在一起工作，可以说继承了那份DNA。至于我个人，进入世嘉后参与过包括《如龙》团队在内的各种类型游戏的制作，也做过F2P手游。对于从零开始重新设计（Re-design）某些东西，我非常得心应手。虽然角色制作等方面有很多《如龙》工作室的成员，但他们与打造《VIRTUA FIGHTER》的原班人马组成了团队，这是一个非常有趣的组合。"
+    },
+    {
+     "t": "p",
+     "v": "Q：一名格斗游戏可用角色开发的流程和周期大约是多久？"
+    },
+    {
+     "t": "p",
+     "v": "A：虽然我不清楚格斗游戏通用的开发流程，但在本作中，我们会优先确立角色的战斗流派与背景故事。我们对设定细节极其执着，深入挖掘了角色战斗的动机，并将其与游戏核心的战斗风格进行反复磨合。以往的《VIRTUA FIGHTER》系列很多时候是从“想做这种战斗类型的角色”出发去构思的，不过本作则是带着“这次要用这样的设定”的想法在进行开发。 然后要说完成一个角色需要多久的话，我想大约需要1年左右吧。由于《VIRTUA FIGHTER》单个角色的招式量高达百余种，这种规模与传统的2D格斗游戏截然不同。面对海量的招式制作与后期打磨，我们必须采取多线并行开发的模式。庞大的动作数据量始终是《VIRTUA FIGHTER》开发中的核心挑战，其艰巨程度是不言而喻的。"
+    },
+    {
+     "t": "p",
+     "v": "Q：能看到VF系列已经通过5 revo重启了电竞生态。新作在这方面是否已有规划？是否可透露在这方面更倾向于官方组织系列赛事，还是更鼓励三方或民间赛事？"
+    },
+    {
+     "t": "p",
+     "v": "A：我心中有构想，但最终还是要取决于玩家们的选择。虽然我们已经开始逐渐支持各个玩家社群的发展，不过能否成为热门电竞项目不是由我们决定的。我们现阶段的基本方针还是更倾向于支持社群发展。"
+    },
+    {
+     "t": "p",
+     "v": "Q：最后请问制作人有什么想对中国的粉丝们说的话吗？"
+    },
+    {
+     "t": "p",
+     "v": "A：系列已经很久没有推出新作了，这次将会是一部真正崭新的作品。我们想要创造一种超越格斗游戏框架、让广泛玩家都能享受的新体验。当然，系列传统的对战部分也会精心打磨。虽然从最开始公开制作情报到现在已经过去了很久，但是我相信本作一定能为大家提供不负期待的、独一无二的体验，敬请期待。而且深受功夫电影的影响，系列作品中的中国角色也很多，希望大家也能喜欢这一部分内容。"
+    }
+   ]
+  },
+  {
+   "id": 60,
+   "category": "业界",
+   "title": "《黑袍纠察队》男主出演的果冻怪，成了战神新作目前最受肯定的部分",
+   "summary": "此前《战神》系列公布了最新作《战神：劳菲》。正如游戏名字所示，这代游戏的主角是奎爷的亡妻、阿特柔斯的母亲，劳菲。 只不过，在之前的几天里，随着玩家社区内容发酵，比起这位主角，反而那个叫做弗兰克的“果冻怪”明显更受关注。 ",
+   "source": "游研社",
+   "url": "https://www.yystv.cn/p/14038",
+   "image": "https://alioss.yystv.cn/doc/14038/036e5e185a5a2922d20c3735e41ca6cf.appmsg_mw680water",
+   "isVideo": false,
+   "ts": 1780934400000,
+   "content": [
+    {
+     "t": "p",
+     "v": "此前《战神》系列公布了最新作《战神：劳菲》。正如游戏名字所示，这代游戏的主角是奎爷的亡妻、阿特柔斯的母亲，劳菲。"
+    },
+    {
+     "t": "p",
+     "v": "只不过，在之前的几天里，随着玩家社区内容发酵，比起这位主角，反而那个叫做弗兰克的“果冻怪”明显更受关注。"
+    },
+    {
+     "t": "p",
+     "v": "其中最重要的原因，就是它带来的反差感。"
+    },
+    {
+     "t": "p",
+     "v": "《战神：劳菲》预告的前半段都像该系列一贯的风格一样，恢弘、严肃到有些沉闷，直到弗兰克的出场，才彻底改变了这种画风。"
+    },
+    {
+     "t": "p",
+     "v": "剧情过场和探索时，这只方形史莱姆会一颤一颤地跟在主角身后，以叙事游戏常见的“小跟班”形式，配合着主角用对话说出心理活动。"
+    },
+    {
+     "t": "p",
+     "v": "同时，它还是阿特柔斯那样的战斗伙伴。看上去没半点战斗力的果冻怪，一打起架来会弹跳、翻滚、或是用自己的身体“砸”向敌人，还能用“肚皮”顶起敌人和主角形成连招。"
+    },
+    {
+     "t": "p",
+     "v": "根据主创的介绍，《战神：劳菲》的设定里，她死后去到的是一个叫做“万维界（Everywhen）”的地方，这里聚集着来自各个神话里的神明。所以这只“拥有自我意识的宇宙凝胶立方体”， 理论上也是某个文明崇拜的神明。"
+    },
+    {
+     "t": "p",
+     "v": "由于它的设定很像《龙与地下城》里的经典怪物“凝胶怪”，因此还有人调侃说《龙与地下城》也是某种宗教。"
+    },
+    {
+     "t": "p",
+     "v": "另一个让果冻怪迅速走红的原因，则是它的幕后扮演者杰克·奎德——他最知名的角色是《黑袍纠察队》的主角休伊。"
+    },
+    {
+     "t": "p",
+     "v": "最为诡异的是，圣莫尼卡工作室仅让他进行了配音，还让他对这个立方体形的角色进行了动作捕捉演出。"
+    },
+    {
+     "t": "p",
+     "v": "从官方的幕后视频里可以看到，为了让杰克·奎德在物理层面上“演好一个几何体”，剧组用 PVC管和胶带为他搭建了一个立方体形的“外骨骼框架”。除了头上的几个动捕点，演员身上几乎没有动捕点，反而是这套PVC架子上贴满了动捕点。"
+    },
+    {
+     "t": "p",
+     "v": "因此在念台词和拍摄打戏的时候，他需要控制的不是自己的身体，而是用双手去摆弄PVC架子的姿势，以此演出这只果冻怪的“神态”。"
+    },
+    {
+     "t": "p",
+     "v": "顺带一提，在《战神：劳菲》的动捕棚里，除了“休伊”之外，还有一位演员也在扮演另一个奇怪的角色，一把圣剑上附带的“有意识的丝带”。"
+    },
+    {
+     "t": "p",
+     "v": "所以在这张主视觉图里，看似只有一名主角，实际上有三名主角"
+    },
+    {
+     "t": "p",
+     "v": "正是凭借着游戏中的反差表现和幕后的诡异花絮，弗兰克这只果冻怪在预告片播出后的两天里，迅速吸引了许多玩家的关注。"
+    },
+    {
+     "t": "p",
+     "v": "有的人把这个方块比作了自己“玩新《战神》的原因”；有的人迫不及待地把它奉为“今年最棒的电子宠物”；还有的人已经迫不及待地开起了“战神笑话”，觉得“把阿特柔斯换成这个方块是圣莫妮卡最明智的决定”。"
+    },
+    {
+     "t": "p",
+     "v": "随之而来的还有大量梗图和表情包。有借机挖苦《战神》系列换皮怪的，调侃圣莫妮卡直接“换皮”了《猫和老鼠》；或者调侃他们原本打算先做个方块占位到时候再改，结果没时间了；"
+    },
+    {
+     "t": "p",
+     "v": "也有吐槽《战神》系列解谜差的，觉得他们既然加入了果冻怪，不如干脆借鉴《传送门》的谜题；"
+    },
+    {
+     "t": "p",
+     "v": "当然还有更多玩家，开始畅想劳菲和弗兰克平时的相处模式，想象它能变身“宇宙立方洗衣机”帮劳菲一家洗衣服。"
+    },
+    {
+     "t": "p",
+     "v": "更狠一点的，已经开始幻想以弗兰克为主角的全新作品《战神：方块》了。"
+    },
+    {
+     "t": "p",
+     "v": "看起来是个解谜游戏……"
+    },
+    {
+     "t": "p",
+     "v": "不管圣莫妮卡工作室有没有想到，《战神》新作最先火起来的，会是这么一个奇形怪状的角色，但他们打破传统的策略显然是奏效了。"
+    },
+    {
+     "t": "p",
+     "v": "也许有玩家会担心，果冻怪这类角色的加入，会消解《战神》系列一贯的史诗感和严肃性。但起码从目前公布的这段预告来看，弗兰克的加入仍旧只是史诗冒险之余的调剂。抛开还看不出端倪的剧情，《战神：劳菲》从打斗的流畅度到镜头的高速调度，依旧是我们熟悉的那个战神。"
+    },
+    {
+     "t": "p",
+     "v": "现在唯一留下的悬念，就是这款新作如何在没有奎托斯的情况下，给我们呈现一个完整的战神故事。希望等到游戏正式发售，它还能维持预告片中的水准吧。"
+    }
+   ]
   }
  ],
  "flash": [
   {
-   "ts": 1781092200000,
-   "text": "30多岁人妻更让人心动 少女跑不过老太太的囧图",
+   "ts": 1781106492000,
+   "text": "PlayStation Plus Extra/Premium Games For June 2026 Revealed",
    "id": 1
   },
   {
-   "ts": 1781091600000,
-   "text": "《鬼泣5》NS2版优化超神了！帧数爆表 画质喜人",
+   "ts": 1781106000000,
+   "text": "索尼PS+会员二三档阵容公布！《最终幻想16》领衔",
    "id": 2
   },
   {
-   "ts": 1781091301000,
-   "text": "Xbox CEO 表示不确定动视暴雪收购是否物有所值",
+   "ts": 1781104620000,
+   "text": "苹果重磅产品全球多地下架！中国官网已断货",
    "id": 3
   },
   {
-   "ts": 1781091240000,
-   "text": "Steam弹幕射击游戏节 2700+游戏特卖 大促开启！",
+   "ts": 1781104440000,
+   "text": "外媒质疑《剑星》新女主太幼！还担心战衣会更涩",
    "id": 4
   },
   {
-   "ts": 1781090460000,
-   "text": "《王国之心合集》预购开启！PS5版不是568港币",
+   "ts": 1781103736000,
+   "text": "Players Think Kingdom Hearts’ New Art Is AI-Generated",
    "id": 5
   },
   {
-   "ts": 1781089380000,
-   "text": "情趣十足！蒂法睡美人等身人偶身材太顶 姿势任意摆",
+   "ts": 1781103638000,
+   "text": "Gears Of War: E-Day Modernizes Movement Without Going Full Parkour",
    "id": 6
   },
   {
-   "ts": 1781089080000,
-   "text": "任天堂也在强调独占！索尼老任大独占时代回来了",
+   "ts": 1781103635000,
+   "text": "Fable’s 1,000 Romance Options Sounds Like The Ultimate Challenge For Completionists",
    "id": 7
   },
   {
-   "ts": 1781084760000,
-   "text": "小岛秀夫与杰夫“复婚”！共饮香槟全网庆祝",
+   "ts": 1781103628000,
+   "text": "Fable Lets You Live A Second Life, Not Just Save The World",
    "id": 8
   },
   {
-   "ts": 1781082828000,
-   "text": "Does That Space Marine Have an Extra Finger? Yes, but Games Workshop Insists It's Not AI",
+   "ts": 1781103602000,
+   "text": "Former Nintendo Staff Say The Legend of Zelda: Ocarina of Time Remake Reveal Should Have Been Changed to Show More, Following High-Profile Leak",
    "id": 9
   },
   {
-   "ts": 1781076901000,
-   "text": "Capcom Responds to Concern the Onimusha: Way of the Sword Demo Feels \"Too Easy\"",
+   "ts": 1781103600000,
+   "text": "《神鬼寓言》游民前瞻：时隔十多年的华丽重生",
    "id": 10
+  },
+  {
+   "ts": 1781103600000,
+   "text": "How Will Capcom Address Alfred Ashford's Storyline in Resident Evil Veronica?",
+   "id": 11
+  },
+  {
+   "ts": 1781103600000,
+   "text": "Resident Evil Veronica Is a Third-Person Game, Capcom Confirms",
+   "id": 12
   }
  ]
 }
