@@ -144,11 +144,11 @@ function htmlToBlocks(html) {
   return blocks;
 }
 
-// 站点正文容器(捕获组 1 为正文 HTML)
+// 站点正文容器(捕获组 1 为正文 HTML;结束标记不命中会吞进页脚广告,务必齐全)
 const CONTAINERS = {
-  "gamersky.com": /<div class="Mid2L_con">([\s\S]*?)(?:<div class="Mid2L_extra|<div class="page_css|<div class="txtcss|$)/,
-  "yystv.cn": /<div class="doc-content[^"]*"[^>]*>([\s\S]*?)(?:<div class="doc-bottom|<footer|$)/,
-  "chuapp.com": /<div class="the-content[^"]*"[^>]*>([\s\S]*?)(?:<div class="single-bottom|<footer|$)/,
+  "gamersky.com": /<div class="Mid2L_con">([\s\S]*?)(?:<span id="pe100_page_contentpage|<!--文章内容导航|<a class="diggBtn|<div class="Mid2L_extra|$)/,
+  "yystv.cn": /<div class="doc-content[^"]*"[^>]*>([\s\S]*?)(?:class="article-links-container|class="qrcode-block|class="doc-share|class="footer|<footer|$)/,
+  "chuapp.com": /<div class="the-content[^"]*"[^>]*>([\s\S]*?)(?:<!--end-->|<!--评论start|相关文章|<footer|$)/,
 };
 
 // 提取失败/无效时返回 null,App 端回退为摘要+原文链接
@@ -190,7 +190,7 @@ async function extractContent(item) {
   }
 }
 
-const BOILERPLATE = /(本文由游民星空|更多相关资讯请关注|转载请注明|责任编辑|关注游民星空|点击进入专题|友情提示：支持键盘)/;
+const BOILERPLATE = /(本文由游民星空|更多相关资讯请关注|转载请注明|责任编辑|关注游民星空|点击进入专题|友情提示：支持键盘|点此前往|游民星空APP|随时掌握游戏情报|出版物经营许可证|京ICP备|京公网安备|人喜欢$)/;
 
 function finalizeBlocks(blocks) {
   const out = [];
@@ -201,6 +201,8 @@ function finalizeBlocks(blocks) {
     if (b.t === "img") {
       if (imgCount >= MAX_IMGS) continue;
       if (!/^https?:\/\//.test(b.v)) continue;
+      // 站点装饰图/二维码/头像等非内容图
+      if (/static\/pages\/|author_cover|avatar|qrcode|loading\.gif|\.gif\?|logo/i.test(b.v)) continue;
       imgCount++;
       out.push({ t: "img", v: b.v.replace(/["'\\]/g, "") });
     } else {

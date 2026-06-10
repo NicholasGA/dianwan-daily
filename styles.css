@@ -26,7 +26,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-html, body { background: var(--bg-page); }
+html, body { background: var(--bg-page); overscroll-behavior-y: contain; }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC",
@@ -536,6 +536,7 @@ body {
   z-index: 100;
   overflow-y: auto;
   animation: slideUp 0.28s cubic-bezier(0.22, 0.9, 0.3, 1);
+  touch-action: pan-y; /* 横向手势留给右滑返回 */
 }
 @keyframes slideUp {
   from { transform: translateX(-50%) translateY(6%); opacity: 0; }
@@ -650,6 +651,27 @@ body {
   cursor: pointer;
 }
 .act.acted { background: #E9E7FA; color: var(--indigo); }
+
+/* ============ 下拉刷新指示器 ============ */
+
+.ptr {
+  position: fixed;
+  top: -46px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--indigo);
+  box-shadow: 0 5px 16px rgba(30, 30, 80, 0.2);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 90;
+  transition: transform 0.25s ease;
+  pointer-events: none;
+}
+.ptr svg { width: 18px; height: 18px; }
+.ptr-ready { color: var(--accent); }
+.ptr-loading svg { animation: rot 0.9s linear infinite; }
 
 /* ============ Toast ============ */
 

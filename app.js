@@ -338,6 +338,118 @@
     });
   }
 
+  /* ---------- iOS 手势:详情页左缘右滑返回 ---------- */
+
+  function bindSwipeBack() {
+    const detail = $("#detail");
+    let sx = 0, sy = 0, dx = 0, swiping = false;
+    detail.addEventListener(
+      "touchstart",
+      (e) => {
+        const t = e.touches[0];
+        // 仿 iOS:从屏幕左缘 44px 内起手才算返回手势
+        swiping = t.clientX - detail.getBoundingClientRect().left < 44;
+        if (swiping) {
+          sx = t.clientX;
+          sy = t.clientY;
+          dx = 0;
+          detail.style.transition = "none";
+        }
+      },
+      { passive: true }
+    );
+    detail.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!swiping) return;
+        const t = e.touches[0];
+        dx = t.clientX - sx;
+        if (dx > 0 && dx > Math.abs(t.clientY - sy)) {
+          detail.style.transform = `translateX(calc(-50% + ${dx}px))`;
+        }
+      },
+      { passive: true }
+    );
+    detail.addEventListener("touchend", () => {
+      if (!swiping) return;
+      swiping = false;
+      detail.style.transition = "transform 0.22s ease";
+      if (dx > 90) {
+        detail.style.transform = "translateX(calc(-50% + 105%))";
+        setTimeout(() => {
+          closeDetail();
+          detail.style.transition = "";
+          detail.style.transform = "";
+        }, 220);
+      } else {
+        detail.style.transform = "";
+        setTimeout(() => (detail.style.transition = ""), 240);
+      }
+    });
+  }
+
+  /* ---------- iOS 手势:列表下拉刷新 ---------- */
+
+  function bindPullRefresh() {
+    const ptr = $("#ptr");
+    const icon = ptr.querySelector("svg");
+    const TRIGGER = 34; // 阻尼后的触发距离(约对应 80px 手指行程)
+    let sy = null, sx = 0, dist = 0, pulling = false;
+
+    document.addEventListener(
+      "touchstart",
+      (e) => {
+        const detailOpen = !$("#detail").classList.contains("hidden");
+        if (window.scrollY <= 0 && !detailOpen && !refreshing) {
+          sy = e.touches[0].clientY;
+          sx = e.touches[0].clientX;
+          dist = 0;
+          pulling = false;
+        } else {
+          sy = null;
+        }
+      },
+      { passive: true }
+    );
+    document.addEventListener(
+      "touchmove",
+      (e) => {
+        if (sy == null) return;
+        const dy = e.touches[0].clientY - sy;
+        const dxAbs = Math.abs(e.touches[0].clientX - sx);
+        // 纵向主导的下拉才接管(不干扰头条横向轮播)
+        if (dy > 8 && dy > dxAbs * 1.5 && window.scrollY <= 0) {
+          pulling = true;
+          if (e.cancelable) e.preventDefault(); // 接管 iOS 橡皮筋回弹
+          dist = Math.min(dy * 0.42, 92);
+          ptr.style.transition = "none";
+          ptr.style.transform = `translate(-50%, ${dist}px)`;
+          icon.style.transform = `rotate(${dist * 4}deg)`;
+          ptr.classList.toggle("ptr-ready", dist >= TRIGGER);
+        }
+      },
+      { passive: false }
+    );
+    document.addEventListener("touchend", async () => {
+      if (sy == null) return;
+      sy = null;
+      if (!pulling) return;
+      pulling = false;
+      ptr.style.transition = "";
+      if (dist >= TRIGGER) {
+        ptr.classList.add("ptr-loading");
+        ptr.style.transform = "translate(-50%, 52px)";
+        await refresh(false);
+        ptr.classList.remove("ptr-loading", "ptr-ready");
+      } else {
+        ptr.classList.remove("ptr-ready");
+      }
+      ptr.style.transform = "";
+      icon.style.transform = "";
+      dist = 0;
+    });
+  }
+
   /* ---------- PWA:离线缓存 ---------- */
 
   if ("serviceWorker" in navigator) {
@@ -350,5 +462,7 @@
 
   renderAll();
   bindEvents();
+  bindSwipeBack();
+  bindPullRefresh();
   refresh(true); // 启动时静默拉取真实新闻
 })();

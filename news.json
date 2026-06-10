@@ -1,8 +1,20 @@
 {
- "generatedAt": "2026-06-10T11:55:02.091Z",
+ "generatedAt": "2026-06-10T12:06:35.210Z",
  "news": [
   {
    "id": 1,
+   "category": "业界",
+   "title": "30多岁人妻更让人心动 少女跑不过老太太的囧图",
+   "summary": "贪婪，焦虑，缺乏耐心，是韭菜三大共性素质。迎合贪婪，贩卖焦虑，速成承诺，是割韭菜的三大标准姿势",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154751.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101958108731.jpg",
+   "isVideo": false,
+   "ts": 1781092200000,
+   "content": null
+  },
+  {
+   "id": 2,
    "category": "主机",
    "title": "Xbox CEO 表示不确定动视暴雪收购是否物有所值",
    "summary": "据 Game Developer 报道，Xbox CEO Asha Sharma 在 Bloomberg Tech 2026 的现场访谈中被问及微软收购动视暴雪（Activision Blizzard）是否物有所值。尽管",
@@ -39,7 +51,19 @@
    ]
   },
   {
-   "id": 2,
+   "id": 3,
+   "category": "PC",
+   "title": "Steam弹幕射击游戏节 2700+游戏特卖 大促开启！",
+   "summary": "Steam弹幕射击游戏节 2700+游戏特卖 大促开启！",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154741.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101934367982.jpg",
+   "isVideo": false,
+   "ts": 1781091240000,
+   "content": null
+  },
+  {
+   "id": 4,
    "category": "主机",
    "title": "《王国之心合集》预购开启！PS5版不是568港币",
    "summary": "《王国之心合集1-3》是将系列三部核心作品集于一体，为玩家完整呈现《王国之心》系列的主线叙事的匠心之作。",
@@ -60,10 +84,6 @@
     {
      "t": "img",
      "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101918235792.jpg"
-    },
-    {
-     "t": "p",
-     "v": "点此前往PS商城界面>>>"
     },
     {
      "t": "p",
@@ -100,79 +120,11 @@
     {
      "t": "img",
      "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101920471777.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://image.gamersky.com/webimg15/content/loading.gif"
-    },
-    {
-     "t": "img",
-     "v": "https://image.gamersky.com/webimg15/img.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/ku/2018/ku_khiii.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/ku/2018/ku_khiii.jpg"
-    },
-    {
-     "t": "p",
-     "v": "游戏平台：PC/PS4/XboxOne"
-    },
-    {
-     "t": "p",
-     "v": "动作角色扮演"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2021/10/06/origin_b_202110061012355234.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2021/03/31/origin_b_202103311923379691.jpg"
-    },
-    {
-     "t": "p",
-     "v": "凡人修仙传"
-    },
-    {
-     "t": "p",
-     "v": "天魔劫(文字版)"
-    },
-    {
-     "t": "p",
-     "v": "航海霸业"
-    },
-    {
-     "t": "p",
-     "v": "神兵奇迹"
-    },
-    {
-     "t": "p",
-     "v": "超鬼打金服"
-    },
-    {
-     "t": "p",
-     "v": "群英风华录"
-    },
-    {
-     "t": "p",
-     "v": "精灵猎人"
-    },
-    {
-     "t": "p",
-     "v": "帕瓦勇者传说"
-    },
-    {
-     "t": "p",
-     "v": "异星战舰"
     }
    ]
   },
   {
-   "id": 3,
+   "id": 5,
    "category": "主机",
    "title": "任天堂也在强调独占！索尼老任大独占时代回来了",
    "summary": "",
@@ -184,7 +136,7 @@
    "content": null
   },
   {
-   "id": 4,
+   "id": 6,
    "category": "业界",
    "title": "触乐怪话：乘坐火箭去喵星",
    "summary": "触乐怪话，每天胡侃和游戏有关的屁事、鬼事、新鲜事。 托帕在喵星上盯着我们…… 图/小罗 我家有两只猫，一只猫叫拖（托）帕，另一只叫橘子，合在一起就叫“托橘之家”。很长一段时间，这四个字取代了“蓝莓果皮”这样的滑稽称呼，成",
@@ -269,91 +221,11 @@
     {
      "t": "img",
      "v": "http://img.chuapp.com/wp-content/Picture/2026-06-10/6726a292c5617614.jpg?imageView2/2/w/700"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2025-12-01/692d103788fad.jpg"
-    },
-    {
-     "t": "p",
-     "v": "爱辣星人，希望做个勇敢的人。"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com/wp-content/Picture/2017-08-14/59917b959139f.png"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com/wp-content/uploads/2016/08/201608221471860954.jpg"
-    },
-    {
-     "t": "h",
-     "v": "登录触乐账号"
-    },
-    {
-     "t": "p",
-     "v": "请登录后发表评论、没有账号请 注册"
-    },
-    {
-     "t": "h",
-     "v": "绑定手机号"
-    },
-    {
-     "t": "p",
-     "v": "根据相关规定，无法对未认证真实身份信息的用户提供跟帖评论服务，请尽快绑定手机号完成认证。"
-    },
-    {
-     "t": "p",
-     "v": "共有 0 条评论"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-06-08/6a26840e8b8df.jpg?imageView2/5/w/323/h/182"
-    },
-    {
-     "t": "h",
-     "v": "触乐怪话：为什么夏日游戏节风生水起，E3却死了？"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-18/6a0ad99804391.jpg?imageView2/5/w/323/h/182"
-    },
-    {
-     "t": "h",
-     "v": "触乐怪话：学会括号画画大法之后"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-25/6a13605c54a36.jpg?imageView2/5/w/323/h/182"
-    },
-    {
-     "t": "h",
-     "v": "触乐怪话：涨价与降价的“温柔手腕”"
-    },
-    {
-     "t": "h",
-     "v": "触乐怪话：当我关心你在想什么"
-    },
-    {
-     "t": "h",
-     "v": "触乐怪话：《极限竞速：地平线6》与线性扳机"
-    },
-    {
-     "t": "h",
-     "v": "触乐怪话：如何用荧光棒花式打call"
-    },
-    {
-     "t": "h",
-     "v": "触乐本周行业大事：2026多款手游未成年人保护机制评分出炉，米哈游名誉侵权案胜诉，《异环》登顶日服iOS畅销榜"
-    },
-    {
-     "t": "h",
-     "v": "触乐怪话：回到哪个夏天？"
     }
    ]
   },
   {
-   "id": 5,
+   "id": 7,
    "category": "业界",
    "title": "不停服还是推出陪伴版？游戏“体面离开”有多难",
    "summary": "最近几年，我们见证了大量游戏的集体死亡。光是2024年，就有超过114款国产游戏停运或停服，其中过半运营时间不足两年。 不仅是中小厂承担着巨大的停运风险，大厂也采取了明显的收缩策略。2025年1月，网易对旗下游戏进行了大",
@@ -502,341 +374,11 @@
     {
      "t": "p",
      "v": "考虑到国内游戏大多数为必须全程联网的长线服务型游戏，“租赁服务”似乎是更常见的说法。在游戏除了游玩本身，也越来越和玩家们的回忆、情感投入乃至社交关系绑定在一起的时代，如何体面地离开确实是一个问题。这些“停运不停服”或者留下陪伴版的游戏，作为一个又一个先例，仍然在探索最合适的方式。"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2025-09-16/68c8ee18bc29f.jpg"
-    },
-    {
-     "t": "p",
-     "v": "zhusiqi@chuapp.com"
-    },
-    {
-     "t": "p",
-     "v": "咖啡因驱动型码字机。"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com/wp-content/Picture/2017-08-14/59917b959139f.png"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com/wp-content/uploads/2016/08/201608221471860954.jpg"
-    },
-    {
-     "t": "h",
-     "v": "登录触乐账号"
-    },
-    {
-     "t": "p",
-     "v": "请登录后发表评论、没有账号请 注册"
-    },
-    {
-     "t": "h",
-     "v": "绑定手机号"
-    },
-    {
-     "t": "p",
-     "v": "根据相关规定，无法对未认证真实身份信息的用户提供跟帖评论服务，请尽快绑定手机号完成认证。"
-    },
-    {
-     "t": "p",
-     "v": "共有 0 条评论"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-20/6a0da72047112.jpg?imageView2/5/w/323/h/182"
-    },
-    {
-     "t": "h",
-     "v": "网易520发布会：“稳中有进”与面向未来"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-28/6a17fd4862794.jpg?imageView2/5/w/323/h/182"
-    },
-    {
-     "t": "h",
-     "v": "这款“越打越年轻”的游戏，其实一直在引领时尚潮流"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-12/6a03449a8079d.jpg?imageView2/5/w/323/h/182"
-    },
-    {
-     "t": "h",
-     "v": "《七界梦谭》二测开启：更高自由度的东方奇诡MMO体验"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-06-04/6a21326f61ebf.jpg?imageView2/5/w/323/h/182"
-    },
-    {
-     "t": "h",
-     "v": "《007：初露锋芒》：写给詹姆斯·邦德的情书"
-    },
-    {
-     "t": "h",
-     "v": "一名外派的摸鱼脱敏计划"
-    },
-    {
-     "t": "h",
-     "v": "女性向小游戏，能成为新增长点吗？"
-    },
-    {
-     "t": "h",
-     "v": "对话《Subnautica 2：异星水域》制作人：与社区共同成长的“深海生存”体验"
-    },
-    {
-     "t": "h",
-     "v": "这款“越打越年轻”的游戏，其实一直在引领时尚潮流"
-    }
-   ]
-  },
-  {
-   "id": 6,
-   "category": "业界",
-   "title": "玩家期望全新大作不上PS暴死！官方霸气回应获盛赞",
-   "summary": "一位玩家在X平台上发文，直言希望《发条革命》销量惨败，开发者因此失业",
-   "source": "游民星空",
-   "url": "https://www.gamersky.com/news/202606/2154660.shtml",
-   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101816182055.jpg",
-   "isVideo": false,
-   "ts": 1781086800000,
-   "content": [
-    {
-     "t": "p",
-     "v": "在Xbox Games Showcase上，inXile Entertainment公布了旗下蒸汽朋克动作RPG《发条革命》（Clockwork Revolution）的新预告，并确认本作将于2027年发售，登陆Xbox Series X|S和PC平台。然而，这一“Xbox主机独占”的决定在社交媒体上引发了争议。"
-    },
-    {
-     "t": "p",
-     "v": "一位玩家在X平台上发文，直言希望游戏销量惨败，开发者因此失业：“哈哈，希望你们因为跳过PlayStation、把游戏放进Game Pass而导致销量暴死，到时候等着你们的简历投进麦当劳吧。”"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101814315416.png"
-    },
-    {
-     "t": "p",
-     "v": "面对这番充满恶意的诅咒，inXile官方账号并未发布长篇大论，而是只用一张图片回应——一个摊手耸肩、表情轻蔑的动图，示意“不予理会”或“随便你怎么说”。这一简洁而有力的回应迅速在玩家社群中病毒式传播，获得大量点赞和转发。"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101814408118.png"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101816532996.png"
-    },
-    {
-     "t": "p",
-     "v": "许多网友站在开发商一边，认为不喜欢平台独占可以理解，但“祝愿别人失业、沦落到麦当劳打工”已经越过了合理批评的底线。有人评论：“这就是为什么Xbox值得拥有像inXile这样有幽默感的开发者。”也有玩家表示：“一个手势胜过千言万语，活该被怼。”"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101816544952.png"
-    },
-    {
-     "t": "p",
-     "v": "大家觉得官方这个回应如何？欢迎来评论区讨论。"
-    },
-    {
-     "t": "img",
-     "v": "https://image.gamersky.com/webimg15/content/loading.gif"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101007282175.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100930321292.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100915484986.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100909449349.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100843072254.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100113386577.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/05/19/origin_202605191007305595.jpg"
-    },
-    {
-     "t": "p",
-     "v": "凡人修仙传"
-    },
-    {
-     "t": "p",
-     "v": "天魔劫(文字版)"
-    },
-    {
-     "t": "p",
-     "v": "航海霸业"
-    },
-    {
-     "t": "p",
-     "v": "神兵奇迹"
-    },
-    {
-     "t": "p",
-     "v": "超鬼打金服"
-    },
-    {
-     "t": "p",
-     "v": "群英风华录"
-    },
-    {
-     "t": "p",
-     "v": "精灵猎人"
-    },
-    {
-     "t": "p",
-     "v": "帕瓦勇者传说"
-    },
-    {
-     "t": "p",
-     "v": "异星战舰"
     }
    ]
   },
   {
    "id": 7,
-   "category": "业界",
-   "title": "大胆直言！《红色沙漠》官方：免费更新就是免费营销",
-   "summary": "《红色沙漠》的开发商Pearl Abyss近几个月的不断更新，让玩家称赞连连。外媒Dexerto采访 Pearl Abyss公关与市场总监 Will Powers，…",
-   "source": "游民星空",
-   "url": "https://www.gamersky.com/news/202606/2154648.shtml",
-   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101808253889.jpg",
-   "isVideo": false,
-   "ts": 1781086140000,
-   "content": [
-    {
-     "t": "p",
-     "v": "《红色沙漠》的开发商Pearl Abyss近几个月的不断更新，让玩家称赞连连。外媒Dexerto采访了开发商的公关与市场总监 Will Powers，他表示，只要玩家有需求，更新就会一直进行下去。"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101802448922.png"
-    },
-    {
-     "t": "p",
-     "v": "他说，本质上工作室将这款游戏视为其另一款游戏《黑色沙漠》的在线模式。“这是一种玩家尚不熟悉的商业模式，即买断制游戏在发售后依然能提供持续且免费的内容。”"
-    },
-    {
-     "t": "p",
-     "v": "这一切都是为了将《红色沙漠》保持在玩家同时在线人数的榜单前列，始终为粉丝提供更多可玩、可看的内容。反过来，这创造了一种有机的宣传效应，吸引更多希望了解游戏热度或窥见有趣新增内容的玩家加入。"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101802569022.png"
-    },
-    {
-     "t": "p",
-     "v": "他补充道："
-    },
-    {
-     "t": "p",
-     "v": "“提供持续的支持和内容，既奖励了投入时间在你的游戏中的社区和玩家，同时也是一种免费的营销，因为你不需要在其他地方花钱投放广告。所以，你把这些预算花在了为游戏添加更多内容上，而不是花在广告宣传上。”"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101803054824.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://image.gamersky.com/webimg15/content/loading.gif"
-    },
-    {
-     "t": "img",
-     "v": "https://image.gamersky.com/webimg15/img.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/03/20/origin_b_202603200925591805.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/03/20/origin_b_202603200925591805.jpg"
-    },
-    {
-     "t": "p",
-     "v": "游戏平台：PC/PS5/XSX"
-    },
-    {
-     "t": "p",
-     "v": "角色扮演 动作游戏 冒险游戏"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2025/11/20/origin_b_202511201406079973.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2024/12/05/origin_b_202412051152423173.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2024/11/08/origin_b_202411081424197126.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2024/09/12/origin_b_202409121450053860.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2025/11/20/origin_b_202511201406079973.jpg"
-    },
-    {
-     "t": "p",
-     "v": "凡人修仙传"
-    },
-    {
-     "t": "p",
-     "v": "天魔劫(文字版)"
-    },
-    {
-     "t": "p",
-     "v": "航海霸业"
-    },
-    {
-     "t": "p",
-     "v": "神兵奇迹"
-    },
-    {
-     "t": "p",
-     "v": "超鬼打金服"
-    },
-    {
-     "t": "p",
-     "v": "群英风华录"
-    },
-    {
-     "t": "p",
-     "v": "精灵猎人"
-    },
-    {
-     "t": "p",
-     "v": "帕瓦勇者传说"
-    },
-    {
-     "t": "p",
-     "v": "异星战舰"
-    }
-   ]
-  },
-  {
-   "id": 8,
    "category": "业界",
    "title": "曝《维罗妮卡RE》最新情报！大量新截图 实机马上来",
    "summary": "据生化圈知名爆料人Dusk Golem透露，《生化危机：代号维罗妮卡》重制版的媒体前瞻评测将于北京时间6月10日晚上11点正式解禁。",
@@ -877,82 +419,51 @@
     {
      "t": "p",
      "v": "需要说明的是目前该消息目前仍处于爆料阶段，官方并未确认，请大家理性看待！"
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "category": "业界",
+   "title": "小岛秀夫与杰夫“复婚”！共饮香槟全网庆祝",
+   "summary": "游戏制作人小岛秀夫与TGA创始人杰夫·基斯利终于同框",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154599.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101744462922.jpg",
+   "isVideo": false,
+   "ts": 1781084760000,
+   "content": [
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101741517758.png"
+    },
+    {
+     "t": "p",
+     "v": "在长时间的“冷战”传闻后，游戏制作人小岛秀夫与TGA创始人杰夫·基斯利终于同框，二人举杯共饮的照片在社交平台迅速刷屏，被粉丝戏称为“年度最佳复合”。"
     },
     {
      "t": "img",
-     "v": "https://image.gamersky.com/webimg15/content/loading.gif"
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101741521748.png"
     },
     {
      "t": "img",
-     "v": "https://image.gamersky.com/webimg15/img.jpg"
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101744167758.png"
+    },
+    {
+     "t": "p",
+     "v": "事件的起因可以追溯到2025年12月的TGA颁奖典礼。小岛秀夫执导的《死亡搁浅2》入围7项提名，最终颗粒无收，而黑马《光与影：33号远征队》横扫多项大奖。此后，小岛与杰夫在社交媒体上几乎再无互动，小岛缺席了2026年的夏日游戏节，杰夫多次在小岛推文下留言均未获回复。海外玩家社区由此衍生出大量“离婚”“冷战”的梗图与调侃。"
     },
     {
      "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/06/origin_b_202606061239386997.jpg"
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101744186180.png"
     },
     {
      "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/06/origin_b_202606061239386997.jpg"
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101744198801.png"
     },
     {
      "t": "p",
-     "v": "游戏平台：PC/PS5/NS2/XSX"
-    },
-    {
-     "t": "p",
-     "v": "动作游戏"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/09/origin_b_202606092011412953.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/09/origin_b_202606091006444932.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/08/origin_b_202606081720131279.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101007282175.jpg"
-    },
-    {
-     "t": "p",
-     "v": "凡人修仙传"
-    },
-    {
-     "t": "p",
-     "v": "天魔劫(文字版)"
-    },
-    {
-     "t": "p",
-     "v": "航海霸业"
-    },
-    {
-     "t": "p",
-     "v": "神兵奇迹"
-    },
-    {
-     "t": "p",
-     "v": "超鬼打金服"
-    },
-    {
-     "t": "p",
-     "v": "群英风华录"
-    },
-    {
-     "t": "p",
-     "v": "精灵猎人"
-    },
-    {
-     "t": "p",
-     "v": "帕瓦勇者传说"
-    },
-    {
-     "t": "p",
-     "v": "异星战舰"
+     "v": "然而，随着这张香槟合照的发布，一切“不和”传闻似乎烟消云散。评论区瞬间涌入数千条“恭喜复婚”“最甜爱情故事”“情侣重聚”等留言。有网友调侃：“他们不是情侣，胜似情侣。”也有粉丝感叹：“小岛真的回来了，最好的爱情故事。”"
     }
    ]
   },
@@ -1148,86 +659,6 @@
     {
      "t": "p",
      "v": "据了解，此次合作不仅是看中了papi酱极高的国民度，更是希望通过其“接地气”的吐槽式带货，强化京东618又好又便宜理念。当全网最低价遇上犀利人设，这场直播你期待吗？"
-    },
-    {
-     "t": "img",
-     "v": "https://image.gamersky.com/webimg15/content/loading.gif"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101007282175.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100930321292.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100915484986.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100909449349.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100843072254.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100113386577.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/05/19/origin_202605191007305595.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/05/15/origin_202605150946442850.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101726114836.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/09/origin_b_202606092215564935.jpg"
-    },
-    {
-     "t": "p",
-     "v": "凡人修仙传"
-    },
-    {
-     "t": "p",
-     "v": "天魔劫(文字版)"
-    },
-    {
-     "t": "p",
-     "v": "航海霸业"
-    },
-    {
-     "t": "p",
-     "v": "神兵奇迹"
-    },
-    {
-     "t": "p",
-     "v": "超鬼打金服"
-    },
-    {
-     "t": "p",
-     "v": "群英风华录"
-    },
-    {
-     "t": "p",
-     "v": "精灵猎人"
-    },
-    {
-     "t": "p",
-     "v": "帕瓦勇者传说"
-    },
-    {
-     "t": "p",
-     "v": "异星战舰"
     }
    ]
   },
@@ -1679,78 +1110,6 @@
     {
      "t": "p",
      "v": "所以在AI大规模介入游戏开发的未来，发行方对于产品的公关和宣发细节，可能也会因为AI一起改变。"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/static/dist/images/qrcode.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/static/pages/details/mp_code.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/author_cover/32cf6e406cfbe7aa6c5595559484afc0.jpg_s80"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/doc/14012/ef18cfd0430942303fc454dd71eed423.appmsg_w360"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/author_cover/4fec1b07cd3faf3a9a485981b7409edc.jpg_s80"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/doc/14025/31139a6b038eb35b3c69f6e8ae9cac05.appmsg_w360"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/author_cover/32cf6e406cfbe7aa6c5595559484afc0.jpg_s80"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/cover/c83b8cc7d40229be36e1d78f3eee68ba.jpg_w360"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/author_cover/630103c833c196dc667fc9188ed56c95.jpg_s80"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/static/pages/nav/store@2x.png"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/static/pages/nav/outsea_store@2x.png"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/static/pages/nav/footer_logo@2x.png"
-    },
-    {
-     "t": "p",
-     "v": "游研社是由多名资深媒体人创办的泛游戏新媒体平台。这里提供最新最全的游戏资讯、原创的图文和视频内容，也有好玩的游戏推荐、游戏历史档案、游戏书籍与周边销售、线上社区与线下活动等周边服务。无论你是硬核玩家、怀旧玩家，还是轻度的休闲玩家，都能在游研社找到感兴趣的东西。"
-    },
-    {
-     "t": "p",
-     "v": "本文版权及著作权归原作者所有，并不代表我方观点。本站/本公众号/本平台/本账号持有者将不承担任何法律责任，如果有侵犯到您的权利权益，请提供相关详细信息并及时联系我们删除。"
-    },
-    {
-     "t": "p",
-     "v": "增值电信业务经营许可证：京B2-20202434"
-    },
-    {
-     "t": "p",
-     "v": "出版物经营许可证：新出发京零字第海180116号"
-    },
-    {
-     "t": "p",
-     "v": "京ICP备17040554号-1"
-    },
-    {
-     "t": "p",
-     "v": "京公网安备 11010802025964号"
     }
    ]
   },
@@ -1812,78 +1171,6 @@
     {
      "t": "p",
      "v": "对于任天堂而言，这笔罚款发生在公司已经进入新主机周期之后。但至少对初代Switch的消费者来说，这场持续多年的手柄争议，终于迎来了一次明确的回应——虽然仅限欧洲市场。"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/static/dist/images/qrcode.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/static/pages/details/mp_code.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/author_cover/cc9f3ce22c1e40afa3123ec25efce1ec.jpg_s80"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/doc/14025/31139a6b038eb35b3c69f6e8ae9cac05.appmsg_w360"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/author_cover/32cf6e406cfbe7aa6c5595559484afc0.jpg_s80"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/doc/13927/631651cc4a12ec93b7c2144b58229381.appmsg_w360"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/author_cover/cc9f3ce22c1e40afa3123ec25efce1ec.jpg_s80"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/doc/14046/0555ad7d1c01cb4da62a66092a99f96e.appmsg_w360"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/author_cover/32cf6e406cfbe7aa6c5595559484afc0.jpg_s80"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/static/pages/nav/store@2x.png"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/static/pages/nav/outsea_store@2x.png"
-    },
-    {
-     "t": "img",
-     "v": "https://alioss.yystv.cn/static/pages/nav/footer_logo@2x.png"
-    },
-    {
-     "t": "p",
-     "v": "游研社是由多名资深媒体人创办的泛游戏新媒体平台。这里提供最新最全的游戏资讯、原创的图文和视频内容，也有好玩的游戏推荐、游戏历史档案、游戏书籍与周边销售、线上社区与线下活动等周边服务。无论你是硬核玩家、怀旧玩家，还是轻度的休闲玩家，都能在游研社找到感兴趣的东西。"
-    },
-    {
-     "t": "p",
-     "v": "本文版权及著作权归原作者所有，并不代表我方观点。本站/本公众号/本平台/本账号持有者将不承担任何法律责任，如果有侵犯到您的权利权益，请提供相关详细信息并及时联系我们删除。"
-    },
-    {
-     "t": "p",
-     "v": "增值电信业务经营许可证：京B2-20202434"
-    },
-    {
-     "t": "p",
-     "v": "出版物经营许可证：新出发京零字第海180116号"
-    },
-    {
-     "t": "p",
-     "v": "京ICP备17040554号-1"
-    },
-    {
-     "t": "p",
-     "v": "京公网安备 11010802025964号"
     }
    ]
   },
@@ -2350,102 +1637,55 @@
     {
      "t": "p",
      "v": "（文中人物均为化名，插图为AI生成。）"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-19/6a0bd1352b8d1.jpg"
-    },
-    {
-     "t": "p",
-     "v": "一个对人类很感兴趣的人，喜欢这个万物可爱的世界，并试图在其中留下一点自己的痕迹~"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com/wp-content/Picture/2017-08-14/59917b959139f.png"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com/wp-content/uploads/2016/08/201608221471860954.jpg"
-    },
-    {
-     "t": "h",
-     "v": "登录触乐账号"
-    },
-    {
-     "t": "p",
-     "v": "请登录后发表评论、没有账号请 注册"
-    },
-    {
-     "t": "h",
-     "v": "绑定手机号"
-    },
-    {
-     "t": "p",
-     "v": "根据相关规定，无法对未认证真实身份信息的用户提供跟帖评论服务，请尽快绑定手机号完成认证。"
-    },
-    {
-     "t": "p",
-     "v": "共有 0 条评论"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-06-10/6a292c7451b35.jpg?imageView2/5/w/323/h/182"
-    },
-    {
-     "t": "h",
-     "v": "触乐怪话：乘坐火箭去喵星"
-    },
-    {
-     "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-16/6a0819b83faff.jpg?imageView2/5/w/323/h/182"
-    },
-    {
-     "t": "h",
-     "v": "触乐本周行业大事：腾讯Q1游戏收入642亿，网易前高层创业获大额融资，恺英布局AI漫剧"
     }
    ]
   }
  ],
  "flash": [
   {
+   "ts": 1781092200000,
+   "text": "30多岁人妻更让人心动 少女跑不过老太太的囧图",
+   "id": 1
+  },
+  {
    "ts": 1781091301000,
    "text": "Xbox CEO 表示不确定动视暴雪收购是否物有所值",
-   "id": 1
+   "id": 2
+  },
+  {
+   "ts": 1781091240000,
+   "text": "Steam弹幕射击游戏节 2700+游戏特卖 大促开启！",
+   "id": 3
   },
   {
    "ts": 1781090460000,
    "text": "《王国之心合集》预购开启！PS5版不是568港币",
-   "id": 2
+   "id": 4
   },
   {
    "ts": 1781089080000,
    "text": "任天堂也在强调独占！索尼老任大独占时代回来了",
-   "id": 3
+   "id": 5
   },
   {
    "ts": 1781088148000,
    "text": "触乐怪话：乘坐火箭去喵星",
-   "id": 4
+   "id": 6
   },
   {
    "ts": 1781088143000,
    "text": "不停服还是推出陪伴版？游戏“体面离开”有多难",
-   "id": 5
-  },
-  {
-   "ts": 1781086800000,
-   "text": "玩家期望全新大作不上PS暴死！官方霸气回应获盛赞",
-   "id": 6
-  },
-  {
-   "ts": 1781086140000,
-   "text": "大胆直言！《红色沙漠》官方：免费更新就是免费营销",
    "id": 7
   },
   {
    "ts": 1781084820000,
    "text": "曝《维罗妮卡RE》最新情报！大量新截图 实机马上来",
    "id": 8
+  },
+  {
+   "ts": 1781084760000,
+   "text": "小岛秀夫与杰夫“复婚”！共饮香槟全网庆祝",
+   "id": 9
   },
   {
    "ts": 1781082828000,
