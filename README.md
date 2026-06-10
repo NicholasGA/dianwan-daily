@@ -29,11 +29,15 @@
 ```
 GitHub Actions(每小时第 7 分钟,也可手动触发)
   └─ scripts/fetch-news.mjs
-       抓取 RSS:机核 / 游研社 / 触乐 / IGN / GameSpot
-       解析标题、摘要、配图、原文链接、视频标记,按关键词分类
+       收集:游民星空(列表页解析) + 机核/游研社/触乐/IGN/GameSpot(RSS)
+       全文:进入每篇文章页提取正文(文字+配图的结构化块)
+         游民星空 Mid2L_con / 游研社 doc-content / 触乐 the-content / 机核官方 JSON API
+         IGN、GameSpot 有 Cloudflare 防护,仅摘要(详情页保留"阅读原文"按钮兜底)
   └─ 提交 news.json → GitHub Pages 自动重新发布
 App 端
   └─ 启动时静默拉取 news.json;刷新按钮手动拉取(网络优先,断网回退缓存)
+  └─ 中文源详情页站内读全文(段落+小标题+配图),末尾保留出处链接
+  └─ 快讯点击站内打开详情,不跳出 App
   └─ data.js 仅作为离线兜底的演示数据
 ```
 

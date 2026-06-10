@@ -61,12 +61,24 @@
 
   /* ---------- 远程数据(news.json) ---------- */
 
+  // 全文块校验:[{t:'p'|'h'|'img', v}] 不合规则丢弃
+  function sanitizeBlocks(content) {
+    if (!Array.isArray(content)) return null;
+    const blocks = content.filter(
+      (b) =>
+        b &&
+        typeof b.v === "string" &&
+        (b.t === "p" || b.t === "h" || (b.t === "img" && /^https?:\/\//.test(b.v)))
+    );
+    return blocks.length ? blocks : null;
+  }
+
   function normalizeRemote(remote) {
     const news = (remote.news || []).map((n, i) => {
       const cleanUrl = /^https?:\/\//.test(n.url || "") ? n.url.replace(/["'\\]/g, "") : null;
       const cleanImg = /^https?:\/\//.test(n.image || "") ? n.image.replace(/["'\\]/g, "") : null;
       return {
-        id: i + 1,
+        id: n.id || i + 1,
         category: CATEGORIES.includes(n.category) ? n.category : "业界",
         title: n.title || "",
         short: n.title || "",
@@ -78,7 +90,8 @@
         image: cleanImg,
         isVideo: !!n.isVideo,
         cover: { ...PALETTES[i % PALETTES.length], glyph: (n.source || "News").slice(0, 2) },
-        content: n.summary ? [n.summary] : [],
+        blocks: sanitizeBlocks(n.content), // 全文(站内阅读)
+        content: n.summary ? [n.summary] : [], // 无全文时的摘要兜底
       };
     });
 
@@ -91,7 +104,7 @@
     const flash = (remote.flash || []).slice(0, 10).map((f) => ({
       time: new Date(f.ts || Date.now()).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" }),
       text: esc(f.text), // 远程文本统一转义(flash 渲染时按 HTML 插入)
-      url: /^https?:\/\//.test(f.url || "") ? f.url.replace(/["'\\]/g, "") : null,
+      id: f.id || null, // 对应 news 的 id,点击站内打开详情
     }));
 
     return {
@@ -202,9 +215,8 @@
     $("#flashList").innerHTML = D.flash
       .map((f, i) => {
         // 演示数据的 text 含可信的 <b> 标签;远程数据在 normalizeRemote 已转义
-        const body = f.url
-          ? `<a href="${esc(f.url)}" target="_blank" rel="noopener">${f.text} <span class="flash-link">↗</span></a>`
-          : f.text;
+        // 有 id 的快讯点击站内打开详情(data-id 走全局点击代理)
+        const body = f.id ? `<span class="flash-go" data-id="${f.id}">${f.text}</span>` : f.text;
         return `
       <div class="flash-item">
         <span class="flash-time">${esc(f.time)}</span>
@@ -240,10 +252,26 @@
     $("#detailTag").textContent = n.category;
     $("#detailTitle").textContent = n.title;
     $("#detailMeta").innerHTML = `<span>${esc(n.source)}</span><span>${esc(n.time)}</span>${n.comments != null ? `<span>💬 ${n.comments} 评论</span>` : ""}`;
-    $("#detailContent").innerHTML = n.content.map((p) => `<p>${esc(p)}</p>`).join("");
-    $("#detailLink").innerHTML = n.url
-      ? `<a class="src-link" href="${esc(n.url)}" target="_blank" rel="noopener">${n.isVideo ? "▶ 观看视频" : "↗ 阅读原文"}<span>${esc(n.source)}</span></a>`
-      : "";
+    if (n.blocks) {
+      // 全文站内阅读:段落 / 小标题 / 配图,末尾保留小字出处链接
+      $("#detailContent").innerHTML = n.blocks
+        .map((b) => {
+          if (b.t === "img")
+            return `<img class="detail-img" src="${esc(b.v)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`;
+          if (b.t === "h") return `<h3 class="detail-h">${esc(b.v)}</h3>`;
+          return `<p>${esc(b.v)}</p>`;
+        })
+        .join("");
+      $("#detailLink").innerHTML = n.url
+        ? `<a class="origin-link" href="${esc(n.url)}" target="_blank" rel="noopener">内容整理自 ${esc(n.source)} · 查看原文 ↗</a>`
+        : "";
+    } else {
+      // 无全文(英文源 / 演示数据):摘要 + 大按钮兜底
+      $("#detailContent").innerHTML = n.content.map((p) => `<p>${esc(p)}</p>`).join("");
+      $("#detailLink").innerHTML = n.url
+        ? `<a class="src-link" href="${esc(n.url)}" target="_blank" rel="noopener">${n.isVideo ? "▶ 观看视频" : "↗ 阅读原文"}<span>${esc(n.source)}</span></a>`
+        : "";
+    }
     $$(".act").forEach((b) => b.classList.remove("acted"));
     const detail = $("#detail");
     detail.classList.remove("hidden");
