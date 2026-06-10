@@ -86,6 +86,7 @@
         id: n.id || i + 1,
         category: CATEGORIES.includes(n.category) ? n.category : "业界",
         title: n.title || "",
+        titleEn: n.titleEn || null,
         short: n.title || "",
         summary: n.summary || "",
         source: n.source || "",
@@ -256,6 +257,8 @@
     }
     $("#detailTag").textContent = n.category;
     $("#detailTitle").textContent = n.title;
+    $("#detailTitleEn").textContent = n.titleEn || "";
+    $("#detailTitleEn").classList.toggle("hidden", !n.titleEn);
     $("#detailMeta").innerHTML = `<span>${esc(n.source)}</span><span>${esc(n.time)}</span>${n.comments != null ? `<span>💬 ${n.comments} 评论</span>` : ""}`;
     if (n.blocks) {
       // 全文站内阅读:段落 / 小标题 / 配图,末尾保留小字出处链接

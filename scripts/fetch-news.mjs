@@ -243,6 +243,23 @@ function finalizeBlocks(blocks) {
   return textLen >= 50 ? out : null; // 正文太短视为提取失败
 }
 
+/* ---------- 英文内容翻译(Google 免费接口,无需密钥;Actions 美国节点可达) ---------- */
+
+async function translate(text) {
+  const u = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=zh-CN&dt=t&q=${encodeURIComponent(text)}`;
+  const res = await fetch(u, { headers: UA, signal: AbortSignal.timeout(15000) });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const j = await res.json();
+  const out = (j[0] || []).map((seg) => seg && seg[0]).filter(Boolean).join("");
+  return out || text;
+}
+
+// 中文字符占比低于 15% 视为英文内容
+const isEnglish = (s) => {
+  const zh = (s.match(/[一-鿿]/g) || []).length;
+  return zh / Math.max(1, s.length) < 0.15;
+};
+
 /* ---------- 分类 ---------- */
 
 function categorize(text) {
@@ -300,6 +317,22 @@ await Promise.all(
   })
 );
 console.log(`全文提取成功:${fullCount}/${news.length}`);
+
+// 英文条目译为中文(原题存入 titleEn,详情页对照显示);失败保留原文
+let translated = 0;
+for (const n of news) {
+  if (!isEnglish(n.title)) continue;
+  try {
+    n.titleEn = n.title;
+    n.title = await translate(n.title);
+    if (n.summary && isEnglish(n.summary)) n.summary = (await translate(n.summary)).slice(0, 120);
+    translated++;
+  } catch (err) {
+    delete n.titleEn;
+    console.error(`翻译失败(保留英文): ${err.message}`);
+  }
+}
+console.log(`英文翻译:${translated} 条`);
 
 const flash = news.slice(0, 12).map((n) => ({ ts: n.ts, text: n.title, id: n.id }));
 

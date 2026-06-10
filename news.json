@@ -1,17 +1,18 @@
 {
- "generatedAt": "2026-06-10T16:15:51.367Z",
+ "generatedAt": "2026-06-10T16:14:22.747Z",
  "news": [
   {
    "id": 1,
    "category": "主机",
-   "title": "PlayStation Plus Extra/Premium Games For June 2026 Revealed",
-   "summary": "Sony has revealed the latest games coming to the Game Catalog for PlayStation Plus Extra and Premium subscribe",
+   "title": "2026 年 6 月推出的 PlayStation Plus Extra/Premium 游戏揭晓",
+   "summary": "索尼公布了 PlayStation Plus Extra 和 Premium 订阅游戏目录中的最新游戏",
    "source": "GameSpot",
    "url": "https://www.gamespot.com/articles/playstation-plus-extra-premium-games-for-june-2026-revealed/",
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/FF16.jpg?w=300",
    "isVideo": false,
    "ts": 1781106492000,
-   "content": null
+   "content": null,
+   "titleEn": "PlayStation Plus Extra/Premium Games For June 2026 Revealed"
   },
   {
    "id": 2,
@@ -227,62 +228,67 @@
   {
    "id": 5,
    "category": "主机",
-   "title": "Players Think Kingdom Hearts’ New Art Is AI-Generated",
-   "summary": "Yesterday's Nintendo Direct certainly got Kingdom Hearts players talking--but it's not the kind of discourse S",
+   "title": "玩家认为《王国之心》的新艺术是人工智能生成的",
+   "summary": "昨天的任天堂直面会确实让《王国之心》的玩家们议论纷纷——但这不是那种讨论",
    "source": "GameSpot",
    "url": "https://www.gamespot.com/articles/players-think-kingdom-hearts-new-art-is-ai-generated/",
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/KH123.jpeg?w=215",
    "isVideo": false,
    "ts": 1781103736000,
-   "content": null
+   "content": null,
+   "titleEn": "Players Think Kingdom Hearts’ New Art Is AI-Generated"
   },
   {
    "id": 6,
    "category": "业界",
-   "title": "Gears Of War: E-Day Modernizes Movement Without Going Full Parkour",
-   "summary": "Popping Locust heads and active reloading has never looked better than in Gears of War: E-Day , but this prequ",
+   "title": "战争机器：E-Day 在不进行全面跑酷的情况下实现运动现代化",
+   "summary": "弹出 Locust 头和主动重新装弹从来没有比《战争机器：E-Day》更好看，但是这个先决条件",
    "source": "GameSpot",
    "url": "https://www.gamespot.com/articles/gears-of-war-e-day-modernizes-movement-without-going-full-parkour/",
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Gears-E-Day.jpg?w=300",
    "isVideo": false,
    "ts": 1781103638000,
-   "content": null
+   "content": null,
+   "titleEn": "Gears Of War: E-Day Modernizes Movement Without Going Full Parkour"
   },
   {
    "id": 7,
    "category": "业界",
-   "title": "Fable’s 1,000 Romance Options Sounds Like The Ultimate Challenge For Completionists",
-   "summary": "Fable isn't just offering a grand fantasy adventure for players to embark on, but also a chance to catch their",
+   "title": "《神鬼寓言》的 1000 种浪漫选择听起来像是完美主义者的终极挑战",
+   "summary": "《神鬼寓言》不仅为玩家提供了一场宏大的奇幻冒险，还为玩家提供了一个抓住机会的机会",
    "source": "GameSpot",
    "url": "https://www.gamespot.com/articles/fables-1000-romance-options-sounds-like-the-ultimate-challenge-for-completionists/",
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Fable-Isabel.jpg?w=300",
    "isVideo": false,
    "ts": 1781103635000,
-   "content": null
+   "content": null,
+   "titleEn": "Fable’s 1,000 Romance Options Sounds Like The Ultimate Challenge For Completionists"
   },
   {
    "id": 8,
    "category": "业界",
-   "title": "Fable Lets You Live A Second Life, Not Just Save The World",
-   "summary": "Fable is now arriving in February 2027 , but with some extra months to fine-tune the fantasy adventure, Playgr",
+   "title": "寓言让你获得第二次生命，而不仅仅是拯救世界",
+   "summary": "《神鬼寓言》现已于 2027 年 2 月上映，但还需要几个月的时间来微调奇幻冒险，Playgr",
    "source": "GameSpot",
    "url": "https://www.gamespot.com/articles/fable-lets-you-live-a-second-life-not-just-save-the-world/",
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Fable-Jack.jpg?w=300",
    "isVideo": false,
    "ts": 1781103628000,
-   "content": null
+   "content": null,
+   "titleEn": "Fable Lets You Live A Second Life, Not Just Save The World"
   },
   {
    "id": 9,
    "category": "主机",
-   "title": "Former Nintendo Staff Say The Legend of Zelda: Ocarina of Time Remake Reveal Should Have Been Changed to Show More, Following High-Profile Leak",
-   "summary": "Former Nintendo staff have suggested the company should have changed its plans to unveil its The Legend of Zel",
+   "title": "任天堂前员工表示，在高调泄密后，《塞尔达传说：时之笛》重制版应该改为展示更多内容",
+   "summary": "任天堂前员工建议该公司应该改变推出《塞尔传说》的计划",
    "source": "IGN",
    "url": "https://www.ign.com/articles/former-nintendo-staff-say-the-legend-of-zelda-ocarina-of-time-remake-reveal-should-have-been-changed-to-show-more-following-high-profile-leak",
    "image": "https://assets-prd.ignimgs.com/2026/06/09/nintendo-everything-blog-1781022109598.jpg",
    "isVideo": false,
    "ts": 1781103602000,
-   "content": null
+   "content": null,
+   "titleEn": "Former Nintendo Staff Say The Legend of Zelda: Ocarina of Time Remake Reveal Should Have Been Changed to Show More, Following High-Profile Leak"
   },
   {
    "id": 10,
@@ -416,122 +422,132 @@
   {
    "id": 11,
    "category": "业界",
-   "title": "How Will Capcom Address Alfred Ashford's Storyline in Resident Evil Veronica?",
-   "summary": "Capcom discusses how it will address Alfred Ashford's storyline in Resident Evil Veronica.",
+   "title": "卡普空将如何讲述《生化危机：维罗妮卡》中阿尔弗雷德·阿什福德的故事情节？",
+   "summary": "卡普空讨论了它将如何解决《生化危机：维罗妮卡》中阿尔弗雷德·阿什福德的故事情节。",
    "source": "IGN",
    "url": "https://www.ign.com/articles/how-will-capcom-address-alfred-ashfords-storyline-in-resident-evil-veronica",
    "image": "https://assets-prd.ignimgs.com/2026/06/10/ss-4473fa20d72b141595ddbe167bc40ff1a784189c-1920x1080-1781102841499.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null
+   "content": null,
+   "titleEn": "How Will Capcom Address Alfred Ashford's Storyline in Resident Evil Veronica?"
   },
   {
    "id": 12,
    "category": "业界",
-   "title": "Resident Evil Veronica Is a Third-Person Game, Capcom Confirms",
-   "summary": "The teaser for Resident Evil Veronica at Summer Game Fest may well have been presented in first-person, but th",
+   "title": "卡普空确认《生化危机维罗妮卡》是一款第三人称游戏",
+   "summary": "夏季游戏节上的《生化危机维罗妮卡》预告片很可能以第一人称形式呈现，但",
    "source": "IGN",
    "url": "https://www.ign.com/articles/resident-evil-veronica-is-a-third-person-game-capcom-confirms",
    "image": "https://assets-prd.ignimgs.com/2026/06/10/ss-5f574a15cb682397b7a03ff06a09969e65201c9d-1920x1080-1781101673669.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null
+   "content": null,
+   "titleEn": "Resident Evil Veronica Is a Third-Person Game, Capcom Confirms"
   },
   {
    "id": 13,
    "category": "业界",
-   "title": "Godzilla: Destroy All Monsters Melee Remastered Is Up for Preorder at Select Retailers, Out in November",
-   "summary": "Godzilla: Destroy All Monsters Melee Remastered is up for preorder at select retailers. We've broken down wher",
+   "title": "《哥斯拉：消灭所有怪物近战重制版》将于 11 月在指定零售商处接受预订",
+   "summary": "《哥斯拉：毁灭所有怪物近战重制版》现已在指定零售商处接受预订。我们已经分手了",
    "source": "IGN",
    "url": "https://www.ign.com/articles/godzilla-destroy-all-monsters-melee-remastered-where-to-preorder",
    "image": "https://assets-prd.ignimgs.com/2026/06/10/godzilla-destroy-all-monsters-melee-remastered-1781094452489.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null
+   "content": null,
+   "titleEn": "Godzilla: Destroy All Monsters Melee Remastered Is Up for Preorder at Select Retailers, Out in November"
   },
   {
    "id": 14,
    "category": "业界",
-   "title": "Capcom Explains How Tifa From Final Fantasy 7 Came to Be a Street Fighter 6 DLC Character",
-   "summary": "Capcom has discussed the eye-catching inclusion of Tifa from Final Fantasy 7 came to be a guest DLC character ",
+   "title": "Capcom 解释《最终幻想 7》中的蒂法如何成为《街头霸王 6》DLC 角色",
+   "summary": "卡普空 (Capcom) 讨论了《最终幻想 7》中引人注目的蒂法 (Tifa) 成为客座 DLC 角色的问题",
    "source": "IGN",
    "url": "https://www.ign.com/articles/capcom-explains-how-tifa-from-final-fantasy-7-came-to-be-a-street-fighter-6-dlc-character",
    "image": "https://assets-prd.ignimgs.com/2026/06/10/tifa-1781096767643.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null
+   "content": null,
+   "titleEn": "Capcom Explains How Tifa From Final Fantasy 7 Came to Be a Street Fighter 6 DLC Character"
   },
   {
    "id": 15,
    "category": "业界",
-   "title": "Halo: Campaign Evolved – The Final Preview",
+   "title": "光环：战役演变 – 最终预览",
    "summary": "",
    "source": "IGN",
    "url": "https://www.ign.com/articles/halo-campaign-evolved-the-final-preview",
    "image": "https://assets-prd.ignimgs.com/2026/06/10/halo-campaign-evolved-blogroll-1781072910946.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null
+   "content": null,
+   "titleEn": "Halo: Campaign Evolved – The Final Preview"
   },
   {
    "id": 16,
    "category": "业界",
-   "title": "Fable Let Me Choose Whether a Talking Pig Should Live or Become Lunch | IGN Preview",
-   "summary": "After a 30-minute demo of Fable's life-sim elements specifically, I'm pretty sold on its \"game within a game,\"",
+   "title": "寓言让我选择一只会说话的猪是活下去还是成为午餐IGN 预览",
+   "summary": "在对《神鬼寓言》的生活模拟元素进行了 30 分钟的演示后，我对它的“游戏中的游戏”非常着迷，",
    "source": "IGN",
    "url": "https://www.ign.com/articles/fable-let-me-choose-whether-a-talking-pig-should-live-or-become-lunch-ign-preview",
    "image": "https://assets-prd.ignimgs.com/2026/06/09/fable-sgf-preview-blogroll-1781036857254.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null
+   "content": null,
+   "titleEn": "Fable Let Me Choose Whether a Talking Pig Should Live or Become Lunch | IGN Preview"
   },
   {
    "id": 17,
    "category": "主机",
-   "title": "Gears of War: E-Day Devs on Respecting the Lore, Game Length, New Movement Mechanics, and More",
-   "summary": "IGN interviews The Coalition to find out more on Xbox console exclusive Gears of War: E-Day.",
+   "title": "战争机器：E-Day 开发者谈论尊重传说、游戏长度、新运动机制等",
+   "summary": "IGN 采访了 The Coalition，以了解有关 Xbox 主机独占《战争机器：E-Day》的更多信息。",
    "source": "IGN",
    "url": "https://www.ign.com/articles/gears-e-day-devs-on-gears-lore-game-length-new-movement-mechanics-and-ai",
    "image": "https://assets-prd.ignimgs.com/2026/06/10/gears-of-war-eday-br-1781083823810.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null
+   "content": null,
+   "titleEn": "Gears of War: E-Day Devs on Respecting the Lore, Game Length, New Movement Mechanics, and More"
   },
   {
    "id": 18,
    "category": "主机",
-   "title": "Gears Of War: E-Day Is Bigger, Bloodier, And More Ambitious Than We Expected",
-   "summary": "Gears of War: E-Day made a big splash during the Xbox Games Showcase, as The Coalition dropped an action-packe",
+   "title": "战争机器：E-Day 比我们预期的更大、更血腥、更雄心勃勃",
+   "summary": "战争机器：E-Day 在 Xbox 游戏展示会上引起了巨大轰动，联盟推出了一款动作游戏",
    "source": "GameSpot",
    "url": "https://www.gamespot.com/articles/gears-of-war-e-day-is-bigger-bloodier-and-more-ambitious-than-we-expected/",
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Gears-E-Day_147a44.jpg?w=300",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null
+   "content": null,
+   "titleEn": "Gears Of War: E-Day Is Bigger, Bloodier, And More Ambitious Than We Expected"
   },
   {
    "id": 19,
    "category": "业界",
-   "title": "Gears of War: E-Day Happened Because Starting Over Sounded More Fun Than Gears 6",
-   "summary": "Gears of War: E-Day will once again see fan-favorite characters like Marcus Fenix and Dominic Santiago headlin",
+   "title": "《战争机器：E-Day》之所以举办，是因为从头开始听起来比《战争机器 6》更有趣",
+   "summary": "《战争机器：E-Day》将再次看到马库斯·菲尼克斯和多米尼克·圣地亚哥等深受粉丝喜爱的角色担任主角",
    "source": "GameSpot",
    "url": "https://www.gamespot.com/articles/gears-of-war-e-day-happened-because-starting-over-sounded-more-fun-than-gears-6/",
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Gears-Eday-2.jpg?w=300",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null
+   "content": null,
+   "titleEn": "Gears of War: E-Day Happened Because Starting Over Sounded More Fun Than Gears 6"
   },
   {
    "id": 20,
    "category": "业界",
-   "title": "Bloober Team Says It’s Humbled By The “Many Corpses” In The Horror Multiplayer Genre",
-   "summary": "The realm of asymmetrical horror multiplayer games grows a little bigger with Saw: Genesis , Bloober Team and ",
+   "title": "Bloober 团队表示，他们对恐怖多人游戏类型中的“许多尸体”感到羞愧",
+   "summary": "《电锯惊魂：创世记》、《Bloober Team》和《电锯惊魂》让非对称恐怖多人游戏的领域变得更加广阔。",
    "source": "GameSpot",
    "url": "https://www.gamespot.com/articles/bloober-team-says-its-humbled-by-the-many-corpses-in-the-horror-multiplayer-genre/",
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/saw-genesis.jpg?w=300",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null
+   "content": null,
+   "titleEn": "Bloober Team Says It’s Humbled By The “Many Corpses” In The Horror Multiplayer Genre"
   },
   {
    "id": 21,
@@ -1729,43 +1745,6 @@
   {
    "id": 43,
    "category": "业界",
-   "title": "DC巨制《超级少女》发布中国独家海报 史诗对决引爆暑期大银幕",
-   "summary": "DC影业全新力作《超级少女》（Supergirl）即将于6月26日在中国内地与北美同步上映，自官宣定档以来，全网热度一路走高，观众期待值持续升温，今日影片特别发布中国独家海报，五大角色集结亮相，带观众提前解锁高燃热血的超",
-   "source": "机核",
-   "url": "https://www.gcores.com/articles/215707",
-   "image": "https://image.gcores.com/d4be4be7983e75778a89b117c5546fbf-1920-1080.webp?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
-   "isVideo": false,
-   "ts": 1781072795000,
-   "content": [
-    {
-     "t": "p",
-     "v": "DC影业全新力作《超级少女》（Supergirl）即将于6月26日在中国内地与北美同步上映，自官宣定档以来，全网热度一路走高，观众期待值持续升温，今日影片特别发布中国独家海报，五大角色集结亮相，带观众提前解锁高燃热血的超英对决氛围。"
-    },
-    {
-     "t": "img",
-     "v": "https://image.gcores.com/798c077e106e6e77d50d0c61e8364256-3000-4444.jpg"
-    },
-    {
-     "t": "p",
-     "v": "中国独家海报以漫天飞沙的外星球为背景，营造出充满史诗感的太空氛围。超级少女卡拉以战斗姿态亮相，俯身蓄力随时准备出击；小氪前爪紧蹬地面，似乎随时冲向敌人，守护唯一的主人；暴狼罗伯手中燃烧火星的铁链横贯画面，将对抗的紧绷氛围推向顶点；少女露西剑指仇人，透露出复仇的急切心情；反派克雷姆露出高傲神情，预示这场星际征途中暗藏杀机，多方势力的交锋已然箭在弦上。"
-    },
-    {
-     "t": "p",
-     "v": "从这款海报呈现的视觉质感来看，观众能够一窥影片全力打造的星际美学。在《超级少女》的拍摄过程中，摄影指导罗伯·哈迪采用变形镜头拍摄，以胶片风格的光影层次与高对比度明暗设计，还原外星荒原的苍凉质感，强化打斗场景的冲击力。美术团队为影片绘制了343张场景设计图，从荒漠营地到星际据点，均采用实景搭建的方式进行拍摄。在埃夫利城镇广场，剧组使用了3058米长的布料，分别制作帐篷、遮盖布、窗帘等装饰道具，打造充满奇幻感的外星球景观。整部电影丰富且考究的视觉设计，将为观众带来一场耳目一新的大银幕盛宴。"
-    },
-    {
-     "t": "p",
-     "v": "作为DC宇宙的全新篇章，《超级少女》打破传统超英叙事框架，以卡拉的冒险成长为主线，搭配特色反派与亦正亦邪的盟友，构筑出极具张力的星际冒险故事，是2026年暑期最受全球观众期待的大片之一。"
-    },
-    {
-     "t": "p",
-     "v": "《超级少女》由DC影业出品，华纳兄弟影片公司发行，克雷格·吉勒斯佩执导，DC影业掌门人皮特·萨夫兰与詹姆斯·古恩担任制片人，米莉·阿尔柯克领衔主演，大卫·科伦斯韦、杰森·莫玛等联袂出演。电影将以2D/CINITY/IMAX/Dolby Cinema格式于6月26日正式登陆全国影院，属于《超级少女》的宇宙传奇即将揭晓。"
-    }
-   ]
-  },
-  {
-   "id": 44,
-   "category": "业界",
    "title": "《BanG Dream! Our Notes》6月26日举办事前登录纪念特番，将公开新情报",
    "summary": "2026年6月10日，Bushiroad宣布将于2026年6月26日播出“Our Notes 事前登录开始纪念特番”。 该特番将邀请《BanG Dream! Our Notes》中登场的全5支乐队的声优参与，公布游戏新情",
    "source": "机核",
@@ -1801,7 +1780,7 @@
    ]
   },
   {
-   "id": 45,
+   "id": 44,
    "category": "主机",
    "title": "《卧龙：苍天陨落 完全版》Switch2版将于2026年9月3日发售",
    "summary": "光荣特库摩于2026年6月10日宣布，《卧龙：苍天陨落 完全版》的Nintendo Switch 2版本将于2026年9月3日发售，售价7480日元（含税）。本作由Team NINJA开发，是一款暗黑三国动作RPG。 <",
@@ -1822,7 +1801,7 @@
    ]
   },
   {
-   "id": 46,
+   "id": 45,
    "category": "PC",
    "title": "《虚空潜者：逃出深渊》确认参加 Steam 夏季新品节，将带来全新试玩内容",
    "summary": "由 STUDIO NEMO 开发、Boltray Games发行的《虚空潜者：逃出深渊》（VOID DIVER: Escape from the Abyss）将参加 2026 Steam 夏季新品节，并提前在 2026 ",
@@ -1879,7 +1858,7 @@
    ]
   },
   {
-   "id": 47,
+   "id": 46,
    "category": "主机",
    "title": "刺绣风中世纪叙事新作《红鹿旅馆》确认将于7月21日正式发售",
    "summary": "中国独立游戏发行商 Aurakenn Games携 捷克独立游戏团队 Attu Games 今日正式宣布，旗下新作《红鹿旅馆（Scarlet Deer Inn）》将于2026年7月21日正式登陆 Steam 平台，主机版",
@@ -1968,7 +1947,7 @@
    ]
   },
   {
-   "id": 48,
+   "id": 47,
    "category": "主机",
    "title": "《轨道双子星》将于2026年9月3日正式登陆Nintendo Switch 2",
    "summary": "正如在今日的任天堂直面会中所公布的，由位于东京的独立游戏开发团队 Shapefarm 倾力打造、Kepler Interactive 发行的复古动漫风双人合作冒险游戏《轨道双子星》，将于 2026年9月3日正式发售 ，并",
@@ -2049,7 +2028,7 @@
    ]
   },
   {
-   "id": 49,
+   "id": 48,
    "category": "主机",
    "title": "《吸血鬼幸存者》制作团队新作《咒术回战 激斗：幸存潮汐》正式公布",
    "summary": "集英社游戏宣布，由 poncle（英国）开发、以《咒术回战》的世界为舞台的生存大逃杀游戏《咒术回战 激斗：幸存潮汐》正式公开。本作于6月9日播出的“Nintendo Direct 2026.6.9”节目中，通过游戏影像的",
@@ -2206,7 +2185,7 @@
    ]
   },
   {
-   "id": 50,
+   "id": 49,
    "category": "主机",
    "title": "《龙之信条2》3.1版本更新上线，新增永久传送石等改动",
    "summary": "卡普空现已面向 PlayStation 5 / Xbox Series X|S / Steam 平台推送《龙之信条2》3.1版本更新，此次更新聚焦多项游戏体验改进，为即将于 10 月推出的资料片《龙之信条2：黑暗觉者》做",
@@ -2243,7 +2222,7 @@
    ]
   },
   {
-   "id": 51,
+   "id": 50,
    "category": "手游",
    "title": "《饥荒：联机版》移动版将于7月21日推出，iOS/Android版开启预注册",
    "summary": "发行商 Playdigious 宣布，《饥荒：联机版》移动版将于7月21日登陆 iOS 和 Android 平台。目前游戏已在 App Store 和 Google Play 开启预注册。 本作是《饥荒》的独立多人扩展包",
@@ -2264,6 +2243,195 @@
     {
      "t": "p",
      "v": "本作是《饥荒》的独立多人扩展包，支持最多4人在线合作或本地联机。移动版针对触屏操作进行了界面优化，并支持云存档和控制器操作，方便玩家在不同设备间同步进度。《饥荒：联机版》原版于2016年在 PC 平台推出，此次移动版由发行商 Playdigious 负责移植。更多详情可查看商店页面。"
+    }
+   ]
+  },
+  {
+   "id": 51,
+   "category": "业界",
+   "title": "“机核股东区”新周边首发曝光！【2026深圳核聚变周边前瞻】",
+   "summary": "各位股东朋友们大家好！ 核聚变游戏嘉年华深圳站即将开幕，在本次活动中，依然少不了热门新游试玩、精彩舞台活动、限定周边收集、沉浸式体验最热烈的玩家氛围！本次也特别设置了“机核股东区”，进行全新的周边商品贩售+GPASS会员",
+   "source": "机核",
+   "url": "https://www.gcores.com/articles/215642",
+   "image": "https://image.gcores.com/c52fe7ddf1e9d805e887fcfd39c35913-1920-1080.png?x-oss-process=image/resize,limit_1,m_fill,w_626,h_292/quality,q_90",
+   "isVideo": false,
+   "ts": 1781056800000,
+   "content": [
+    {
+     "t": "p",
+     "v": "各位股东朋友们大家好！"
+    },
+    {
+     "t": "p",
+     "v": "核聚变游戏嘉年华深圳站即将开幕，在本次活动中，依然少不了热门新游试玩、精彩舞台活动、限定周边收集、沉浸式体验最热烈的玩家氛围！本次也特别设置了“机核股东区”，进行全新的周边商品贩售+GPASS会员四周年徽章赠送。"
+    },
+    {
+     "t": "p",
+     "v": "具体都有什么呢？让我们跟随这篇文章来看看！"
+    },
+    {
+     "t": "h",
+     "v": "“机核股东区”位置"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/b599f0b5a8e8ca86df7a0278981e5ad1-3200-1800.webp"
+    },
+    {
+     "t": "p",
+     "v": "本次2026深圳核聚变，“机核股东区”位于A区的A22号，也就是主舞台旁边！只要您看到主舞台，就能看到我们啦。"
+    },
+    {
+     "t": "h",
+     "v": "GPASS四周年徽章赠送"
+    },
+    {
+     "t": "p",
+     "v": "和之前的核聚变一样，我们也特别设计制作了全新的GPASS四周年徽章。"
+    },
+    {
+     "t": "p",
+     "v": "来到本区，现场向本展台工作人员出示您的GPASS会员页面（展示机核APP上的ID即可）就能免费领取全新四周年徽章。"
+    },
+    {
+     "t": "p",
+     "v": "本次展会也会进行周边贩售，具体商品请看下面！"
+    },
+    {
+     "t": "p",
+     "v": "（此次周边依旧由今年设计了“机核网大股东礼包”的@晓得设计_大C 老师倾情设计！）"
+    },
+    {
+     "t": "h",
+     "v": "“酒蒙子已折叠DO NOT DISTURB”亚克力门挂"
+    },
+    {
+     "t": "p",
+     "v": "本产品材质为亚克力，尺寸是200*80mm"
+    },
+    {
+     "t": "h",
+     "v": "“这里是二次元该滚的是你”亚克力门挂"
+    },
+    {
+     "t": "p",
+     "v": "本产品材质为亚克力，尺寸是200*80mm"
+    },
+    {
+     "t": "h",
+     "v": "“Where's Your Horse？”机械键盘键帽（空格键）"
+    },
+    {
+     "t": "p",
+     "v": "本产品为原厂6.25U PBT材质，一个空格键键帽"
+    },
+    {
+     "t": "h",
+     "v": "“只管喝酒不谈感情” 不锈钢啤酒杯"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/f76ae1bd7f9cf03b8c9fdcd49b2b06e9-4284-5712.jpg"
+    },
+    {
+     "t": "p",
+     "v": "本产品材质为304不锈钢，酒杯容量为500ml"
+    },
+    {
+     "t": "h",
+     "v": "“扎实”便携折叠椅（有背带）"
+    },
+    {
+     "t": "p",
+     "v": "本产品材质为帆布，尺寸为25*23*26cm"
+    },
+    {
+     "t": "h",
+     "v": "“帮您垫着”软木杯垫"
+    },
+    {
+     "t": "p",
+     "v": "本产品材质为软木材质"
+    },
+    {
+     "t": "h",
+     "v": "老中小登+酒蒙子 吧唧"
+    },
+    {
+     "t": "p",
+     "v": "此次也制作了全新的马口铁徽章！共四款"
+    },
+    {
+     "t": "h",
+     "v": "核聚变限定“中元夜话”纳凉折扇（两款）"
+    },
+    {
+     "t": "p",
+     "v": "这两款均为仿乌木扇骨折扇，尺寸为八寸。"
+    },
+    {
+     "t": "p",
+     "v": "另外，本展台也会展示和贩售之前的机核桌游“绝对不存在的游戏”，以及其他曾经通贩的商品，欢迎大家随时来转转，GPASS会员也别忘记领取免费的徽章哦。请记住我们的展位号为A22！"
+    },
+    {
+     "t": "h",
+     "v": "展会详情"
+    },
+    {
+     "t": "p",
+     "v": "展会时间："
+    },
+    {
+     "t": "p",
+     "v": "2026 年 6 月 27 日（周六）9：00-17：00（16：00停止入场）"
+    },
+    {
+     "t": "p",
+     "v": "2026 年 6 月 28 日（周日）9：00-17：00（16：00停止入场）"
+    },
+    {
+     "t": "p",
+     "v": "展会地点："
+    },
+    {
+     "t": "p",
+     "v": "深圳国际会展中心 10号馆"
+    },
+    {
+     "t": "p",
+     "v": "票务信息："
+    },
+    {
+     "t": "p",
+     "v": "单日票：全价 108 元/人 | 优惠票价 98 元/人"
+    },
+    {
+     "t": "p",
+     "v": "票务平台：哔哩哔哩会员购"
+    },
+    {
+     "t": "p",
+     "v": "特别说明：凡在哔哩哔哩会员购购买核聚变门票的玩家们可以到现场兑换「实体纪念票」，本次门票为纪念品，不具备入场功能，现场入场请以“电子票”为依据携有效身份证件入场哦～"
+    },
+    {
+     "t": "p",
+     "v": "重点提醒："
+    },
+    {
+     "t": "p",
+     "v": "应场馆要求，禁止观众在现场进行自制周边、物料、食品的发放行为，届时现场安保工作人员会按照治安标准，对入场观众进行相应检查，如果有发现类似大量携带物，会被禁止入场。"
+    },
+    {
+     "t": "p",
+     "v": "现场禁止穿着 Cosplay 服装、携带 Cosplay 道具及进行相关角色扮演活动。"
+    },
+    {
+     "t": "p",
+     "v": "因场馆物业安全与卫生管理规定，严禁点外卖，场馆内部已经预置并开放了专门的餐饮饭店。"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gcores.com/3ab565833104b48a7cbe9a89fae7d79d-1920-1080.webp"
     }
    ]
   },
@@ -3480,7 +3648,7 @@
  "flash": [
   {
    "ts": 1781106492000,
-   "text": "PlayStation Plus Extra/Premium Games For June 2026 Revealed",
+   "text": "2026 年 6 月推出的 PlayStation Plus Extra/Premium 游戏揭晓",
    "id": 1
   },
   {
@@ -3500,27 +3668,27 @@
   },
   {
    "ts": 1781103736000,
-   "text": "Players Think Kingdom Hearts’ New Art Is AI-Generated",
+   "text": "玩家认为《王国之心》的新艺术是人工智能生成的",
    "id": 5
   },
   {
    "ts": 1781103638000,
-   "text": "Gears Of War: E-Day Modernizes Movement Without Going Full Parkour",
+   "text": "战争机器：E-Day 在不进行全面跑酷的情况下实现运动现代化",
    "id": 6
   },
   {
    "ts": 1781103635000,
-   "text": "Fable’s 1,000 Romance Options Sounds Like The Ultimate Challenge For Completionists",
+   "text": "《神鬼寓言》的 1000 种浪漫选择听起来像是完美主义者的终极挑战",
    "id": 7
   },
   {
    "ts": 1781103628000,
-   "text": "Fable Lets You Live A Second Life, Not Just Save The World",
+   "text": "寓言让你获得第二次生命，而不仅仅是拯救世界",
    "id": 8
   },
   {
    "ts": 1781103602000,
-   "text": "Former Nintendo Staff Say The Legend of Zelda: Ocarina of Time Remake Reveal Should Have Been Changed to Show More, Following High-Profile Leak",
+   "text": "任天堂前员工表示，在高调泄密后，《塞尔达传说：时之笛》重制版应该改为展示更多内容",
    "id": 9
   },
   {
@@ -3530,12 +3698,12 @@
   },
   {
    "ts": 1781103600000,
-   "text": "How Will Capcom Address Alfred Ashford's Storyline in Resident Evil Veronica?",
+   "text": "卡普空将如何讲述《生化危机：维罗妮卡》中阿尔弗雷德·阿什福德的故事情节？",
    "id": 11
   },
   {
    "ts": 1781103600000,
-   "text": "Resident Evil Veronica Is a Third-Person Game, Capcom Confirms",
+   "text": "卡普空确认《生化危机维罗妮卡》是一款第三人称游戏",
    "id": 12
   }
  ]
