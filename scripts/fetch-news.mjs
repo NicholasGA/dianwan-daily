@@ -36,6 +36,9 @@ function field(xml, tag) {
 
 const stripTags = (s) => decode(s.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
 
+// http 图床(如触乐)在 HTTPS 站点会被混合内容策略拦截,经 wsrv.nl 图片代理转 https
+const httpsImage = (u) => (u && u.startsWith("http://") ? `https://wsrv.nl/?url=${encodeURIComponent(u.slice(7))}` : u);
+
 async function get(url) {
   const res = await fetch(url, { headers: UA, signal: AbortSignal.timeout(20000), redirect: "follow" });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -204,7 +207,7 @@ function finalizeBlocks(blocks) {
       // 站点装饰图/二维码/头像等非内容图
       if (/static\/pages\/|author_cover|avatar|qrcode|loading\.gif|\.gif\?|logo/i.test(b.v)) continue;
       imgCount++;
-      out.push({ t: "img", v: b.v.replace(/["'\\]/g, "") });
+      out.push({ t: "img", v: httpsImage(b.v.replace(/["'\\]/g, "")) });
     } else {
       const v = b.v.replace(/\s+/g, " ").trim();
       if (!v || BOILERPLATE.test(v)) continue;
@@ -251,7 +254,7 @@ const news = collected
     return true;
   })
   .slice(0, MAX_TOTAL)
-  .map((n, i) => ({ id: i + 1, category: categorize(n.title + " " + n.summary), ...n }));
+  .map((n, i) => ({ id: i + 1, category: categorize(n.title + " " + n.summary), ...n, image: httpsImage(n.image) }));
 
 if (news.length < 5) {
   console.error(`仅抓到 ${news.length} 条,保留原 news.json 不更新`);

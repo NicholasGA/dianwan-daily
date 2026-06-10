@@ -61,22 +61,27 @@
 
   /* ---------- 远程数据(news.json) ---------- */
 
+  // http 图在 HTTPS 站点会被混合内容拦截,转 wsrv.nl 代理(兜底旧缓存数据,新数据已在抓取端处理)
+  const httpsImage = (u) => (u && u.startsWith("http://") ? `https://wsrv.nl/?url=${encodeURIComponent(u.slice(7))}` : u);
+
   // 全文块校验:[{t:'p'|'h'|'img', v}] 不合规则丢弃
   function sanitizeBlocks(content) {
     if (!Array.isArray(content)) return null;
-    const blocks = content.filter(
-      (b) =>
-        b &&
-        typeof b.v === "string" &&
-        (b.t === "p" || b.t === "h" || (b.t === "img" && /^https?:\/\//.test(b.v)))
-    );
+    const blocks = content
+      .filter(
+        (b) =>
+          b &&
+          typeof b.v === "string" &&
+          (b.t === "p" || b.t === "h" || (b.t === "img" && /^https?:\/\//.test(b.v)))
+      )
+      .map((b) => (b.t === "img" ? { t: "img", v: httpsImage(b.v) } : b));
     return blocks.length ? blocks : null;
   }
 
   function normalizeRemote(remote) {
     const news = (remote.news || []).map((n, i) => {
       const cleanUrl = /^https?:\/\//.test(n.url || "") ? n.url.replace(/["'\\]/g, "") : null;
-      const cleanImg = /^https?:\/\//.test(n.image || "") ? n.image.replace(/["'\\]/g, "") : null;
+      const cleanImg = /^https?:\/\//.test(n.image || "") ? httpsImage(n.image.replace(/["'\\]/g, "")) : null;
       return {
         id: n.id || i + 1,
         category: CATEGORIES.includes(n.category) ? n.category : "业界",
