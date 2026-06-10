@@ -40,9 +40,16 @@ const stripTags = (s) => decode(s.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ")
 const httpsImage = (u) => (u && u.startsWith("http://") ? `https://wsrv.nl/?url=${encodeURIComponent(u.slice(7))}` : u);
 
 async function get(url) {
-  const res = await fetch(url, { headers: UA, signal: AbortSignal.timeout(20000), redirect: "follow" });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return res.text();
+  // 触乐等 http 源从 Actions 运行器抓取偶发超时,失败重试一次
+  for (let attempt = 0; ; attempt++) {
+    try {
+      const res = await fetch(url, { headers: UA, signal: AbortSignal.timeout(20000), redirect: "follow" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.text();
+    } catch (err) {
+      if (attempt >= 1) throw err;
+    }
+  }
 }
 
 /* ---------- 元数据收集:RSS 源 ---------- */
