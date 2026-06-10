@@ -27,7 +27,9 @@
           <strong id="streakTitle">哇!连续追新 25 天</strong>
           <span id="streakSub">你比 81% 的玩家更早知道业界动态</span>
         </div>
-        <div class="streak-dots"><i></i><i></i><i></i></div>
+        <button class="refresh-btn" id="refreshBtn" aria-label="刷新">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v4.5h-4.5"/></svg>
+        </button>
       </div>
 
       <h1 class="headline" id="headline">今日 12 条<br>游戏新闻</h1>
@@ -74,7 +76,12 @@
   <!-- ============ 快讯视图 ============ -->
   <div class="view hidden" id="view-flash">
     <header class="flash-hero">
-      <h1 class="headline headline-sm">快讯</h1>
+      <div class="flash-head">
+        <h1 class="headline headline-sm">快讯</h1>
+        <button class="refresh-btn" aria-label="刷新">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v4.5h-4.5"/></svg>
+        </button>
+      </div>
       <p class="flash-sub" id="flashDate">实时业界动态速递</p>
     </header>
     <main class="sheet sheet-flash">
@@ -119,6 +126,7 @@
       <h1 id="detailTitle"></h1>
       <div class="detail-meta" id="detailMeta"></div>
       <div class="detail-content" id="detailContent"></div>
+      <div id="detailLink"></div>
       <div class="detail-actions">
         <button class="act" id="actLike">👍 <span>点赞</span></button>
         <button class="act" id="actFav">⭐ <span>收藏</span></button>
