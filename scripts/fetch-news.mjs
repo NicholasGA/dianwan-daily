@@ -77,6 +77,14 @@ async function fetchRss(feed) {
     const title = stripTags(field(item, "title"));
     if (!title) continue;
     const descRaw = field(item, "description");
+    // 英文站文章页有 Cloudflare 防护抓不到全文,RSS 描述里的导语段落是唯一可用正文
+    let descBlocks;
+    if (feed.fullDesc) {
+      const html = decode(descRaw);
+      const blocks = htmlToBlocks(html).filter((b) => b.t !== "img" || /^https?:/.test(b.v));
+      const plain = stripTags(descRaw);
+      descBlocks = blocks.some((b) => b.t !== "img") ? blocks : plain ? [{ t: "p", v: plain }] : undefined;
+    }
     out.push({
       title,
       summary: stripTags(descRaw).slice(0, 110),
@@ -85,6 +93,7 @@ async function fetchRss(feed) {
       image: pickImage(item, descRaw),
       isVideo: /\/videos?\//.test(link),
       ts: Date.parse(field(item, "pubDate")) || Date.now(),
+      descBlocks,
     });
     if (out.length >= feed.max) break;
   }
@@ -145,9 +154,12 @@ const FEEDS = [
   { source: "机核", fetcher: fetchRss, url: "https://www.gcores.com/rss", skip: /\/radios\//, max: 15 },
   { source: "游研社", fetcher: fetchRss, url: "https://www.yystv.cn/rss/feed", max: 15 },
   { source: "触乐", fetcher: fetchRss, url: "http://www.chuapp.com/feed", max: 15 },
-  { source: "IGN", fetcher: fetchRss, url: "https://feeds.ign.com/ign/games-all", max: 8 },
-  { source: "GameSpot", fetcher: fetchRss, url: "https://www.gamespot.com/feeds/game-news/", max: 8 },
+  { source: "IGN", fetcher: fetchRss, url: "https://feeds.ign.com/ign/games-all", max: 8, fullDesc: true },
+  { source: "GameSpot", fetcher: fetchRss, url: "https://www.gamespot.com/feeds/game-news/", max: 8, fullDesc: true },
 ];
+
+// 同题去重时的来源优先级:中文源有全文,优先保留
+const PRIORITY = { 游民星空: 0, 机核: 0, 游研社: 0, 触乐: 0, IGN: 1, GameSpot: 1 };
 
 /* ---------- 全文提取 ---------- */
 
@@ -206,7 +218,10 @@ async function extractContent(item) {
     }
 
     const domain = Object.keys(CONTAINERS).find((d) => item.url.includes(d));
-    if (!domain) return null; // IGN / GameSpot 等:不支持全文
+    if (!domain) {
+      // IGN / GameSpot 等:文章页抓不到,退而用 RSS 导语段落
+      return item.descBlocks ? finalizeBlocks(item.descBlocks) : null;
+    }
     const html = await get(item.url);
     const m = html.match(CONTAINERS[domain]);
     if (!m) return null;
@@ -217,7 +232,7 @@ async function extractContent(item) {
   }
 }
 
-const BOILERPLATE = /(本文由游民星空|更多相关资讯请关注|转载请注明|责任编辑|关注游民星空|点击进入专题|友情提示：支持键盘|点此前往|游民星空APP|随时掌握游戏情报|出版物经营许可证|京ICP备|京公网安备|人喜欢$)/;
+const BOILERPLATE = /(本文由游民星空|更多相关资讯请关注|转载请注明|责任编辑|关注游民星空|点击进入专题|友情提示：支持键盘|点此前往|游民星空APP|随时掌握游戏情报|出版物经营许可证|京ICP备|京公网安备|人喜欢$|This story is developing|Sign up for|Subscribe to our|Got a news tip)/i;
 
 function finalizeBlocks(blocks) {
   const out = [];
@@ -284,43 +299,27 @@ const collected = await Promise.all(
   })
 );
 
+// 1) 粗去重(同标题前缀)+ 按时间取候选池
 const seen = new Set();
-const perSource = {};
-const news = collected
+const candidates = collected
   .flat()
   .sort((a, b) => b.ts - a.ts)
   .filter((n) => {
     const k = n.title.slice(0, 24);
     if (seen.has(k)) return false;
     seen.add(k);
-    perSource[n.source] = (perSource[n.source] || 0) + 1;
-    return perSource[n.source] <= PER_SOURCE_CAP;
+    return true;
   })
-  .slice(0, MAX_TOTAL)
-  .map((n, i) => ({ id: i + 1, category: categorize(n.title + " " + n.summary), ...n, image: httpsImage(n.image) }));
+  .slice(0, 90);
 
-if (news.length < 5) {
-  console.error(`仅抓到 ${news.length} 条,保留原 news.json 不更新`);
+if (candidates.length < 5) {
+  console.error(`仅抓到 ${candidates.length} 条,保留原 news.json 不更新`);
   process.exit(0);
 }
 
-// 并发提取全文(限流)
-let cursor = 0;
-let fullCount = 0;
-await Promise.all(
-  Array.from({ length: CONCURRENCY }, async () => {
-    while (cursor < news.length) {
-      const item = news[cursor++];
-      item.content = await extractContent(item);
-      if (item.content) fullCount++;
-    }
-  })
-);
-console.log(`全文提取成功:${fullCount}/${news.length}`);
-
-// 英文条目译为中文(原题存入 titleEn,详情页对照显示);失败保留原文
+// 2) 英文条目先译标题/摘要(原题存 titleEn)——跨语言查重需要中文标题可比
 let translated = 0;
-for (const n of news) {
+for (const n of candidates) {
   if (!isEnglish(n.title)) continue;
   try {
     n.titleEn = n.title;
@@ -333,6 +332,91 @@ for (const n of news) {
   }
 }
 console.log(`英文翻译:${translated} 条`);
+
+// 3) 同一事件跨来源查重:标题二元组相似度 + 《游戏名》共现,优先保留中文源
+const normT = (t) => t.toLowerCase().replace(/[^一-鿿a-z0-9]/g, "");
+const bigrams = (s) => {
+  const o = new Set();
+  for (let i = 0; i < s.length - 1; i++) o.add(s.slice(i, i + 2));
+  return o;
+};
+const overlap = (a, b) => {
+  const A = bigrams(a), B = bigrams(b);
+  if (!A.size || !B.size) return 0;
+  let n = 0;
+  for (const x of A) if (B.has(x)) n++;
+  return n / Math.min(A.size, B.size);
+};
+const gameNames = (t) => [...t.matchAll(/《([^》]+)》/g)].map((m) => normT(m[1]));
+// 日期/平台/发售套话会虚抬相似度("将于2026年X月X日登陆Switch"),比较前剥掉
+const BOILER_RE = /(将于|正式|登陆|发售|公布|宣布|确认|推出|上线|预购|开启|即将|nintendoswitch2?|switch2?|playstation|ps5|ps4|xboxseries|xbox|steam|\d+)/g;
+function sameStory(a, b) {
+  const na = gameNames(a.title), nb = gameNames(b.title);
+  const shared = na.find((x) => nb.includes(x));
+  if (shared) {
+    // 同一游戏:去掉游戏名后比较剩余表述,避免"同游戏不同事"被误合并
+    const ra = normT(a.title).split(shared).join("");
+    const rb = normT(b.title).split(shared).join("");
+    if (ra.length < 4 && rb.length < 4) return true;
+    return overlap(ra, rb) >= 0.35;
+  }
+  const sa = normT(a.title).replace(BOILER_RE, "");
+  const sb = normT(b.title).replace(BOILER_RE, "");
+  if (sa.length < 4 || sb.length < 4) return false;
+  return overlap(sa, sb) >= 0.6;
+}
+
+const ranked = [...candidates].sort(
+  (x, y) => (PRIORITY[x.source] ?? 1) - (PRIORITY[y.source] ?? 1) || y.ts - x.ts
+);
+const winners = [];
+for (const c of ranked) {
+  const dup = winners.find((w) => sameStory(w, c));
+  if (dup) {
+    console.log(`同题剔除: [${c.source}] ${c.title.slice(0, 28)} ≈ [${dup.source}] ${dup.title.slice(0, 28)}`);
+    continue;
+  }
+  winners.push(c);
+}
+
+// 4) 按时间排序 + 单源上限 + 总量,定稿
+const perSource = {};
+const news = winners
+  .sort((a, b) => b.ts - a.ts)
+  .filter((n) => {
+    perSource[n.source] = (perSource[n.source] || 0) + 1;
+    return perSource[n.source] <= PER_SOURCE_CAP;
+  })
+  .slice(0, MAX_TOTAL)
+  .map((n, i) => ({ id: i + 1, category: categorize(n.title + " " + n.summary), ...n, image: httpsImage(n.image) }));
+
+// 5) 并发提取全文(限流)
+let cursor = 0;
+let fullCount = 0;
+await Promise.all(
+  Array.from({ length: CONCURRENCY }, async () => {
+    while (cursor < news.length) {
+      const item = news[cursor++];
+      item.content = await extractContent(item);
+      if (item.content) fullCount++;
+      delete item.descBlocks; // 中间数据不写入 news.json
+    }
+  })
+);
+console.log(`全文提取成功:${fullCount}/${news.length}`);
+
+// 6) 英文条目的正文段落译为中文(导语级,段落数少)
+for (const n of news) {
+  if (!n.titleEn || !n.content) continue;
+  for (const b of n.content) {
+    if (b.t === "img" || !isEnglish(b.v)) continue;
+    try {
+      b.v = await translate(b.v);
+    } catch {
+      /* 保留英文 */
+    }
+  }
+}
 
 const flash = news.slice(0, 12).map((n) => ({ ts: n.ts, text: n.title, id: n.id }));
 

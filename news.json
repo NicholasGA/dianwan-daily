@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-06-10T16:29:50.948Z",
+ "generatedAt": "2026-06-10T16:29:21.261Z",
  "news": [
   {
    "id": 1,
@@ -11,8 +11,37 @@
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/FF16.jpg?w=300",
    "isVideo": false,
    "ts": 1781106492000,
-   "content": null,
-   "titleEn": "PlayStation Plus Extra/Premium Games For June 2026 Revealed"
+   "titleEn": "PlayStation Plus Extra/Premium Games For June 2026 Revealed",
+   "content": [
+    {
+     "t": "p",
+     "v": "索尼公布了 6 月份将在 PlayStation Plus Extra 和 Premium 订阅者的游戏目录中推出的最新游戏。索尼还改变了新产品在美国、英国和日本的发布时间表，第一批产品将于 6 月 16 日上市，其他产品将在晚些时候上市。在全球其他地区，所有这些游戏将于 6 月 16 日开始发售。"
+    },
+    {
+     "t": "p",
+     "v": "本月的头条新闻是《最终幻想 16》。这部《最终幻想》系列的主线作品于 2023 年发布，是该系列的更黑暗、更成熟的版本。玩家将接替克莱夫·罗斯菲尔德 (Clive Rosfield)、罗莎莉亚第一盾以及他弟弟约书亚 (Joshua) 的守护者——他也恰好是艾康凤凰 (Eikon Phoenix) 的统治者——而动作角色扮演游戏将主要的《最终幻想》能力与动态战场选项结合在一起。虽然不包含在内，但您可以通过两个发布后扩展来升级冒险。"
+    },
+    {
+     "t": "p",
+     "v": "《Sonic X Shadow Generations》将经典热门《Sonic Generations》的完整重制版与《Shadow the Hedgehog》的全新独立战役结合在一起。它融合了经典的《刺猬索尼克》的乐趣和前卫的《暗影》的酷感，提供了两全其美的优点。 PS Plus 订阅者还可以在本月下载《Kingdom Come: Deliverance》，这是一款以中世纪波西米亚为背景的原创故事驱动型开放世界角色扮演游戏。这是一款关于为父母报仇和学习剑道的游戏，PS5 版本具有多项图形升级。"
+    },
+    {
+     "t": "p",
+     "v": "时间快进到几个世纪后的未来，《奇异人生：双重曝光》中，该系列的原创主角马克斯·考菲尔德 (Max Caulfield) 步入了聚光灯下。这位驻场摄影师发现她大学里的一位密友被残忍杀害，她利用自己的能力倒带时间，寻找阻止悲剧发生的方法。"
+    },
+    {
+     "t": "p",
+     "v": "任何想要尝试农业的人都可以在 Farming Simulator 25 中跳上拖拉机享受乐趣，Blades of Fire 是您本月可以尝试的另一款黑暗奇幻冒险游戏，如果您是 Crimson Desert 的粉丝，Pearl Abyss 的原创开放世界 MMORPG Black Desert 值得一试。"
+    },
+    {
+     "t": "p",
+     "v": "最后，PlayStation Plus Premium 订阅者可以试试《Gitaroo Man》，这是一款经典的 PlayStation 2 节奏游戏，具有硬摇滚的配乐和丰富多彩的艺术指导。"
+    },
+    {
+     "t": "p",
+     "v": "别忘了，所有 PS Plus 会员都可以领取三款免费游戏——Grounded Everything Yoked Edition、Nickelodeon All-Star Brawl 2 和 Warhammer 40,000: Darktide 2。"
+    }
+   ]
   },
   {
    "id": 2,
@@ -235,8 +264,37 @@
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/KH123.jpeg?w=215",
    "isVideo": false,
    "ts": 1781103736000,
-   "content": null,
-   "titleEn": "Players Think Kingdom Hearts’ New Art Is AI-Generated"
+   "titleEn": "Players Think Kingdom Hearts’ New Art Is AI-Generated",
+   "content": [
+    {
+     "t": "p",
+     "v": "昨天的 Nintendo Direct 确实让《王国之心》玩家议论纷纷，但这并不是史克威尔艾尼克斯在发布新的《王国之心 4》预告片并宣布整个《王国之心》三部曲的原生版本将于 10 月 8 日登陆 Switch 2 后所希望的那种讨论。相反，目光敏锐的玩家将注意力集中在看似由 AI 生成的关键艺术上，史克威尔艾尼克斯在《王国之心合集》宣布后不久就在 X 上分享了这些艺术 [I-III]"
+    },
+    {
+     "t": "p",
+     "v": "正如艺术家兼《王国之心》粉丝 Vexmyx 所指出的那样，该图像显示唐纳德一只手有四个手指，但另一只手有五个手指——众所周知，生成式人工智能工具往往难以处理手和手指，经常生成对象要么缺少数字，要么数字太多的图像。唐老鸭最近一次出现在《王国之心 3》中时，他只有四个手指，并且知道迪士尼对唐老鸭和高飞等传统角色的保护程度如何，很难想象他们会雇用一位不知道自己有多少根手指的艺术家。唐纳德的脚的形状也相当奇怪，尽管这可能只是一个视角问题，因为他在空中漂浮（飞翔？），一只脚（脚蹼？）在前，另一只脚在后面。"
+    },
+    {
+     "t": "p",
+     "v": "其他细节，比如唐纳德外套上的一个拉链和索拉心爱的键刃上的链条，看起来也相当奇怪和奇怪的不均匀，好像是由不太清楚拉链或链节如何工作的人画的。但时尚失礼并不止于拉链——Sora 鞋底上的花纹也被去掉了，呈现出一种紧密但不太正确的凸起方块图案，而他的鞋底上历史上有微小的凸起皇冠图案，与他脖子上的皇冠形吊坠相匹配。高飞似乎穿着钢头靴子，但他的右脚看起来比左脚长得多，而且似乎没有钢头。"
+    },
+    {
+     "t": "p",
+     "v": "同样，这可能只是一个视角问题，因为角色的姿势不同，但考虑到该系列的受欢迎程度，以及迪士尼对角色设计的严格要求，许多《王国之心》粉丝想知道该图像是否至少部分是由人工智能生成的。"
+    },
+    {
+     "t": "p",
+     "v": "“我不确定是完全生成的还是人工智能增强的，”Vexmyx 说道，并分享了一张图像，突出显示了图像中具有最明显人工智能指纹的部分。 “但我很失望。如果[人工智能的说法]属实，这是不可接受的，需要解决。”"
+    },
+    {
+     "t": "p",
+     "v": "虽然人为错误可能可以解释该图像的一些奇怪方面，但它肯定无法解释为什么该系列标志性钟楼的表面有看起来弯曲的指针。"
+    },
+    {
+     "t": "p",
+     "v": "GameSpot 已联系 Square Enix 寻求评论，但未及时收到回复。"
+    }
+   ]
   },
   {
    "id": 6,
@@ -248,8 +306,53 @@
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Gears-E-Day.jpg?w=300",
    "isVideo": false,
    "ts": 1781103638000,
-   "content": null,
-   "titleEn": "Gears Of War: E-Day Modernizes Movement Without Going Full Parkour"
+   "titleEn": "Gears Of War: E-Day Modernizes Movement Without Going Full Parkour",
+   "content": [
+    {
+     "t": "p",
+     "v": "弹出 Locust 头和主动重新装弹从来没有像《战争机器：E-Day》那样好看，但这部前传也对你在战役中的移动方式做出了一些重大改变。前传中的动作进行了大规模修改，马库斯·菲尼克斯和他的小队其他成员可以在战斗中绕过各种障碍来重新定位。从技术上讲，该游戏有一个跳跃按钮，可以越过展示柜等较大的障碍，但不要指望《战争机器：E-Day》会将该系列变成平台游戏。"
+    },
+    {
+     "t": "p",
+     "v": "The Coalition 工作室创意总监 Matt Searcy 在接受 GameSpot 采访时解释了《战争机器：E-Day》如何融合之前游戏中建立的传统粘性封面系统，并将其发展得更加有机。这一点在 Xbox 游戏展示柜中得到了充分展示，《战争机器：E-Day》的游戏预览显示马库斯·菲尼克斯在齐胸高的建筑物之间移动，越过更高的建筑物，并以令人惊讶的方式利用环境来发挥自己的优势。"
+    },
+    {
+     "t": "p",
+     "v": "“你进出、沿着掩体移动的方式要自然得多，”瑟西说。 “我们仍然像《战争机器》中那样保持掩体，拥有那种重量很重要。但是能够进出，能够更顺利地在不同的掩体形状之间转移——你甚至会看到我们通过车窗或架子进行互动——所以与掩体之间有更多有机的互动。这是游戏的核心部分，我们希望能够扩展它。你可以滑到汽车下面并炸毁一个人，这是一个非常酷的举动。”"
+    },
+    {
+     "t": "p",
+     "v": "“对我们来说，机动性更多的是一种发展游戏机制的方式，而不是一种叙事手段。《Jumping in Gears》，我们永远不会成为一款平台游戏。我们没有跳跃到某个地方的关卡。对我们来说，我们将其视为一种为侧翼添加新维度的方式。只要能够爬上那个高高的地幔——你可以从掩体中做到这一点，也可以跳上去——然后，只要跳到另一个地方并侧翼某人，它就打开了我们所有的视野水平。”"
+    },
+    {
+     "t": "p",
+     "v": "《战争机器：E-Day》将于 10 月 3 日推出 PC 和 Xbox Series X|S 版，但没有 PS5 版本，并且公开测试版将于 8 月开始。"
+    },
+    {
+     "t": "img",
+     "v": "https://www.gamespot.com/wp-content/uploads/2026/06/Gears-Square-1.jpg?w=300"
+    },
+    {
+     "t": "h",
+     "v": "战争机器：E-Day 标准版"
+    },
+    {
+     "t": "p",
+     "v": "70 美元 | 10 月 6 日发布"
+    },
+    {
+     "t": "img",
+     "v": "https://www.gamespot.com/wp-content/uploads/2026/06/Gears-Square-2.jpg?w=300"
+    },
+    {
+     "t": "h",
+     "v": "战争机器：E-Day 高级版"
+    },
+    {
+     "t": "p",
+     "v": "100 美元 | 10 月 1 日发布"
+    }
+   ]
   },
   {
    "id": 7,
@@ -261,8 +364,25 @@
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Fable-Isabel.jpg?w=300",
    "isVideo": false,
    "ts": 1781103635000,
-   "content": null,
-   "titleEn": "Fable’s 1,000 Romance Options Sounds Like The Ultimate Challenge For Completionists"
+   "titleEn": "Fable’s 1,000 Romance Options Sounds Like The Ultimate Challenge For Completionists",
+   "content": [
+    {
+     "t": "p",
+     "v": "《神鬼寓言》不仅为玩家提供了一场宏大的奇幻冒险，而且还为玩家提供了在任务之间喘口气的机会，这要归功于一个充满了数百个不同的不可玩角色的世界。每个 NPC 都有独特的个性和目标，根据 Playground Games 的说法，每个 NPC 都可以恋爱。事实上，与每个人都结婚是可能的——只是不是一次全部结婚，因为《神鬼寓言》对爱情采取一夫一妻制的态度。"
+    },
+    {
+     "t": "p",
+     "v": "“游戏中有超过 1,000 个手工制作的 NPC，如果你愿意的话，你确实可以与他们中的任何一个——或者全部——建立关系。可能会花费你相当长的时间，但你绝对可以做到，”游戏副总监 Craig Littler 向 GameSpot 说道。 “不过，我要说的一件事是，它确实与复杂、微妙的道德体系联系在一起，因为是的，你可以与任何人建立关系，但不能同时进行，因为你不可能同时对所有人都包容。一个人可能希望你善良。另一个人可能希望你成为杀人犯。事情就是这样。”"
+    },
+    {
+     "t": "p",
+     "v": "“所有 1,000 个都是我们团队手工制作的，”游戏副总监 William Kennedy 补充道。 “游戏设计团队为这些目标付出了很多努力，正如你在演示中看到的，我们有雄心勃勃的梅根，她所有的目标都围绕着拥有东西。她希望我有一所房子。她希望我穿着漂亮的衣服。她希望我拥有自己的家，而设计团队在手工制作方面所做的就是确保每个 NPC 都是一个有凝聚力的角色，当你与他们互动时，你最终可能会拥有不同的故事。”"
+    },
+    {
+     "t": "p",
+     "v": "原定于今年推出的《神鬼寓言》PC、Xbox Series X|S 和 PS5 版本最近被推迟至 2027 年 2 月 23 日。上周的 Xbox 游戏展示会透露了该游戏的一些新细节，例如新角色​​伊莎贝尔（由海莉·阿特维尔饰演）、原版《神鬼寓言》中的反派“刀锋杰克”的简短预告，以及游戏第一个故事驱动的扩展包“英雄令”的确认。"
+    }
+   ]
   },
   {
    "id": 8,
@@ -274,8 +394,29 @@
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Fable-Jack.jpg?w=300",
    "isVideo": false,
    "ts": 1781103628000,
-   "content": null,
-   "titleEn": "Fable Lets You Live A Second Life, Not Just Save The World"
+   "titleEn": "Fable Lets You Live A Second Life, Not Just Save The World",
+   "content": [
+    {
+     "t": "p",
+     "v": "《神鬼寓言》现已于 2027 年 2 月上市，但需要额外几个月的时间来对奇幻冒险进行微调，Playground Games 看起来将在经典系列中发布一款令人印象深刻的作品。 Peter Molyneux 的 Lionhead Studios 的旧版《神鬼寓言》游戏有着远大的抱负，但在 Playground 的掌舵下，新游戏正将该系列引向意想不到的方向：生活模拟。"
+    },
+    {
+     "t": "p",
+     "v": "在夏季游戏节期间，GameSpot 近距离观察了《神鬼寓言》，游戏开发者展示了游戏中的深厚关系。在一个例子中，玩家必须成为一个成功的故事才能吸引他们所选择的浪漫追求。"
+    },
+    {
+     "t": "p",
+     "v": "这包括穿着漂亮的衣服，创业，并确保盈利，这一切都是为了赢得一位美丽少女的芳心。更令人印象深刻的是，所选择的 NPC 是游戏中的数百人之一，每个人都有独特的个性。"
+    },
+    {
+     "t": "p",
+     "v": "有可能与他们每一个人都追求浪漫吗？是的，Playground Games 说，但不是一下子就全部解决，因为每个 NPC 对于他们的生活伴侣应该是什么样子都有自己的理想化版本。 “一个人可能希望你善良。另一个人可能希望你成为一名杀人犯。事情就是这样，”游戏副总监克雷格·利特勒 (Craig Littler) 告诉 GameSpot。有关我们刚刚了解的有关游戏的每个新细节的更多详细信息，您可以观看上面的视频。"
+    },
+    {
+     "t": "p",
+     "v": "《神鬼寓言》将于 2027 年 2 月 23 日推出 PC、Xbox Series X|S 和 PS5 版本。在上周的 Xbox 游戏展示会上，我们看到了《神鬼寓言》首个故事驱动的扩展包《英雄令》的发布，以及我们首次看到由海莉·阿特维尔 (Hayley Atwell) 饰演的新角色伊莎贝尔 (Isabel)。"
+    }
+   ]
   },
   {
    "id": 9,
@@ -287,8 +428,13 @@
    "image": "https://assets-prd.ignimgs.com/2026/06/09/nintendo-everything-blog-1781022109598.jpg",
    "isVideo": false,
    "ts": 1781103602000,
-   "content": null,
-   "titleEn": "Former Nintendo Staff Say The Legend of Zelda: Ocarina of Time Remake Reveal Should Have Been Changed to Show More, Following High-Profile Leak"
+   "titleEn": "Former Nintendo Staff Say The Legend of Zelda: Ocarina of Time Remake Reveal Should Have Been Changed to Show More, Following High-Profile Leak",
+   "content": [
+    {
+     "t": "p",
+     "v": "任天堂前员工表示，公司应该改变推出《塞尔达传说：时之笛》重制版的计划，此前一次破坏性的泄密事件让昨天的简短披露更像是“已成定局”。"
+    }
+   ]
   },
   {
    "id": 10,
@@ -429,8 +575,13 @@
    "image": "https://assets-prd.ignimgs.com/2026/06/10/ss-4473fa20d72b141595ddbe167bc40ff1a784189c-1920x1080-1781102841499.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null,
-   "titleEn": "How Will Capcom Address Alfred Ashford's Storyline in Resident Evil Veronica?"
+   "titleEn": "How Will Capcom Address Alfred Ashford's Storyline in Resident Evil Veronica?",
+   "content": [
+    {
+     "t": "p",
+     "v": "卡普空讨论了它将如何解决《生化危机：维罗妮卡》中阿尔弗雷德·阿什福德的故事情节。"
+    }
+   ]
   },
   {
    "id": 12,
@@ -442,8 +593,13 @@
    "image": "https://assets-prd.ignimgs.com/2026/06/10/ss-5f574a15cb682397b7a03ff06a09969e65201c9d-1920x1080-1781101673669.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null,
-   "titleEn": "Resident Evil Veronica Is a Third-Person Game, Capcom Confirms"
+   "titleEn": "Resident Evil Veronica Is a Third-Person Game, Capcom Confirms",
+   "content": [
+    {
+     "t": "p",
+     "v": "卡普空证实，夏季游戏节上《生化危机维罗妮卡》的预告片很可能以第一人称形式呈现，但游戏本身将以第三人称形式进行。"
+    }
+   ]
   },
   {
    "id": 13,
@@ -455,8 +611,13 @@
    "image": "https://assets-prd.ignimgs.com/2026/06/10/godzilla-destroy-all-monsters-melee-remastered-1781094452489.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null,
-   "titleEn": "Godzilla: Destroy All Monsters Melee Remastered Is Up for Preorder at Select Retailers, Out in November"
+   "titleEn": "Godzilla: Destroy All Monsters Melee Remastered Is Up for Preorder at Select Retailers, Out in November",
+   "content": [
+    {
+     "t": "p",
+     "v": "《哥斯拉：毁灭所有怪物近战重制版》现已在指定零售商处接受预订。我们已详细列出您可以在 11 月 3 日发布之前获取副本的位置。"
+    }
+   ]
   },
   {
    "id": 14,
@@ -468,8 +629,13 @@
    "image": "https://assets-prd.ignimgs.com/2026/06/10/tifa-1781096767643.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null,
-   "titleEn": "Capcom Explains How Tifa From Final Fantasy 7 Came to Be a Street Fighter 6 DLC Character"
+   "titleEn": "Capcom Explains How Tifa From Final Fantasy 7 Came to Be a Street Fighter 6 DLC Character",
+   "content": [
+    {
+     "t": "p",
+     "v": "Capcom 讨论了《最终幻想 7》中引人注目的蒂法成为《街头霸王 6》客座 DLC 角色的问题，并解释了为什么她非常适合这款游戏。"
+    }
+   ]
   },
   {
    "id": 15,
@@ -481,8 +647,8 @@
    "image": "https://assets-prd.ignimgs.com/2026/06/10/halo-campaign-evolved-blogroll-1781072910946.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null,
-   "titleEn": "Halo: Campaign Evolved – The Final Preview"
+   "titleEn": "Halo: Campaign Evolved – The Final Preview",
+   "content": null
   },
   {
    "id": 16,
@@ -494,8 +660,13 @@
    "image": "https://assets-prd.ignimgs.com/2026/06/09/fable-sgf-preview-blogroll-1781036857254.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null,
-   "titleEn": "Fable Let Me Choose Whether a Talking Pig Should Live or Become Lunch | IGN Preview"
+   "titleEn": "Fable Let Me Choose Whether a Talking Pig Should Live or Become Lunch | IGN Preview",
+   "content": [
+    {
+     "t": "p",
+     "v": "在对《神鬼寓言》的生活模拟元素进行了 30 分钟的演示后，我对它的“游戏中的游戏”非常着迷，这是使原始三部曲变得独特和特别的重要组成部分，因此对于《神鬼寓言》的成功至关重要。"
+    }
+   ]
   },
   {
    "id": 17,
@@ -507,8 +678,13 @@
    "image": "https://assets-prd.ignimgs.com/2026/06/10/gears-of-war-eday-br-1781083823810.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null,
-   "titleEn": "Gears of War: E-Day Devs on Respecting the Lore, Game Length, New Movement Mechanics, and More"
+   "titleEn": "Gears of War: E-Day Devs on Respecting the Lore, Game Length, New Movement Mechanics, and More",
+   "content": [
+    {
+     "t": "p",
+     "v": "IGN 采访了 The Coalition，以了解有关 Xbox 主机独占《战争机器：E-Day》的更多信息。"
+    }
+   ]
   },
   {
    "id": 18,
@@ -520,8 +696,33 @@
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Gears-E-Day_147a44.jpg?w=300",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null,
-   "titleEn": "Gears Of War: E-Day Is Bigger, Bloodier, And More Ambitious Than We Expected"
+   "titleEn": "Gears Of War: E-Day Is Bigger, Bloodier, And More Ambitious Than We Expected",
+   "content": [
+    {
+     "t": "p",
+     "v": "《战争机器：E-Day》在 Xbox 游戏展示会上引起了巨大轰动，联盟向观众展示了充满动感的预览。得益于虚幻引擎 5 的支持，《战争机器》不仅看起来比以往任何时候都更好，而且还添加了多种设计选择，通过流畅的运动机制和关卡让游戏玩得更好，让您有机会测试自己的技能。"
+    },
+    {
+     "t": "p",
+     "v": "GameSpot 有机会仔细观察这款游戏，并与 The Coalition 的开发者坐下来了解有关前传的更多信息。您可以查看我们从这次采访中了解到的所有新内容，这些内容在下面视频的初始预览中没有展示。"
+    },
+    {
+     "t": "p",
+     "v": "《战争机器：E-Day》是该系列的一个全新开始，根据 The Coalition 的说法，开发商从一个“空硬盘”开始在虚幻引擎 5 中重建《战争机器》。《E-Day》的关键地点是塞拉星球上的卡洛纳，这座城市将在出现日期间被蝗虫崛起攻击人类时摧毁。联盟表示，随着环境的变化，整个战役中都会感受到破坏，虽然《E-Day》不是一款开放世界游戏，但其大型竞技场是战斗谜题，等待玩家通过更平​​滑的掩体过渡和极端暴力来解决它们。"
+    },
+    {
+     "t": "p",
+     "v": "一些任务的战斗空间会更狭窄，而另一些任务则允许玩家进入整个社区发动战争。主要目标是让玩家感觉自己身处一部大制作的动作电影中，因为他们滑行并越过障碍物，这样他们就可以从侧翼攻击敌人。"
+    },
+    {
+     "t": "p",
+     "v": "我们在 The Coalition 中听到的其他有趣的花絮包括工作室提到 E-Day 拥有其设计过的最长的活动（工作室估计需要大约 14 小时才能完成）、E-Day 是工作室接下来想要讲述的故事，而 PC 游戏手持设备的所有者应该期望看到它在这些系统上运行得很好。"
+    },
+    {
+     "t": "p",
+     "v": "《战争机器：E-Day》将于 10 月 3 日在 PC 和 Xbox Series X|S 上推出，但不会登陆 PS5。"
+    }
+   ]
   },
   {
    "id": 19,
@@ -533,8 +734,57 @@
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/Gears-Eday-2.jpg?w=300",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null,
-   "titleEn": "Gears of War: E-Day Happened Because Starting Over Sounded More Fun Than Gears 6"
+   "titleEn": "Gears of War: E-Day Happened Because Starting Over Sounded More Fun Than Gears 6",
+   "content": [
+    {
+     "t": "p",
+     "v": "《战争机器：E-Day》将再次看到马库斯·菲尼克斯和多米尼克·圣地亚哥等深受粉丝喜爱的角色成为该系列下一款游戏的主角，但是《战争机器 5》中悬而未决的悬念又如何呢？我们会看到那些挥之不去的情节线索得到解决吗？开发商 The Coalition 并未透露凯特·迪亚兹和她的团队是否会回归，但工作室透露了为什么选择制作前传而不是续集。"
+    },
+    {
+     "t": "p",
+     "v": "工作室创意总监马特·西尔西 (Matt Searcy) 在接受 GameSpot 采访时表示，《Emergence Day》的故事正是他们最想讲述的故事，人们对这个项目的热情主导了讨论。"
+    },
+    {
+     "t": "p",
+     "v": "“我们有机会在这里讲述我们想讲的故事。我们想讲什么故事？我们选择了 E-Day，”瑟西对 GameSpot 说道。 “在《战争机器 5》之后，我们接连推出了一系列游戏，而疫情同时袭来。每个人都在评估自己的工作、自己想要居住的地方，这对我们来说并没有太大不同。作为一个工作室，我们想对我们的下一款游戏做什么？它与虚幻引擎 5 完全一致。无论我们做什么，我们都将从空硬盘开始。”"
+    },
+    {
+     "t": "p",
+     "v": "“所以我们看了这两件事，我们真正想讲的故事是我们一直在谈论的故事。构建所有这些东西的机会——不仅仅是我们的机制——还有蝗虫，我们的角色，所有这些从头开始的东西，真是太好了，不容错过。所以我们看了这一点，这是激情主导的事情之一，就像任何其他对话一样。我们喜欢这个故事，但我们说，‘如果我们想做的就是这个’，那么这就是我们应该做的正在做，我们只是选择了这一点。”"
+    },
+    {
+     "t": "p",
+     "v": "《战争机器 5》揭示了一些关于 Locust、它们的起源以及 Kait 与一切事物的联系的重大启示。目前看来，蝗虫的黑暗起源不会成为《E-Day》的中心情节点，但这并不意味着这场战役不会是严峻的。 Coalition 透露，玩家将在战役期间看到大量平民伤亡（工作室估计大约需要 14 小时才能完成），而随着“紧急日”成为一场全球性灾难，卡洛纳市将开始崩溃。"
+    },
+    {
+     "t": "img",
+     "v": "https://www.gamespot.com/wp-content/uploads/2026/06/Gears-Square-1.jpg?w=300"
+    },
+    {
+     "t": "h",
+     "v": "战争机器：E-Day 标准版"
+    },
+    {
+     "t": "p",
+     "v": "70 美元 | 10 月 6 日发布"
+    },
+    {
+     "t": "img",
+     "v": "https://www.gamespot.com/wp-content/uploads/2026/06/Gears-Square-2.jpg?w=300"
+    },
+    {
+     "t": "h",
+     "v": "战争机器：E-Day 高级版"
+    },
+    {
+     "t": "p",
+     "v": "100 美元 | 10 月 1 日发布"
+    },
+    {
+     "t": "p",
+     "v": "《战争机器：E-Day》将于 10 月 3 日在 PC 和 Xbox Series X|S 上发布，但不会登陆 PS5。在发布之前，The Coalition 展示了游戏中的动作是如何演变的，以及标志性的枪骑兵将如何获得起源故事。多人游戏的公开测试版将于八月举行。"
+    }
+   ]
   },
   {
    "id": 20,
@@ -546,8 +796,33 @@
    "image": "https://www.gamespot.com/wp-content/uploads/2026/06/saw-genesis.jpg?w=300",
    "isVideo": false,
    "ts": 1781103600000,
-   "content": null,
-   "titleEn": "Bloober Team Says It’s Humbled By The “Many Corpses” In The Horror Multiplayer Genre"
+   "titleEn": "Bloober Team Says It’s Humbled By The “Many Corpses” In The Horror Multiplayer Genre",
+   "content": [
+    {
+     "t": "p",
+     "v": "《电锯惊魂：创世纪》、Bloober Team 和 Anshar Studios 共同开发了基于狮门影业《电锯惊魂》系列的 3v1 游戏，非对称恐怖多人游戏领域变得更加广阔。"
+    },
+    {
+     "t": "p",
+     "v": "我在 2026 年夏季游戏节上旁听了大约 30 分钟的游戏预览，我向团队询问了进入这个拥挤的空间是什么感觉，好莱坞似乎看到了美元符号，并向各个团队扔了许可证，然后在游戏没有变得足够受欢迎而无法继续开发时，让一些游戏工作室来收拾残局。"
+    },
+    {
+     "t": "p",
+     "v": "Bloober Team 的出版主管 Michał Gembicki 告诉我，团队知道比分，并承认这确实吓到了他们。 “我们知道这是一个饱和的市场，对吧？里面有很多尸体，很多尸体（指着《电锯惊魂》主题房间里的道具尸体）。我们对此感到害怕。我们对此感到谦卑，所以我们知道我们需要进行大量实验。”"
+    },
+    {
+     "t": "p",
+     "v": "Gembecki 继续说道，“但与此同时，从 Bloober 的角度来看，我们已经开发了像《克洛诺斯》和《寂静岭》这样的第一方游戏，显然，这些游戏专注于在相当线性的世界中讲述故事，这是一次尝试进入一些新的东西、一个全新的部门，并成为一家更广泛的公司。”"
+    },
+    {
+     "t": "p",
+     "v": "您可以在下面查看我对《电锯惊魂：创世纪》的印象，以便更仔细地了解即将推出的恐怖多人游戏。"
+    },
+    {
+     "t": "p",
+     "v": "Broken Mirror Games 是 Bloober Team 的新内部替代标签，而《电锯惊魂：创世记》则是该旗帜下发布的第一款游戏。与 Anshar Studios 共同开发的《电锯惊魂：创世纪》将于今年晚些时候在 Steam 抢先体验版上首次推出。"
+    }
+   ]
   },
   {
    "id": 21,
