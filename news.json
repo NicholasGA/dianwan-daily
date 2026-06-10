@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-06-10T11:51:28.011Z",
+ "generatedAt": "2026-06-10T11:55:02.091Z",
  "news": [
   {
    "id": 1,
@@ -41,7 +41,7 @@
   {
    "id": 2,
    "category": "主机",
-   "title": "《王国之心》预购开启！PS5版不是568港币",
+   "title": "《王国之心合集》预购开启！PS5版不是568港币",
    "summary": "《王国之心合集1-3》是将系列三部核心作品集于一体，为玩家完整呈现《王国之心》系列的主线叙事的匠心之作。",
    "source": "游民星空",
    "url": "https://www.gamersky.com/news/202606/2154740.shtml",
@@ -308,27 +308,23 @@
     },
     {
      "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-12/6a02b30b355d7.jpg?imageView2/5/w/323/h/182"
+     "v": "http://img.chuapp.com//wp-content/Picture/2026-06-08/6a26840e8b8df.jpg?imageView2/5/w/323/h/182"
     },
     {
      "t": "h",
-     "v": "触乐怪话：夜之城，华强北"
+     "v": "触乐怪话：为什么夏日游戏节风生水起，E3却死了？"
     },
     {
      "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-25/6a1402f9948d5.jpg?imageView2/5/w/323/h/182"
+     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-18/6a0ad99804391.jpg?imageView2/5/w/323/h/182"
     },
     {
      "t": "h",
-     "v": "前BioWare设计师：我不擅长管理工作室，是个外行"
+     "v": "触乐怪话：学会括号画画大法之后"
     },
     {
      "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-20/6a0d813a16c0a.jpg?imageView2/5/w/323/h/182"
-    },
-    {
-     "t": "h",
-     "v": "触乐怪话：当我关心你在想什么"
+     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-25/6a13605c54a36.jpg?imageView2/5/w/323/h/182"
     },
     {
      "t": "h",
@@ -336,19 +332,23 @@
     },
     {
      "t": "h",
-     "v": "《战术小队：破晓攻势》首曝与试玩：硬核战场与新手门槛"
+     "v": "触乐怪话：当我关心你在想什么"
     },
     {
      "t": "h",
-     "v": "触乐怪话：原来这就是情感本……吗？"
+     "v": "触乐怪话：《极限竞速：地平线6》与线性扳机"
     },
     {
      "t": "h",
-     "v": "网易520发布会：“稳中有进”与面向未来"
+     "v": "触乐怪话：如何用荧光棒花式打call"
     },
     {
      "t": "h",
-     "v": "触乐怪话：睡过头怎么办"
+     "v": "触乐本周行业大事：2026多款手游未成年人保护机制评分出炉，米哈游名誉侵权案胜诉，《异环》登顶日服iOS畅销榜"
+    },
+    {
+     "t": "h",
+     "v": "触乐怪话：回到哪个夏天？"
     }
    ]
   },
@@ -545,27 +545,27 @@
     },
     {
      "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-23/6a10efb393865.jpg?imageView2/5/w/323/h/182"
+     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-20/6a0da72047112.jpg?imageView2/5/w/323/h/182"
     },
     {
      "t": "h",
-     "v": "触乐本周行业大事：4月中国游戏市场收入超303亿元，网易Q1游戏收入257亿元，B站游戏收入下滑12%"
+     "v": "网易520发布会：“稳中有进”与面向未来"
     },
     {
      "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-06-03/6a1f5b832a3f8.jpg?imageView2/5/w/323/h/182"
+     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-28/6a17fd4862794.jpg?imageView2/5/w/323/h/182"
     },
     {
      "t": "h",
-     "v": "《影之刃零》发售日推迟至10月29日，将于夏季开启预售"
+     "v": "这款“越打越年轻”的游戏，其实一直在引领时尚潮流"
     },
     {
      "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-20/6a0d20842f45e.jpg?imageView2/5/w/323/h/182"
+     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-12/6a03449a8079d.jpg?imageView2/5/w/323/h/182"
     },
     {
      "t": "h",
-     "v": "他们做游戏，也在知乎聊游戏"
+     "v": "《七界梦谭》二测开启：更高自由度的东方奇诡MMO体验"
     },
     {
      "t": "img",
@@ -577,133 +577,24 @@
     },
     {
      "t": "h",
-     "v": "《盛世天下》女帝篇：领跑互动影视新征程"
+     "v": "一名外派的摸鱼脱敏计划"
     },
     {
      "t": "h",
-     "v": "30年前，《合金弹头》的开发往事"
+     "v": "女性向小游戏，能成为新增长点吗？"
+    },
+    {
+     "t": "h",
+     "v": "对话《Subnautica 2：异星水域》制作人：与社区共同成长的“深海生存”体验"
     },
     {
      "t": "h",
      "v": "这款“越打越年轻”的游戏，其实一直在引领时尚潮流"
-    },
-    {
-     "t": "h",
-     "v": "《穿越火线：潜伏》：梦想变成现实"
     }
    ]
   },
   {
    "id": 6,
-   "category": "业界",
-   "title": "麦当劳全新Logo大变！现场照片正式公布",
-   "summary": "今日，麦当劳官方正式公布2026年FIFA世界杯联名活动细节，此前引发热议的“招牌长包事件”也随之揭晓谜底——这一设计实为世界杯主…",
-   "source": "游民星空",
-   "url": "https://www.gamersky.com/news/202606/2154705.shtml",
-   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101840057115.jpg",
-   "isVideo": false,
-   "ts": 1781088060000,
-   "content": [
-    {
-     "t": "p",
-     "v": "今日，麦当劳官方正式公布2026年FIFA世界杯联名活动细节，此前引发热议的“招牌长包事件”也随之揭晓谜底——这一设计实为世界杯主题的足球元素，并非此前网传的“包包”造型。"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101840318475.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101840389136.jpg"
-    },
-    {
-     "t": "p",
-     "v": "官方同步放出活动现场实拍图，搭配品牌标识与足球图案，整体设计充满世界杯氛围。"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101840448088.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101840513824.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101840577747.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101841049084.jpg"
-    },
-    {
-     "t": "p",
-     "v": "你会为了这次世界杯联动去麦当劳打卡吗？欢迎在评论区留言讨论。"
-    },
-    {
-     "t": "img",
-     "v": "https://image.gamersky.com/webimg15/content/loading.gif"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101007282175.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100930321292.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100915484986.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100909449349.jpg"
-    },
-    {
-     "t": "img",
-     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100843072254.jpg"
-    },
-    {
-     "t": "p",
-     "v": "凡人修仙传"
-    },
-    {
-     "t": "p",
-     "v": "天魔劫(文字版)"
-    },
-    {
-     "t": "p",
-     "v": "航海霸业"
-    },
-    {
-     "t": "p",
-     "v": "神兵奇迹"
-    },
-    {
-     "t": "p",
-     "v": "超鬼打金服"
-    },
-    {
-     "t": "p",
-     "v": "群英风华录"
-    },
-    {
-     "t": "p",
-     "v": "精灵猎人"
-    },
-    {
-     "t": "p",
-     "v": "帕瓦勇者传说"
-    },
-    {
-     "t": "p",
-     "v": "异星战舰"
-    }
-   ]
-  },
-  {
-   "id": 7,
    "category": "业界",
    "title": "玩家期望全新大作不上PS暴死！官方霸气回应获盛赞",
    "summary": "一位玩家在X平台上发文，直言希望《发条革命》销量惨败，开发者因此失业",
@@ -820,7 +711,7 @@
    ]
   },
   {
-   "id": 8,
+   "id": 7,
    "category": "业界",
    "title": "大胆直言！《红色沙漠》官方：免费更新就是免费营销",
    "summary": "《红色沙漠》的开发商Pearl Abyss近几个月的不断更新，让玩家称赞连连。外媒Dexerto采访 Pearl Abyss公关与市场总监 Will Powers，…",
@@ -945,7 +836,7 @@
    ]
   },
   {
-   "id": 9,
+   "id": 8,
    "category": "业界",
    "title": "曝《维罗妮卡RE》最新情报！大量新截图 实机马上来",
    "summary": "据生化圈知名爆料人Dusk Golem透露，《生化危机：代号维罗妮卡》重制版的媒体前瞻评测将于北京时间6月10日晚上11点正式解禁。",
@@ -1066,7 +957,7 @@
    ]
   },
   {
-   "id": 10,
+   "id": 9,
    "category": "业界",
    "title": "Does That Space Marine Have an Extra Finger? Yes, but Games Workshop Insists It's Not AI",
    "summary": "Games Workshop has issued an official response denying the use of AI after fans spotted a Space Marine with an",
@@ -1076,6 +967,119 @@
    "isVideo": false,
    "ts": 1781082828000,
    "content": null
+  },
+  {
+   "id": 10,
+   "category": "业界",
+   "title": "《权游》二丫形象巨变！稚嫩幼态已成诱人性感熟女",
+   "summary": "近日，在《权力的游戏》中饰演”二丫“艾莉亚·史塔克的演员麦茜·威廉姆斯的形象变化在网络引起热议。",
+   "source": "游民星空",
+   "url": "https://www.gamersky.com/news/202606/2154541.shtml",
+   "image": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101639465122.jpg",
+   "isVideo": false,
+   "ts": 1781080800000,
+   "content": [
+    {
+     "t": "p",
+     "v": "近日，在《权力的游戏》中饰演”二丫“艾莉亚·史塔克的演员麦茜·威廉姆斯的形象变化在网络引起热议。1997年出生的她14岁就首次出演了《权力的游戏》，而现在的她已经直逼30岁了。"
+    },
+    {
+     "t": "p",
+     "v": "一起来看看形象对比吧！"
+    },
+    {
+     "t": "p",
+     "v": "剧中形象："
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101635145517.png"
+    },
+    {
+     "t": "p",
+     "v": "如今美照："
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101635382810.png"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101635409299.png"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101635413866.png"
+    },
+    {
+     "t": "img",
+     "v": "https://img1.gamersky.com/upimg/pic/2026/06/10/small_202606101635422009.png"
+    },
+    {
+     "t": "img",
+     "v": "https://image.gamersky.com/webimg15/content/loading.gif"
+    },
+    {
+     "t": "img",
+     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606101007282175.jpg"
+    },
+    {
+     "t": "img",
+     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100930321292.jpg"
+    },
+    {
+     "t": "img",
+     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100915484986.jpg"
+    },
+    {
+     "t": "img",
+     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100909449349.jpg"
+    },
+    {
+     "t": "img",
+     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100843072254.jpg"
+    },
+    {
+     "t": "img",
+     "v": "https://imgs.gamersky.com/upimg/new_preview/2026/06/10/origin_b_202606100113386577.jpg"
+    },
+    {
+     "t": "p",
+     "v": "凡人修仙传"
+    },
+    {
+     "t": "p",
+     "v": "天魔劫(文字版)"
+    },
+    {
+     "t": "p",
+     "v": "航海霸业"
+    },
+    {
+     "t": "p",
+     "v": "神兵奇迹"
+    },
+    {
+     "t": "p",
+     "v": "超鬼打金服"
+    },
+    {
+     "t": "p",
+     "v": "群英风华录"
+    },
+    {
+     "t": "p",
+     "v": "精灵猎人"
+    },
+    {
+     "t": "p",
+     "v": "帕瓦勇者传说"
+    },
+    {
+     "t": "p",
+     "v": "异星战舰"
+    }
+   ]
   },
   {
    "id": 11,
@@ -2385,19 +2389,19 @@
     },
     {
      "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-06-10/6a29265b67382.jpg?imageView2/5/w/323/h/182"
+     "v": "http://img.chuapp.com//wp-content/Picture/2026-06-10/6a292c7451b35.jpg?imageView2/5/w/323/h/182"
     },
     {
      "t": "h",
-     "v": "不停服还是推出陪伴版？游戏“体面离开”有多难"
+     "v": "触乐怪话：乘坐火箭去喵星"
     },
     {
      "t": "img",
-     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-20/6a0d20842f45e.jpg?imageView2/5/w/323/h/182"
+     "v": "http://img.chuapp.com//wp-content/Picture/2026-05-16/6a0819b83faff.jpg?imageView2/5/w/323/h/182"
     },
     {
      "t": "h",
-     "v": "他们做游戏，也在知乎聊游戏"
+     "v": "触乐本周行业大事：腾讯Q1游戏收入642亿，网易前高层创业获大额融资，恺英布局AI漫剧"
     }
    ]
   }
@@ -2410,7 +2414,7 @@
   },
   {
    "ts": 1781090460000,
-   "text": "《王国之心》预购开启！PS5版不是568港币",
+   "text": "《王国之心合集》预购开启！PS5版不是568港币",
    "id": 2
   },
   {
@@ -2429,28 +2433,28 @@
    "id": 5
   },
   {
-   "ts": 1781088060000,
-   "text": "麦当劳全新Logo大变！现场照片正式公布",
-   "id": 6
-  },
-  {
    "ts": 1781086800000,
    "text": "玩家期望全新大作不上PS暴死！官方霸气回应获盛赞",
-   "id": 7
+   "id": 6
   },
   {
    "ts": 1781086140000,
    "text": "大胆直言！《红色沙漠》官方：免费更新就是免费营销",
-   "id": 8
+   "id": 7
   },
   {
    "ts": 1781084820000,
    "text": "曝《维罗妮卡RE》最新情报！大量新截图 实机马上来",
-   "id": 9
+   "id": 8
   },
   {
    "ts": 1781082828000,
    "text": "Does That Space Marine Have an Extra Finger? Yes, but Games Workshop Insists It's Not AI",
+   "id": 9
+  },
+  {
+   "ts": 1781080800000,
+   "text": "《权游》二丫形象巨变！稚嫩幼态已成诱人性感熟女",
    "id": 10
   }
  ]
