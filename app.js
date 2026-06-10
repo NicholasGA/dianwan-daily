@@ -124,19 +124,170 @@
     };
   }
 
+  /* ---------- 即时增量:刷新时直连源站抓最新 ---------- */
+
+  function categorizeClient(text) {
+    if (/(手游|移动端|iOS|安卓|Android|原神|崩坏|鸣潮|明日方舟|王者荣耀|和平精英|二游|抽卡|mobile game)/i.test(text)) return "手游";
+    if (/(PS5|PS4|PlayStation|Xbox|Switch|任天堂|Nintendo|主机|塞尔达|马里奥|console)/i.test(text)) return "主机";
+    if (/(Steam|Epic|PC ?版|显卡|GOG|模组|\bMod\b|\bPC\b)/i.test(text)) return "PC";
+    return "业界";
+  }
+
+  const stripTags = (s) => (s || "").replace(/<[^>]+>/g, " ").replace(/&[a-z#0-9]+;/gi, " ").replace(/\s+/g, " ").trim();
+
+  function rssField(xml, tag) {
+    const m = xml.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`, "i"));
+    if (!m) return "";
+    return m[1].replace(/^<!\[CDATA\[([\s\S]*?)\]\]>$/, "$1").trim();
+  }
+
+  function parseRss(xml, source, skipRe) {
+    const out = [];
+    for (const m of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)) {
+      if (out.length >= 12) break;
+      const item = m[1];
+      const url = rssField(item, "link");
+      const title = stripTags(rssField(item, "title"));
+      if (!url || !title || (skipRe && skipRe.test(url))) continue;
+      const desc = rssField(item, "description");
+      const img = rssField(item, "thumb") || desc.match(/<img[^>]+src="([^"]+)"/i)?.[1] || null;
+      out.push({
+        title,
+        summary: stripTags(desc).slice(0, 110),
+        source,
+        url,
+        image: img,
+        isVideo: /\/videos?\//.test(url),
+        ts: Date.parse(rssField(item, "pubDate")) || Date.now(),
+      });
+    }
+    return out;
+  }
+
+  // CORS 代理链:corsproxy 优先,allorigins 兜底
+  async function proxyFetch(url) {
+    const proxies = [
+      (u) => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
+      (u) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    ];
+    let lastErr;
+    for (const p of proxies) {
+      try {
+        const res = await fetch(p(url), { signal: AbortSignal.timeout(8000) });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return await res.text();
+      } catch (err) {
+        lastErr = err;
+      }
+    }
+    throw lastErr;
+  }
+
+  // 游民星空官方列表接口是 JSONP,浏览器可跨域直连,无需代理
+  let jsonpSeq = 0;
+  function fetchGamerskyJsonp() {
+    return new Promise((resolve, reject) => {
+      const cb = `__dwGsCb${++jsonpSeq}`;
+      const s = document.createElement("script");
+      const timer = setTimeout(() => { cleanup(); reject(new Error("timeout")); }, 8000);
+      function cleanup() { clearTimeout(timer); delete window[cb]; s.remove(); }
+      window[cb] = (data) => {
+        const items = [];
+        const html = (data && data.body) || "";
+        for (const m of html.matchAll(/<li>([\s\S]*?)<\/li>/g)) {
+          if (items.length >= 14) break;
+          const li = m[1];
+          const a = li.match(/<a class="tt" href="(https:\/\/www\.gamersky\.com\/news\/\d{6}\/\d+\.shtml)"[^>]*>([\s\S]*?)<\/a>/);
+          if (!a) continue;
+          const img = li.match(/<img src="([^"]+)"/);
+          const txt = li.match(/<div class="txt">([\s\S]*?)<\/div>/);
+          const time = li.match(/<div class="time">([^<]+)<\/div>/);
+          items.push({
+            title: stripTags(a[2]),
+            summary: txt ? stripTags(txt[1]).slice(0, 110) : "",
+            source: "游民星空",
+            url: a[1],
+            image: img ? img[1] : null,
+            isVideo: false,
+            ts: time ? Date.parse(time[1].trim().replace(" ", "T") + ":00+08:00") || Date.now() : Date.now(),
+          });
+        }
+        cleanup();
+        resolve(items);
+      };
+      s.onerror = () => { cleanup(); reject(new Error("script error")); };
+      s.src = `https://db2.gamersky.com/LabelJsonpAjax.aspx?callback=${cb}&jsondata=${encodeURIComponent(
+        JSON.stringify({ type: "updatenodelabel", isCache: true, cacheTime: 60, nodeId: "11007", isNodeId: "true", page: 1 })
+      )}`;
+      document.head.appendChild(s);
+    });
+  }
+
+  async function fetchInstant() {
+    const results = await Promise.allSettled([
+      fetchGamerskyJsonp(),
+      proxyFetch("https://www.gcores.com/rss").then((x) => parseRss(x, "机核", /\/radios\//)),
+      proxyFetch("https://www.yystv.cn/rss/feed").then((x) => parseRss(x, "游研社")),
+    ]);
+    return results.filter((r) => r.status === "fulfilled").flatMap((r) => r.value);
+  }
+
+  /* ---------- 刷新:基线 news.json + 即时增量 + 新增统计 ---------- */
+
+  const SEEN_KEY = "dianwanSeen";
+
   let refreshing = false;
   async function refresh(silent) {
     if (refreshing) return;
     refreshing = true;
     $$(".refresh-btn svg").forEach((s) => s.classList.add("spin"));
     try {
-      const res = await fetch("news.json", { cache: "no-store" });
+      // 基线:流水线生成的 news.json(带全文)与即时增量并行拉取
+      const [res, instantResult] = await Promise.all([
+        fetch("news.json", { cache: "no-store" }),
+        fetchInstant().catch(() => []),
+      ]);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const remote = await res.json();
       if (!remote.news || !remote.news.length) throw new Error("empty");
-      D = normalizeRemote(remote);
+
+      // 即时增量:只收"比基线最新一条更新"的,避免被流水线去重/截断过的旧闻回流
+      const cutoff = Math.max(...remote.news.map((n) => n.ts || 0));
+      const baseTitles = new Set(remote.news.map((n) => (n.title || "").slice(0, 18)));
+      const baseUrls = new Set(remote.news.map((n) => n.url));
+      const fresh = instantResult
+        .filter((n) => n.ts > cutoff && !baseUrls.has(n.url) && !baseTitles.has(n.title.slice(0, 18)))
+        .filter((n, i, arr) => arr.findIndex((x) => x.title.slice(0, 18) === n.title.slice(0, 18)) === i)
+        .sort((a, b) => b.ts - a.ts)
+        .slice(0, 15)
+        .map((n) => ({ ...n, category: categorizeClient(n.title + " " + n.summary), content: null }));
+
+      const combinedNews = [...fresh, ...remote.news].map((n, i) => ({ ...n, id: i + 1 }));
+      D = normalizeRemote({
+        generatedAt: remote.generatedAt,
+        news: combinedNews,
+        flash: combinedNews.slice(0, 12).map((n) => ({ ts: n.ts, text: n.title, id: n.id })),
+      });
       renderAll();
-      if (!silent) toast(`已更新 · ${D.news.length} 条新闻`);
+
+      // 与上次刷新对比的新增统计(本地记录已见过的新闻)
+      const keys = combinedNews.map((n) => n.url || n.title.slice(0, 24));
+      let prev = [];
+      try { prev = JSON.parse(localStorage.getItem(SEEN_KEY) || "[]"); } catch {}
+      const prevSet = new Set(prev);
+      const freshCount = keys.filter((k) => !prevSet.has(k)).length;
+      try {
+        localStorage.setItem(SEEN_KEY, JSON.stringify([...new Set([...keys, ...prev])].slice(0, 600)));
+      } catch {}
+      if (!silent) {
+        toast(
+          prev.length === 0
+            ? `已更新 · ${combinedNews.length} 条新闻`
+            : freshCount > 0
+              ? `比上次刷新新增 ${freshCount} 条`
+              : "已是最新,没有新内容"
+        );
+      }
     } catch (err) {
       if (!silent) toast("刷新失败,显示已缓存内容");
     } finally {
@@ -350,37 +501,47 @@
 
   function bindSwipeBack() {
     const detail = $("#detail");
-    let sx = 0, sy = 0, dx = 0, swiping = false;
+    let sx = 0, sy = 0, dx = 0, mode = null; // null=未判定 / "swipe"=右滑返回 / "scroll"=正文滚动
     detail.addEventListener(
       "touchstart",
       (e) => {
         const t = e.touches[0];
-        // 仿 iOS:从屏幕左缘 44px 内起手才算返回手势
-        swiping = t.clientX - detail.getBoundingClientRect().left < 44;
-        if (swiping) {
-          sx = t.clientX;
-          sy = t.clientY;
-          dx = 0;
-          detail.style.transition = "none";
-        }
+        sx = t.clientX;
+        sy = t.clientY;
+        dx = 0;
+        mode = null;
       },
       { passive: true }
     );
     detail.addEventListener(
       "touchmove",
       (e) => {
-        if (!swiping) return;
+        if (mode === "scroll") return;
         const t = e.touches[0];
-        dx = t.clientX - sx;
-        if (dx > 0 && dx > Math.abs(t.clientY - sy)) {
-          detail.style.transform = `translateX(calc(-50% + ${dx}px))`;
+        const mx = t.clientX - sx;
+        const my = t.clientY - sy;
+        if (mode === null) {
+          // 首次显著位移时锁定方向:向右且横向主导 → 返回手势,否则交给滚动
+          if (mx > 12 && mx > Math.abs(my) * 1.4) {
+            mode = "swipe";
+            detail.style.transition = "none";
+          } else if (Math.abs(my) > 12 || mx < -12) {
+            mode = "scroll";
+            return;
+          } else {
+            return;
+          }
         }
+        dx = Math.max(0, mx);
+        detail.style.transform = `translateX(calc(-50% + ${dx}px))`;
+        if (e.cancelable) e.preventDefault(); // 右滑期间禁止页面同时滚动
       },
-      { passive: true }
+      { passive: false }
     );
     detail.addEventListener("touchend", () => {
-      if (!swiping) return;
-      swiping = false;
+      const wasSwipe = mode === "swipe";
+      mode = null;
+      if (!wasSwipe) return;
       detail.style.transition = "transform 0.22s ease";
       if (dx > 90) {
         detail.style.transform = "translateX(calc(-50% + 105%))";

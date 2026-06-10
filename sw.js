@@ -1,6 +1,6 @@
 /* 电玩日报 Service Worker — 离线缓存(stale-while-revalidate) */
 
-const CACHE = "dianwan-v6";
+const CACHE = "dianwan-v7";
 const ASSETS = [
   "./",
   "./index.html",
