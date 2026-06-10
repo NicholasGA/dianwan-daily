@@ -7,7 +7,7 @@
 
 import { writeFileSync, readFileSync, mkdirSync, readdirSync, unlinkSync } from "node:fs";
 
-const MAX_TOTAL = 60;
+const MAX_TOTAL = 80;
 const PER_SOURCE_CAP = 18; // 单一来源不挤占整个列表
 const CONCURRENCY = 6;
 const MAX_BLOCKS = 60;
@@ -149,17 +149,51 @@ async function fetchGamersky(feed) {
   return out;
 }
 
+/* ---------- 元数据收集:3DM(列表页解析,无 RSS) ---------- */
+
+async function fetch3DM(feed) {
+  const html = await get("https://www.3dmgame.com/news/");
+  const out = [];
+  const seenUrl = new Set();
+  for (const m of html.matchAll(/<li class="selectpost">([\s\S]*?)<\/li>/g)) {
+    const li = m[1];
+    const a = li.match(/<a href="(https:\/\/www\.3dmgame\.com\/news\/\d{6}\/\d+\.html)"[^>]*class="bt"[^>]*>([\s\S]*?)<\/a>/);
+    if (!a) continue;
+    const url = a[1];
+    if (seenUrl.has(url)) continue;
+    seenUrl.add(url);
+    const img = li.match(/<img[^>]+data-original="([^"]+)"/);
+    const txt = li.match(/<div class="miaoshu">([\s\S]*?)<\/div>/);
+    const time = li.match(/<span class="time">([^<]+)<\/span>/);
+    // 列表时间为北京时间,如 "2026-06-10 21:33:01"
+    const ts = time ? Date.parse(time[1].trim().replace(" ", "T") + "+08:00") || Date.now() : Date.now();
+    out.push({
+      title: stripTags(a[2]),
+      summary: txt ? stripTags(txt[1]).slice(0, 110) : "",
+      source: feed.source,
+      url,
+      image: img ? decode(img[1]) : null,
+      isVideo: false,
+      ts,
+    });
+    if (out.length >= feed.max) break;
+  }
+  return out;
+}
+
 const FEEDS = [
   { source: "游民星空", fetcher: fetchGamersky, pages: 2, max: 40 }, // 新闻频道第 1-2 页全量
+  { source: "3DM", fetcher: fetch3DM, max: 12 },
   { source: "机核", fetcher: fetchRss, url: "https://www.gcores.com/rss", skip: /\/radios\//, max: 15 },
   { source: "游研社", fetcher: fetchRss, url: "https://www.yystv.cn/rss/feed", max: 15 },
   { source: "触乐", fetcher: fetchRss, url: "http://www.chuapp.com/feed", max: 15 },
+  { source: "indienova", fetcher: fetchRss, url: "https://indienova.com/feed/", max: 6, fullDesc: true },
   { source: "IGN", fetcher: fetchRss, url: "https://feeds.ign.com/ign/games-all", max: 8, fullDesc: true },
   { source: "GameSpot", fetcher: fetchRss, url: "https://www.gamespot.com/feeds/game-news/", max: 8, fullDesc: true },
 ];
 
 // 同题去重时的来源优先级:中文源有全文,优先保留
-const PRIORITY = { 游民星空: 0, 机核: 0, 游研社: 0, 触乐: 0, IGN: 1, GameSpot: 1 };
+const PRIORITY = { 游民星空: 0, "3DM": 0, 机核: 0, 游研社: 0, 触乐: 0, indienova: 0, IGN: 1, GameSpot: 1 };
 
 /* ---------- 全文提取 ---------- */
 
@@ -185,6 +219,7 @@ function htmlToBlocks(html) {
 
 // 站点正文容器(捕获组 1 为正文 HTML;结束标记不命中会吞进页脚广告,务必齐全)
 const CONTAINERS = {
+  "3dmgame.com": /<div class="news_warp_center">([\s\S]*?)(?:class="bq|<footer|$)/,
   "gamersky.com": /<div class="Mid2L_con">([\s\S]*?)(?:<span id="pe100_page_contentpage|<!--文章内容导航|<a class="diggBtn|<div class="Mid2L_extra|$)/,
   "yystv.cn": /<div class="doc-content[^"]*"[^>]*>([\s\S]*?)(?:class="article-links-container|class="qrcode-block|class="doc-share|class="footer|<footer|$)/,
   "chuapp.com": /<div class="the-content[^"]*"[^>]*>([\s\S]*?)(?:<!--end-->|<!--评论start|相关文章|<footer|$)/,
@@ -278,7 +313,7 @@ const isEnglish = (s) => {
 /* ---------- 分类 ---------- */
 
 function categorize(text) {
-  if (/(手游|移动端|iOS|安卓|Android|原神|崩坏|鸣潮|明日方舟|王者荣耀|和平精英|二游|抽卡|mobile game)/i.test(text)) return "手游";
+  if (/(手游|移动端|iOS|安卓|Android|原神|崩坏|鸣潮|明日方舟|王者荣耀|和平精英|二游|抽卡|mobile game|TapTap|App Store|开启预约|公测|星穹铁道|绝区零|碧蓝航线|阴阳师|蛋仔)/i.test(text)) return "手游";
   if (/(PS5|PS4|PlayStation|Xbox|Switch|任天堂|Nintendo|主机|塞尔达|马里奥|console)/i.test(text)) return "主机";
   if (/(Steam|Epic|PC ?版|显卡|GOG|模组|\bMod\b|\bPC\b)/i.test(text)) return "PC";
   return "业界";

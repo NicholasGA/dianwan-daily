@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <!-- 全局不发 Referer:游民/机核图床对外站 Referer 返回 403,且 CSS 背景图不支持 referrerpolicy 属性 -->
 <meta name="referrer" content="no-referrer">
-<meta name="theme-color" content="#C9C5F4">
+<meta name="theme-color" content="#C9C5F4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#332F6E" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="电玩日报">
@@ -67,7 +68,16 @@
       </section>
 
       <section class="feed">
-        <h3 class="feed-title">最新资讯</h3>
+        <div class="feed-head">
+          <h3 class="feed-title">最新资讯</h3>
+          <button class="search-btn" id="searchBtn" aria-label="搜索">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+          </button>
+        </div>
+        <div class="search-row hidden" id="searchRow">
+          <input id="searchInput" type="search" placeholder="搜索游戏、厂商、关键词…">
+          <button id="searchClear">取消</button>
+        </div>
         <div id="feedList"></div>
         <div class="feed-more" id="feedMore">下滑加载更早的新闻</div>
       </section>
@@ -93,6 +103,42 @@
     </main>
   </div>
 
+  <!-- ============ 收藏视图 ============ -->
+  <div class="view hidden" id="view-favs">
+    <header class="flash-hero">
+      <div class="flash-head">
+        <h1 class="headline headline-sm">收藏</h1>
+      </div>
+      <p class="flash-sub" id="favsCount">长按保存喜欢的新闻</p>
+    </header>
+    <main class="sheet sheet-flash">
+      <div id="favsList"></div>
+      <p class="feed-more hidden" id="favsEmpty">还没有收藏<br>打开任意新闻,点底部「⭐ 收藏」</p>
+    </main>
+  </div>
+
+  <!-- ============ 我的视图 ============ -->
+  <div class="view hidden" id="view-me">
+    <header class="flash-hero">
+      <div class="flash-head">
+        <h1 class="headline headline-sm">我的</h1>
+      </div>
+      <p class="flash-sub" id="meDate"></p>
+    </header>
+    <main class="sheet sheet-flash">
+      <div class="me-stats">
+        <div class="me-stat"><b id="meStreak">1</b><span>连续追新(天)</span></div>
+        <div class="me-stat"><b id="meRead">0</b><span>累计已读</span></div>
+        <div class="me-stat"><b id="meFavs">0</b><span>收藏</span></div>
+      </div>
+      <div class="me-block">
+        <h4>新闻来源</h4>
+        <p class="me-sources">游民星空 · 3DM · 机核 · 游研社 · 触乐 · indienova · IGN · GameSpot</p>
+        <p class="me-tip">每 30 分钟自动抓取,英文新闻自动翻译为中文;下拉可即时刷新;滑到列表底部可翻看 30 天内的历史新闻。内容版权归原站所有,本应用仅作个人阅读使用。</p>
+      </div>
+    </main>
+  </div>
+
   <!-- ============ 底部标签栏 ============ -->
   <nav class="tabbar" id="tabbar">
     <button class="tab tab-active" data-tab="home">
@@ -103,13 +149,9 @@
       <svg viewBox="0 0 24 24"><path d="M13 2L4.5 13.5H11L9.5 22L19 10H12.5L13 2Z"/></svg>
       <span>快讯</span>
     </button>
-    <button class="tab" data-tab="video">
-      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5L10 9.5z" fill="var(--bg-card)" stroke="none"/></svg>
-      <span>视频</span>
-    </button>
-    <button class="tab" data-tab="community">
-      <svg viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4 4V6z"/></svg>
-      <span>社区</span>
+    <button class="tab" data-tab="favs">
+      <svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.7 6.3.8-4.6 4.3 1.2 6.2L12 17l-5.6 3 1.2-6.2L3 9.5l6.3-.8L12 3z"/></svg>
+      <span>收藏</span>
     </button>
     <button class="tab" data-tab="me">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>

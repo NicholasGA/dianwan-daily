@@ -360,11 +360,55 @@ body {
 /* ============ 资讯流(参考游民星空/机核列表) ============ */
 
 .feed { margin-top: 28px; }
+.feed-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .feed-title {
   font-size: 1.18rem;
   font-weight: 800;
   margin-bottom: 4px;
 }
+.search-btn {
+  width: 32px; height: 32px;
+  border: none; border-radius: 50%;
+  background: #F0F1F5;
+  color: var(--ink-2);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.search-btn svg { width: 15px; height: 15px; }
+.search-row { display: flex; gap: 10px; align-items: center; margin: 10px 0 4px; }
+.search-row input {
+  flex: 1;
+  border: none;
+  background: #F0F1F5;
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--ink);
+  outline: none;
+  -webkit-appearance: none;
+}
+#searchClear {
+  border: none; background: none;
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--indigo);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.feed-empty {
+  text-align: center;
+  padding: 36px 0 20px;
+  font-size: 0.92rem;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+.feed-empty span { font-size: 0.76rem; color: var(--ink-3); }
 
 .news-item {
   display: flex;
@@ -374,6 +418,7 @@ body {
   cursor: pointer;
 }
 .news-item:last-child { border-bottom: none; }
+.news-item.is-read .news-title { color: var(--ink-3); font-weight: 600; }
 .news-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .news-cat {
   align-self: flex-start;
@@ -702,6 +747,69 @@ body {
 .ptr-ready { color: var(--accent); }
 .ptr-loading svg { animation: rot 0.9s linear infinite; }
 
+/* ============ 我的页 ============ */
+
+.me-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.me-stat {
+  background: #F3F4F8;
+  border-radius: var(--radius-lg);
+  padding: 18px 8px 14px;
+  text-align: center;
+}
+.me-stat b {
+  display: block;
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.me-stat span { font-size: 0.7rem; color: var(--ink-3); }
+.me-block {
+  background: #F3F4F8;
+  border-radius: var(--radius-lg);
+  padding: 18px;
+}
+.me-block h4 { font-size: 0.92rem; font-weight: 800; margin-bottom: 8px; }
+.me-sources { font-size: 0.84rem; color: var(--ink-2); line-height: 1.7; }
+.me-tip { font-size: 0.74rem; color: var(--ink-3); margin-top: 10px; line-height: 1.7; }
+
+/* ============ 动效 ============ */
+
+.news-item, .cover, .topic-cover, .act, .tab, .chip, .search-btn {
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.news-item:active { transform: scale(0.985); opacity: 0.75; }
+.cover:active, .topic-cover:active { transform: scale(0.96); }
+.act:active, .search-btn:active { transform: scale(0.94); }
+.tab:active { transform: scale(0.9); }
+.refresh-btn:active { transform: scale(0.88); }
+.flash-item .flash-go:active { opacity: 0.55; }
+
+.view { animation: viewIn 0.22s ease; }
+@keyframes viewIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.detail-out {
+  transition: transform 0.2s ease, opacity 0.2s ease !important;
+  transform: translateX(calc(-50% + 100%)) !important;
+  opacity: 0.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* ============ Toast ============ */
 
 .toast {
@@ -719,3 +827,51 @@ body {
   animation: fadeIn 0.2s ease;
 }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ============ 深色模式(跟随系统) ============ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-page: #0D0E14;
+    --bg-app: #13141B;
+    --bg-card: #1A1B24;
+    --hero-1: #403D85;
+    --hero-2: #322F6B;
+    --ink: #F0F0F6;
+    --ink-2: #C2C4D2;
+    --ink-3: #80839A;
+    --indigo: #C5C2F8;
+    --indigo-soft: #A4A1E0;
+    --accent: #A29BFF;
+    --chip-badge: #2C2D42;
+  }
+  .headline { color: #F4F4FA; }
+  .featured-title { color: #ECECF4; }
+  .streak-icon { background: #0A0A10; }
+  .chip { color: #9DA0B2; }
+  .chip.chip-on { color: #FFFFFF; }
+  .chip.chip-on .chip-count { background: #2C2D42; color: var(--indigo); }
+  .pill { background: #262736; color: var(--ink-2); }
+  .pill-active { background: #34325C; color: var(--indigo); }
+  .news-item { border-bottom-color: #23242F; }
+  .search-btn, .search-row input { background: #262736; color: var(--ink-2); }
+  .act { background: #262736; color: var(--ink-2); }
+  .act.acted { background: #34325C; color: var(--indigo); }
+  .src-link { background: #ECECF4; color: #15151C; }
+  .tabbar { background: rgba(19, 20, 27, 0.92); border-top-color: #23242F; }
+  .tab { color: #6E7184; }
+  .tab-active { color: #F0F0F6; }
+  .tab-active svg { fill: #F0F0F6; stroke: #F0F0F6; }
+  .detail-back { background: rgba(32, 33, 46, 0.88); color: #F0F0F6; }
+  .detail-content p { color: #D5D6E2; }
+  .detail-img { background: #23242F; }
+  .ptr { background: #23242F; }
+  .flash-line { background: #262736; }
+  .flash-dot { box-shadow: 0 0 0 4px #2A2B42; }
+  .flash-text { color: #D5D6E2; }
+  .feed-day::before, .feed-day::after { background: #23242F; }
+  .me-stat, .me-block { background: #20212C; }
+  .shelf-bar { background: rgba(255, 255, 255, 0.12); }
+  .toast { background: rgba(240, 240, 246, 0.94); color: #15151C; }
+  .refresh-btn { background: rgba(255, 255, 255, 0.16); color: #E4E2FB; }
+}
