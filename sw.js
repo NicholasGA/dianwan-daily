@@ -1,6 +1,6 @@
 /* 电玩日报 Service Worker — 离线缓存(stale-while-revalidate) */
 
-const CACHE = "dianwan-v7";
+const CACHE = "dianwan-v8";
 const ASSETS = [
   "./",
   "./index.html",
@@ -33,7 +33,7 @@ self.addEventListener("fetch", (e) => {
   if (e.request.method !== "GET") return;
 
   const url = new URL(e.request.url);
-  if (url.pathname.endsWith("/news.json")) {
+  if (url.pathname.endsWith("/news.json") || url.pathname.endsWith("/archive/index.json")) {
     e.respondWith(
       fetch(e.request)
         .then((res) => {

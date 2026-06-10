@@ -5,7 +5,7 @@
    生成 news.json。无第三方依赖,Node 18+ 自带 fetch。
    ============================================================ */
 
-import { writeFileSync } from "node:fs";
+import { writeFileSync, readFileSync, mkdirSync, readdirSync, unlinkSync } from "node:fs";
 
 const MAX_TOTAL = 60;
 const PER_SOURCE_CAP = 18; // 单一来源不挤占整个列表
@@ -426,3 +426,42 @@ writeFileSync(
   "utf8"
 );
 console.log(`news.json 已生成:${news.length} 条新闻`);
+
+/* ---------- 历史归档:按北京日期累积,供 App 下滑加载更早新闻 ---------- */
+
+const ARCHIVE_DIR = new URL("../archive/", import.meta.url);
+mkdirSync(ARCHIVE_DIR, { recursive: true });
+const dayOf = (ts) => new Date((ts || Date.now()) + 8 * 3600 * 1000).toISOString().slice(0, 10);
+
+const byDay = {};
+for (const n of news) (byDay[dayOf(n.ts)] ||= []).push(n);
+
+for (const [day, items] of Object.entries(byDay)) {
+  const file = new URL(`${day}.json`, ARCHIVE_DIR);
+  let existing = [];
+  try {
+    existing = JSON.parse(readFileSync(file, "utf8")).items || [];
+  } catch {}
+  const map = new Map();
+  for (const it of [...existing, ...items]) {
+    const k = it.url || it.title;
+    const prev = map.get(k);
+    // 同条新闻多次出现时保留信息更全的版本(有全文优先)
+    if (!prev || (!prev.content && it.content)) {
+      const { id, ...rest } = { ...prev, ...it, content: it.content || prev?.content || null };
+      map.set(k, rest);
+    }
+  }
+  const merged = [...map.values()].sort((a, b) => b.ts - a.ts);
+  writeFileSync(file, JSON.stringify({ date: day, items: merged }, null, 1), "utf8");
+}
+
+// 索引(日期倒序)+ 清理 30 天前的归档
+const pruneBefore = dayOf(Date.now() - 30 * 86400000);
+const allDates = readdirSync(ARCHIVE_DIR)
+  .filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f))
+  .map((f) => f.slice(0, 10));
+for (const d of allDates.filter((d) => d < pruneBefore)) unlinkSync(new URL(`${d}.json`, ARCHIVE_DIR));
+const dates = allDates.filter((d) => d >= pruneBefore).sort().reverse();
+writeFileSync(new URL("index.json", ARCHIVE_DIR), JSON.stringify(dates), "utf8");
+console.log(`归档完成:本轮 ${Object.keys(byDay).sort().join(", ")},可翻 ${dates.length} 天`);

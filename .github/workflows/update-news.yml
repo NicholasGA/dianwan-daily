@@ -26,5 +26,5 @@ jobs:
         run: |
           git config user.name "dianwan-news-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add news.json
+          git add -A news.json archive
           git diff --cached --quiet || (git commit -m "chore: 更新新闻数据 [bot]" && git push)

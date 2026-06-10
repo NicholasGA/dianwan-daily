@@ -30,7 +30,9 @@
 
   const coverStyle = (cover) => `--c1:${cover.c1};--c2:${cover.c2};--fg:${cover.fg}`;
 
-  const findNews = (id) => D.news.find((n) => n.id === id);
+  const findNews = (id) =>
+    D.news.find((n) => n.id === id) ||
+    history.flatMap((g) => g.items).find((n) => n.id === id);
 
   function relTime(ts) {
     const m = Math.floor((Date.now() - ts) / 60000);
@@ -78,28 +80,31 @@
     return blocks.length ? blocks : null;
   }
 
+  // 单条新闻(远程/归档通用)→ 视图模型
+  function normalizeItem(n, id) {
+    const cleanUrl = /^https?:\/\//.test(n.url || "") ? n.url.replace(/["'\\]/g, "") : null;
+    const cleanImg = /^https?:\/\//.test(n.image || "") ? httpsImage(n.image.replace(/["'\\]/g, "")) : null;
+    return {
+      id,
+      category: CATEGORIES.includes(n.category) ? n.category : "业界",
+      title: n.title || "",
+      titleEn: n.titleEn || null,
+      short: n.title || "",
+      summary: n.summary || "",
+      source: n.source || "",
+      time: relTime(n.ts || Date.now()),
+      comments: null,
+      url: cleanUrl,
+      image: cleanImg,
+      isVideo: !!n.isVideo,
+      cover: { ...PALETTES[id % PALETTES.length], glyph: (n.source || "News").slice(0, 2) },
+      blocks: sanitizeBlocks(n.content), // 全文(站内阅读)
+      content: n.summary ? [n.summary] : [], // 无全文时的摘要兜底
+    };
+  }
+
   function normalizeRemote(remote) {
-    const news = (remote.news || []).map((n, i) => {
-      const cleanUrl = /^https?:\/\//.test(n.url || "") ? n.url.replace(/["'\\]/g, "") : null;
-      const cleanImg = /^https?:\/\//.test(n.image || "") ? httpsImage(n.image.replace(/["'\\]/g, "")) : null;
-      return {
-        id: n.id || i + 1,
-        category: CATEGORIES.includes(n.category) ? n.category : "业界",
-        title: n.title || "",
-        titleEn: n.titleEn || null,
-        short: n.title || "",
-        summary: n.summary || "",
-        source: n.source || "",
-        time: relTime(n.ts || Date.now()),
-        comments: null,
-        url: cleanUrl,
-        image: cleanImg,
-        isVideo: !!n.isVideo,
-        cover: { ...PALETTES[i % PALETTES.length], glyph: (n.source || "News").slice(0, 2) },
-        blocks: sanitizeBlocks(n.content), // 全文(站内阅读)
-        content: n.summary ? [n.summary] : [], // 无全文时的摘要兜底
-      };
-    });
+    const news = (remote.news || []).map((n, i) => normalizeItem(n, n.id || i + 1));
 
     const byImageFirst = (arr) => [...arr].sort((a, b) => (b.image ? 1 : 0) - (a.image ? 1 : 0));
     const featuredIds = byImageFirst(news).slice(0, 5).map((n) => n.id);
@@ -270,16 +275,17 @@
       });
       renderAll();
 
-      // 与上次刷新对比的新增统计(本地记录已见过的新闻)
-      const keys = combinedNews.map((n) => n.url || n.title.slice(0, 24));
-      let prev = [];
-      try { prev = JSON.parse(localStorage.getItem(SEEN_KEY) || "[]"); } catch {}
-      const prevSet = new Set(prev);
-      const freshCount = keys.filter((k) => !prevSet.has(k)).length;
-      try {
-        localStorage.setItem(SEEN_KEY, JSON.stringify([...new Set([...keys, ...prev])].slice(0, 600)));
-      } catch {}
+      // 与上次刷新对比的新增统计
+      // 只在手动刷新时记账:启动时的静默刷新不算"看过",否则刚打开 App 一拉就"已是最新"
       if (!silent) {
+        const keys = combinedNews.map((n) => n.url || n.title.slice(0, 24));
+        let prev = [];
+        try { prev = JSON.parse(localStorage.getItem(SEEN_KEY) || "[]"); } catch {}
+        const prevSet = new Set(prev);
+        const freshCount = keys.filter((k) => !prevSet.has(k)).length;
+        try {
+          localStorage.setItem(SEEN_KEY, JSON.stringify([...new Set([...keys, ...prev])].slice(0, 600)));
+        } catch {}
         toast(
           prev.length === 0
             ? `已更新 · ${combinedNews.length} 条新闻`
@@ -346,11 +352,8 @@
       .join("");
   }
 
-  function renderFeed() {
-    const list = activeCategory === "全部" ? D.news : D.news.filter((n) => n.category === activeCategory);
-    $("#feedList").innerHTML = list
-      .map(
-        (n) => `
+  function newsItemHtml(n) {
+    return `
       <article class="news-item" data-id="${n.id}">
         <div class="news-main">
           <span class="news-cat">${esc(n.category)}</span>
@@ -363,9 +366,84 @@
           ${n.image ? `<img class="thumb-img" src="${esc(n.image)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="thumb-glyph">${esc(n.cover.glyph)}</span>`}
           ${videoBadge(n)}
         </div>
-      </article>`
-      )
-      .join("");
+      </article>`;
+  }
+
+  function formatDay(d) {
+    const [y, m, dd] = d.split("-").map(Number);
+    const wd = "日一二三四五六"[new Date(y, m - 1, dd).getDay()];
+    return `${m} 月 ${dd} 日 · 周${wd}`;
+  }
+
+  function renderFeed() {
+    const match = (n) => activeCategory === "全部" || n.category === activeCategory;
+    // 当前窗口
+    let html = D.news.filter(match).map(newsItemHtml).join("");
+    // 历史归档(按日分组,剔除与当前窗口重复的)
+    const windowKeys = new Set(D.news.map((n) => n.url || n.title));
+    for (const g of history) {
+      const items = g.items.filter((n) => match(n) && !windowKeys.has(n.url || n.title));
+      if (!items.length) continue;
+      html += `<div class="feed-day">${formatDay(g.date)}</div>` + items.map(newsItemHtml).join("");
+    }
+    $("#feedList").innerHTML = html;
+  }
+
+  /* ---------- 历史新闻:滑到底部加载更早(archive/) ---------- */
+
+  let archiveDates = null;
+  const loadedDates = new Set();
+  const history = []; // [{date, items}]
+  let historyLoading = false;
+  let historyIdSeq = 100000; // 与窗口 id 错开
+
+  async function loadMoreHistory() {
+    if (historyLoading) return;
+    historyLoading = true;
+    const more = $("#feedMore");
+    try {
+      if (archiveDates === null) {
+        try {
+          const r = await fetch("archive/index.json", { cache: "no-store" });
+          archiveDates = r.ok ? await r.json() : [];
+        } catch {
+          archiveDates = [];
+        }
+      }
+      // 循环取更早的日期,直到真的渲染出新内容为止
+      // (最近一天的归档往往和当前窗口完全重合,跳过它,否则加载会"卡住")
+      while (true) {
+        const next = (archiveDates || []).find((d) => !loadedDates.has(d));
+        if (!next) {
+          more.textContent = archiveDates && archiveDates.length ? "没有更早的新闻了" : "暂无历史归档";
+          return;
+        }
+        more.textContent = "加载更早的新闻…";
+        const r = await fetch(`archive/${next}.json`);
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        const day = await r.json();
+        loadedDates.add(next);
+        const windowKeys = new Set(D.news.map((n) => n.url || n.title));
+        const items = (day.items || []).map((n) => normalizeItem(n, ++historyIdSeq));
+        history.push({ date: next, items });
+        if (items.some((n) => !windowKeys.has(n.url || n.title))) {
+          renderFeed();
+          more.textContent = "继续下滑加载更早";
+          break;
+        }
+      }
+    } catch {
+      more.textContent = "加载失败,继续下滑重试";
+    } finally {
+      historyLoading = false;
+    }
+    // 渲染后哨兵若仍在视口附近(本次加载内容不足一屏),自动续载
+    requestAnimationFrame(() => {
+      const rect = more.getBoundingClientRect();
+      if (rect.top < window.innerHeight + 400 && (archiveDates || []).some((d) => !loadedDates.has(d))) {
+        loadMoreHistory();
+      }
+    });
   }
 
   function renderFlash() {
@@ -634,4 +712,12 @@
   bindSwipeBack();
   bindPullRefresh();
   refresh(true); // 启动时静默拉取真实新闻
+
+  // 滑到底部自动加载更早的新闻
+  new IntersectionObserver(
+    (entries) => {
+      if (entries.some((e) => e.isIntersecting)) loadMoreHistory();
+    },
+    { rootMargin: "500px" }
+  ).observe($("#feedMore"));
 })();

@@ -436,6 +436,29 @@ body {
   padding: 18px 0 10px;
 }
 
+/* 历史归档:日期分隔条 + 底部加载提示 */
+.feed-day {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0 4px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--ink-2);
+}
+.feed-day::before, .feed-day::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #ECEDF3;
+}
+.feed-more {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--ink-3);
+  padding: 18px 0 6px;
+}
+
 /* ============ 快讯视图 ============ */
 
 .flash-hero {

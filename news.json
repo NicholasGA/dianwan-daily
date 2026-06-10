@@ -1,8 +1,44 @@
 {
- "generatedAt": "2026-06-10T16:31:35.651Z",
+ "generatedAt": "2026-06-10T16:52:29.892Z",
  "news": [
   {
    "id": 1,
+   "category": "主机",
+   "title": "为什么现在是《塞尔达传说：时之笛》重制版的最佳时机",
+   "summary": "距离新的主线游戏还有几年的时间，塞尔达电影即将上映，现在正是最佳时机",
+   "source": "IGN",
+   "url": "https://www.ign.com/articles/why-now-is-the-perfect-time-for-a-zelda-ocarina-of-time-remake",
+   "image": "https://assets-prd.ignimgs.com/2026/06/10/zelda-oot-remake-blogroll-1781102895395.jpg",
+   "isVideo": false,
+   "ts": 1781108100000,
+   "titleEn": "Why Now Is the Perfect Time for a Zelda: Ocarina of Time Remake",
+   "content": [
+    {
+     "t": "p",
+     "v": "距离新主线游戏的推出还有几年时间，《塞尔达传说》电影也即将面世，现在正是重制《塞尔达传说：时之笛》的最佳时机。"
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "category": "业界",
+   "title": "微软对《上古卷轴 6》再次缺席的评论",
+   "summary": "随着《上古卷轴 6》的发布已经八周年了，微软表示其最终的发布也将带来希望",
+   "source": "IGN",
+   "url": "https://www.ign.com/articles/microsoft-comments-on-yet-another-the-elder-scrolls-6-no-show",
+   "image": "https://assets1.ignimgs.com/2019/06/17/5-es6-1560804827894.jpg",
+   "isVideo": false,
+   "ts": 1781106919000,
+   "titleEn": "Microsoft Comments on Yet Another The Elder Scrolls 6 No-Show",
+   "content": [
+    {
+     "t": "p",
+     "v": "随着《上古卷轴 6》的发布已经八周年了，微软表示，其最终的发布也将向粉丝们承诺这款游戏“即将推出”。"
+    }
+   ]
+  },
+  {
+   "id": 3,
    "category": "主机",
    "title": "2026 年 6 月推出的 PlayStation Plus Extra/Premium 游戏揭晓",
    "summary": "索尼公布了 PlayStation Plus Extra 和 Premium 订阅游戏目录中的最新游戏",
@@ -44,7 +80,7 @@
    ]
   },
   {
-   "id": 2,
+   "id": 4,
    "category": "主机",
    "title": "索尼PS+会员二三档阵容公布！《最终幻想16》领衔",
    "summary": "PlayStation今日公布了本月PS Plus二三档会员游戏库的新增名单。",
@@ -137,7 +173,7 @@
    ]
   },
   {
-   "id": 3,
+   "id": 5,
    "category": "业界",
    "title": "苹果重磅产品全球多地下架！中国官网已断货",
    "summary": "IT之家 6 月 10 日消息，MacRumors 发现，苹果 Vision Pro 旅行舱目前已在全球多个市场地区的线上商店中下架，至少包括英国、日本、…",
@@ -202,7 +238,7 @@
    ]
   },
   {
-   "id": 4,
+   "id": 6,
    "category": "业界",
    "title": "外媒质疑《剑星》新女主太幼！还担心战衣会更涩",
    "summary": "外媒Kotaku近日发文点评《剑星：血雨》新主角伊薇（Evie）引发的争议，并对Shift Up CEO兼系列制作人金亨泰的回应提出质疑。",
@@ -255,7 +291,7 @@
    ]
   },
   {
-   "id": 5,
+   "id": 7,
    "category": "主机",
    "title": "玩家认为《王国之心》的新艺术是人工智能生成的",
    "summary": "昨天的任天堂直面会确实让《王国之心》的玩家们议论纷纷——但这不是那种讨论",
@@ -297,7 +333,7 @@
    ]
   },
   {
-   "id": 6,
+   "id": 8,
    "category": "业界",
    "title": "战争机器：E-Day 在不进行全面跑酷的情况下实现运动现代化",
    "summary": "弹出 Locust 头和主动重新装弹从来没有比《战争机器：E-Day》更好看，但是这个先决条件",
@@ -355,7 +391,7 @@
    ]
   },
   {
-   "id": 7,
+   "id": 9,
    "category": "业界",
    "title": "《神鬼寓言》的 1000 种浪漫选择听起来像是完美主义者的终极挑战",
    "summary": "《神鬼寓言》不仅为玩家提供了一场宏大的奇幻冒险，还为玩家提供了一个抓住机会的机会",
@@ -385,7 +421,7 @@
    ]
   },
   {
-   "id": 8,
+   "id": 10,
    "category": "业界",
    "title": "寓言让你获得第二次生命，而不仅仅是拯救世界",
    "summary": "《神鬼寓言》现已于 2027 年 2 月上映，但还需要几个月的时间来微调奇幻冒险，Playgr",
@@ -419,7 +455,7 @@
    ]
   },
   {
-   "id": 9,
+   "id": 11,
    "category": "主机",
    "title": "任天堂前员工表示，在高调泄密后，《塞尔达传说：时之笛》重制版应该改为展示更多内容",
    "summary": "任天堂前员工建议该公司应该改变推出《塞尔传说》的计划",
@@ -437,7 +473,7 @@
    ]
   },
   {
-   "id": 10,
+   "id": 12,
    "category": "主机",
    "title": "《神鬼寓言》游民前瞻：时隔十多年的华丽重生",
    "summary": "感谢Xbox官方的邀请，我们在前不久举办的夏日游戏节中，提前观看了《神鬼寓言》最新的30分钟实机试玩，并现场听取了开发人员的讲解。",
@@ -566,7 +602,20 @@
    ]
   },
   {
-   "id": 11,
+   "id": 13,
+   "category": "业界",
+   "title": "光环：战役演变 – 最终预览",
+   "summary": "",
+   "source": "IGN",
+   "url": "https://www.ign.com/articles/halo-campaign-evolved-the-final-preview",
+   "image": "https://assets-prd.ignimgs.com/2026/06/10/halo-campaign-evolved-blogroll-1781072910946.jpg",
+   "isVideo": false,
+   "ts": 1781103600000,
+   "titleEn": "Halo: Campaign Evolved – The Final Preview",
+   "content": null
+  },
+  {
+   "id": 14,
    "category": "业界",
    "title": "卡普空将如何讲述《生化危机：维罗妮卡》中阿尔弗雷德·阿什福德的故事情节？",
    "summary": "卡普空讨论了它将如何解决《生化危机：维罗妮卡》中阿尔弗雷德·阿什福德的故事情节。",
@@ -584,74 +633,7 @@
    ]
   },
   {
-   "id": 12,
-   "category": "业界",
-   "title": "卡普空确认《生化危机维罗妮卡》是一款第三人称游戏",
-   "summary": "夏季游戏节上的《生化危机维罗妮卡》预告片很可能以第一人称形式呈现，但",
-   "source": "IGN",
-   "url": "https://www.ign.com/articles/resident-evil-veronica-is-a-third-person-game-capcom-confirms",
-   "image": "https://assets-prd.ignimgs.com/2026/06/10/ss-5f574a15cb682397b7a03ff06a09969e65201c9d-1920x1080-1781101673669.jpg",
-   "isVideo": false,
-   "ts": 1781103600000,
-   "titleEn": "Resident Evil Veronica Is a Third-Person Game, Capcom Confirms",
-   "content": [
-    {
-     "t": "p",
-     "v": "卡普空证实，夏季游戏节上《生化危机维罗妮卡》的预告片很可能以第一人称形式呈现，但游戏本身将以第三人称形式进行。"
-    }
-   ]
-  },
-  {
-   "id": 13,
-   "category": "业界",
-   "title": "《哥斯拉：消灭所有怪物近战重制版》将于 11 月在指定零售商处接受预订",
-   "summary": "《哥斯拉：毁灭所有怪物近战重制版》现已在指定零售商处接受预订。我们已经分手了",
-   "source": "IGN",
-   "url": "https://www.ign.com/articles/godzilla-destroy-all-monsters-melee-remastered-where-to-preorder",
-   "image": "https://assets-prd.ignimgs.com/2026/06/10/godzilla-destroy-all-monsters-melee-remastered-1781094452489.jpg",
-   "isVideo": false,
-   "ts": 1781103600000,
-   "titleEn": "Godzilla: Destroy All Monsters Melee Remastered Is Up for Preorder at Select Retailers, Out in November",
-   "content": [
-    {
-     "t": "p",
-     "v": "《哥斯拉：毁灭所有怪物近战重制版》现已在指定零售商处接受预订。我们已详细列出您可以在 11 月 3 日发布之前获取副本的位置。"
-    }
-   ]
-  },
-  {
-   "id": 14,
-   "category": "业界",
-   "title": "Capcom 解释《最终幻想 7》中的蒂法如何成为《街头霸王 6》DLC 角色",
-   "summary": "卡普空 (Capcom) 讨论了《最终幻想 7》中引人注目的蒂法 (Tifa) 成为客座 DLC 角色的问题",
-   "source": "IGN",
-   "url": "https://www.ign.com/articles/capcom-explains-how-tifa-from-final-fantasy-7-came-to-be-a-street-fighter-6-dlc-character",
-   "image": "https://assets-prd.ignimgs.com/2026/06/10/tifa-1781096767643.jpg",
-   "isVideo": false,
-   "ts": 1781103600000,
-   "titleEn": "Capcom Explains How Tifa From Final Fantasy 7 Came to Be a Street Fighter 6 DLC Character",
-   "content": [
-    {
-     "t": "p",
-     "v": "Capcom 讨论了《最终幻想 7》中引人注目的蒂法成为《街头霸王 6》客座 DLC 角色的问题，并解释了为什么她非常适合这款游戏。"
-    }
-   ]
-  },
-  {
    "id": 15,
-   "category": "业界",
-   "title": "光环：战役演变 – 最终预览",
-   "summary": "",
-   "source": "IGN",
-   "url": "https://www.ign.com/articles/halo-campaign-evolved-the-final-preview",
-   "image": "https://assets-prd.ignimgs.com/2026/06/10/halo-campaign-evolved-blogroll-1781072910946.jpg",
-   "isVideo": false,
-   "ts": 1781103600000,
-   "titleEn": "Halo: Campaign Evolved – The Final Preview",
-   "content": null
-  },
-  {
-   "id": 16,
    "category": "业界",
    "title": "寓言让我选择一只会说话的猪是活下去还是成为午餐IGN 预览",
    "summary": "在对《神鬼寓言》的生活模拟元素进行了 30 分钟的演示后，我对它的“游戏中的游戏”非常着迷，",
@@ -669,20 +651,38 @@
    ]
   },
   {
-   "id": 17,
-   "category": "主机",
-   "title": "战争机器：E-Day 开发者谈论尊重传说、游戏长度、新运动机制等",
-   "summary": "IGN 采访了 The Coalition，以了解有关 Xbox 主机独占《战争机器：E-Day》的更多信息。",
+   "id": 16,
+   "category": "业界",
+   "title": "卡普空确认《生化危机维罗妮卡》是一款第三人称游戏",
+   "summary": "夏季游戏节上的《生化危机维罗妮卡》预告片很可能以第一人称形式呈现，但",
    "source": "IGN",
-   "url": "https://www.ign.com/articles/gears-e-day-devs-on-gears-lore-game-length-new-movement-mechanics-and-ai",
-   "image": "https://assets-prd.ignimgs.com/2026/06/10/gears-of-war-eday-br-1781083823810.jpg",
+   "url": "https://www.ign.com/articles/resident-evil-veronica-is-a-third-person-game-capcom-confirms",
+   "image": "https://assets-prd.ignimgs.com/2026/06/10/ss-5f574a15cb682397b7a03ff06a09969e65201c9d-1920x1080-1781101673669.jpg",
    "isVideo": false,
    "ts": 1781103600000,
-   "titleEn": "Gears of War: E-Day Devs on Respecting the Lore, Game Length, New Movement Mechanics, and More",
+   "titleEn": "Resident Evil Veronica Is a Third-Person Game, Capcom Confirms",
    "content": [
     {
      "t": "p",
-     "v": "IGN 采访了 The Coalition，以了解有关 Xbox 主机独占《战争机器：E-Day》的更多信息。"
+     "v": "卡普空证实，夏季游戏节上《生化危机维罗妮卡》的预告片很可能以第一人称形式呈现，但游戏本身将以第三人称形式进行。"
+    }
+   ]
+  },
+  {
+   "id": 17,
+   "category": "业界",
+   "title": "《哥斯拉：消灭所有怪物近战重制版》将于 11 月在指定零售商处接受预订",
+   "summary": "《哥斯拉：毁灭所有怪物近战重制版》现已在指定零售商处接受预订。我们已经分手了",
+   "source": "IGN",
+   "url": "https://www.ign.com/articles/godzilla-destroy-all-monsters-melee-remastered-where-to-preorder",
+   "image": "https://assets-prd.ignimgs.com/2026/06/10/godzilla-destroy-all-monsters-melee-remastered-1781094452489.jpg",
+   "isVideo": false,
+   "ts": 1781103600000,
+   "titleEn": "Godzilla: Destroy All Monsters Melee Remastered Is Up for Preorder at Select Retailers, Out in November",
+   "content": [
+    {
+     "t": "p",
+     "v": "《哥斯拉：毁灭所有怪物近战重制版》现已在指定零售商处接受预订。我们已详细列出您可以在 11 月 3 日发布之前获取副本的位置。"
     }
    ]
   },
@@ -3770,63 +3770,63 @@
  ],
  "flash": [
   {
+   "ts": 1781108100000,
+   "text": "为什么现在是《塞尔达传说：时之笛》重制版的最佳时机",
+   "id": 1
+  },
+  {
+   "ts": 1781106919000,
+   "text": "微软对《上古卷轴 6》再次缺席的评论",
+   "id": 2
+  },
+  {
    "ts": 1781106492000,
    "text": "2026 年 6 月推出的 PlayStation Plus Extra/Premium 游戏揭晓",
-   "id": 1
+   "id": 3
   },
   {
    "ts": 1781106000000,
    "text": "索尼PS+会员二三档阵容公布！《最终幻想16》领衔",
-   "id": 2
+   "id": 4
   },
   {
    "ts": 1781104620000,
    "text": "苹果重磅产品全球多地下架！中国官网已断货",
-   "id": 3
+   "id": 5
   },
   {
    "ts": 1781104440000,
    "text": "外媒质疑《剑星》新女主太幼！还担心战衣会更涩",
-   "id": 4
+   "id": 6
   },
   {
    "ts": 1781103736000,
    "text": "玩家认为《王国之心》的新艺术是人工智能生成的",
-   "id": 5
+   "id": 7
   },
   {
    "ts": 1781103638000,
    "text": "战争机器：E-Day 在不进行全面跑酷的情况下实现运动现代化",
-   "id": 6
+   "id": 8
   },
   {
    "ts": 1781103635000,
    "text": "《神鬼寓言》的 1000 种浪漫选择听起来像是完美主义者的终极挑战",
-   "id": 7
+   "id": 9
   },
   {
    "ts": 1781103628000,
    "text": "寓言让你获得第二次生命，而不仅仅是拯救世界",
-   "id": 8
+   "id": 10
   },
   {
    "ts": 1781103602000,
    "text": "任天堂前员工表示，在高调泄密后，《塞尔达传说：时之笛》重制版应该改为展示更多内容",
-   "id": 9
-  },
-  {
-   "ts": 1781103600000,
-   "text": "《神鬼寓言》游民前瞻：时隔十多年的华丽重生",
-   "id": 10
-  },
-  {
-   "ts": 1781103600000,
-   "text": "卡普空将如何讲述《生化危机：维罗妮卡》中阿尔弗雷德·阿什福德的故事情节？",
    "id": 11
   },
   {
    "ts": 1781103600000,
-   "text": "卡普空确认《生化危机维罗妮卡》是一款第三人称游戏",
+   "text": "《神鬼寓言》游民前瞻：时隔十多年的华丽重生",
    "id": 12
   }
  ]
