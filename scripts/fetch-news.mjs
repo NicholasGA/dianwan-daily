@@ -453,7 +453,7 @@ for (const n of news) {
   }
 }
 
-const flash = news.slice(0, 12).map((n) => ({ ts: n.ts, text: n.title, id: n.id }));
+const flash = news.slice(0, 16).map((n) => ({ ts: n.ts, text: n.title, id: n.id }));
 
 writeFileSync(
   new URL("../news.json", import.meta.url),

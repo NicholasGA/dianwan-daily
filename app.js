@@ -137,7 +137,7 @@
     const topicIds = byImageFirst(news.filter((n) => !featuredIds.includes(n.id)))
       .slice(0, 4)
       .map((n) => n.id);
-    const flash = (remote.flash || []).slice(0, 12).map((f) => ({
+    const flash = (remote.flash || []).slice(0, 16).map((f) => ({
       time: new Date(f.ts || Date.now()).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" }),
       text: esc(f.text),
       id: f.id || null,
@@ -289,7 +289,7 @@
       const combined = {
         generatedAt: remote.generatedAt,
         news: combinedNews,
-        flash: combinedNews.slice(0, 12).map((n) => ({ ts: n.ts, text: n.title, id: n.id })),
+        flash: combinedNews.slice(0, 16).map((n) => ({ ts: n.ts, text: n.title, id: n.id })),
       };
       D = normalizeRemote(combined);
       renderAll();
