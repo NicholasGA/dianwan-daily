@@ -191,13 +191,17 @@
    "summary": "基于Godot的无编程2D动作游戏制作工具，动作游戏制作大师（Action Game Maker）。",
    "source": "indienova",
    "url": "https://indienova.com/indie-game-development/action-game-maker-tutorials-14/",
-   "image": null,
+   "image": "https://hivebak.indienova.com/farm/article/headpic/2026/04/head-9225DZ-action-game-maker-tutorials-14.jpg",
    "isVideo": false,
    "ts": 1780812000000,
    "content": [
     {
+     "t": "img",
+     "v": "https://hivebak.indienova.com/farm/article/headpic/2026/04/head-9225DZ-action-game-maker-tutorials-14.jpg"
+    },
+    {
      "t": "p",
-     "v": "基于Godot的无编程2D动作游戏制作工具，动作游戏制作大师（Action Game Maker）。"
+     "v": "基于 Godot 的无编程 2D 动作游戏制作工具：动作游戏制作大师（Action Game Maker）"
     }
    ]
   },
@@ -207,10 +211,251 @@
    "summary": "本期 itch 游戏汇编如期而至，开始阅读，随时试玩，享受时光吧！",
    "source": "indienova",
    "url": "https://indienova.com/indie-game-news/itch-new-games-summary-of-last-week-2026-0525-0531-part2/",
-   "image": null,
+   "image": "https://hivebak.indienova.com/farm/article/headpic/2026/06/head-9871ix-banner0525_0531B.jpg",
    "isVideo": false,
    "ts": 1780790400000,
-   "content": null
+   "content": [
+    {
+     "t": "img",
+     "v": "https://hivebak.indienova.com/farm/article/headpic/2026/06/head-9871ix-banner0525_0531B.jpg"
+    },
+    {
+     "t": "p",
+     "v": "关键字： 冒险、短篇"
+    },
+    {
+     "t": "p",
+     "v": "发布时间： 5 月 28 日"
+    },
+    {
+     "t": "p",
+     "v": "开发者： Coleo_Kin"
+    },
+    {
+     "t": "p",
+     "v": "游戏简介： 这世上讨厌的东西太多了。看啥不顺眼，就冲它撒泡尿，让烦恼一尿了之。"
+    },
+    {
+     "t": "p",
+     "v": "引擎 / 工具： PixiJS"
+    },
+    {
+     "t": "p",
+     "v": "游戏链接： https://coleo_kin.itch.io/pissing-child-monogatari"
+    },
+    {
+     "t": "img",
+     "v": "https://hivebak.indienova.com/farm/article/picture/2026/06/itch-0249754-dLWZa8.gif"
+    },
+    {
+     "t": "p",
+     "v": "关键字： 恐怖"
+    },
+    {
+     "t": "p",
+     "v": "发布时间： 5 月 28 日"
+    },
+    {
+     "t": "p",
+     "v": "开发者： Noctroom-ノクトルーム-"
+    },
+    {
+     "t": "p",
+     "v": "游戏简介： 五名特工奉命前往一栋宅邸，各自发现一名“非人女子”。援军抵达前，他们必须坚守五分钟，监视目标的一举一动。"
+    },
+    {
+     "t": "p",
+     "v": "引擎 / 工具： TyranoBuilder"
+    },
+    {
+     "t": "p",
+     "v": "游戏链接： https://noctroom.itch.io/namelesslady"
+    },
+    {
+     "t": "img",
+     "v": "https://hivebak.indienova.com/farm/article/picture/2026/06/itch-0281647-cBMUNr.gif"
+    },
+    {
+     "t": "p",
+     "v": "关键字： 卡牌、纸牌接龙"
+    },
+    {
+     "t": "p",
+     "v": "发布时间： 5 月 28 日"
+    },
+    {
+     "t": "p",
+     "v": "开发者： Kenney"
+    },
+    {
+     "t": "p",
+     "v": "游戏简介： 画面简洁流畅的纸牌接龙，适合随时摸鱼来一局。"
+    },
+    {
+     "t": "p",
+     "v": "引擎 / 工具： Unity"
+    },
+    {
+     "t": "p",
+     "v": "游戏链接： https://kenney.itch.io/kenney-solitaire"
+    },
+    {
+     "t": "img",
+     "v": "https://hivebak.indienova.com/farm/article/picture/2026/06/itch-0258723-1Xx6xe.gif"
+    },
+    {
+     "t": "p",
+     "v": "关键字： 解谜、平台游戏"
+    },
+    {
+     "t": "p",
+     "v": "发布时间： 5 月 28 日"
+    },
+    {
+     "t": "p",
+     "v": "开发者： PUNKCAKE Délicieux 🥞、Lorraine 🍬 Devaux"
+    },
+    {
+     "t": "p",
+     "v": "游戏简介： 深入荒废神殿，取回魂缚者的灵魂宝石。相传，这颗宝石能扭曲空间。"
+    },
+    {
+     "t": "p",
+     "v": "引擎 / 工具： PICO-8"
+    },
+    {
+     "t": "p",
+     "v": "游戏链接： https://punkcake.itch.io/soulbound"
+    },
+    {
+     "t": "img",
+     "v": "https://hivebak.indienova.com/farm/article/picture/2026/06/itch-0263390-snmYnk.gif"
+    },
+    {
+     "t": "p",
+     "v": "关键字： 模拟、幻想、点击放置"
+    },
+    {
+     "t": "p",
+     "v": "发布时间： 5 月 29 日"
+    },
+    {
+     "t": "p",
+     "v": "开发者： J0skiy、Execute、4epushila26"
+    },
+    {
+     "t": "p",
+     "v": "游戏简介： 操控怪物大军，寻找最优路径突袭人类村庄，打砸抢杀，为非作歹。"
+    },
+    {
+     "t": "p",
+     "v": "引擎 / 工具： Godot"
+    },
+    {
+     "t": "p",
+     "v": "游戏链接： https://j0skiy.itch.io/freakish-attack"
+    },
+    {
+     "t": "img",
+     "v": "https://hivebak.indienova.com/farm/article/picture/2026/06/itch-0267210-wrs0bY.gif"
+    },
+    {
+     "t": "p",
+     "v": "关键字： 竞赛、动物、街机、可爱、仅限鼠标"
+    },
+    {
+     "t": "p",
+     "v": "发布时间： 5 月 29 日"
+    },
+    {
+     "t": "p",
+     "v": "开发者： jayclock"
+    },
+    {
+     "t": "p",
+     "v": "游戏简介： 猫猫很挑剔，想把它撸爽可不容易。找准爽点，一顿猛撸，让猫猫跑成一道闪电。"
+    },
+    {
+     "t": "p",
+     "v": "引擎 / 工具： Godot"
+    },
+    {
+     "t": "p",
+     "v": "游戏链接： https://jayclock.itch.io/car-cat-curling"
+    },
+    {
+     "t": "img",
+     "v": "https://hivebak.indienova.com/farm/article/picture/2026/06/itch-0254720-7ISPct.gif"
+    },
+    {
+     "t": "p",
+     "v": "关键字： 冒险、平台游戏"
+    },
+    {
+     "t": "p",
+     "v": "发布时间： 5 月 29 日"
+    },
+    {
+     "t": "p",
+     "v": "开发者： Toasty、riggy2k3、SomeRanDev、Amaiguri、Coco Dayo、Gimpy"
+    },
+    {
+     "t": "p",
+     "v": "游戏简介： 你来到大厂面试金融分析师岗位，这关系到女儿的医药费，容不得失败。没想到刚进面试室，就要惨遭优化了！？"
+    },
+    {
+     "t": "p",
+     "v": "引擎 / 工具： RPG Maker"
+    },
+    {
+     "t": "p",
+     "v": "游戏链接： https://toastytime.itch.io/corporate-trimming"
+    },
+    {
+     "t": "img",
+     "v": "https://hivebak.indienova.com/farm/article/picture/2026/06/itch-0283195-5kwShj.gif"
+    },
+    {
+     "t": "p",
+     "v": "关键字： 策略、解谜、卡通、卡牌构筑、Roguelike"
+    },
+    {
+     "t": "p",
+     "v": "发布时间： 5 月 29 日"
+    },
+    {
+     "t": "p",
+     "v": "开发者： Mismatched Socks"
+    },
+    {
+     "t": "p",
+     "v": "游戏简介： 结合《俄罗斯方块》与《小丑牌》的 Roguelike 卡牌构筑游戏。拼织布片，叠加效果，冲击高分。"
+    },
+    {
+     "t": "p",
+     "v": "引擎 / 工具： Unity"
+    },
+    {
+     "t": "p",
+     "v": "游戏链接： https://mismatched-socks.itch.io/arachnes-loom"
+    },
+    {
+     "t": "img",
+     "v": "https://hivebak.indienova.com/farm/article/picture/2026/06/itch-0277966-oKRDUk.gif"
+    },
+    {
+     "t": "p",
+     "v": "关键字： 冒险、解谜、气氛、恐怖、叙事、指向点击"
+    },
+    {
+     "t": "p",
+     "v": "发布时间： 5 月 29 日"
+    },
+    {
+     "t": "p",
+     "v": "开发者： CatTrigger"
+    }
+   ]
   }
  ]
 }

@@ -447,20 +447,54 @@
     return `${m} 月 ${dd} 日 · 周${wd}`;
   }
 
+  const dayKeyOf = (ts) => new Date(ts + 8 * 3600 * 1000).toISOString().slice(0, 10);
+
+  // 窗口 + 已加载归档合并成一条连续时间长河(去重,按时间倒序,按天分隔)
   function renderFeed() {
     const q = searchQuery.toLowerCase();
     const match = (n) =>
       (activeCategory === "全部" || n.category === activeCategory) &&
       (!q || (n.title + " " + n.summary + " " + n.source).toLowerCase().includes(q));
-    let html = D.news.filter(match).map(newsItemHtml).join("");
-    const windowKeys = new Set(D.news.map(itemKey));
-    for (const g of history) {
-      const items = g.items.filter((n) => match(n) && !windowKeys.has(itemKey(n)));
-      if (!items.length) continue;
-      html += `<div class="feed-day">${formatDay(g.date)}</div>` + items.map(newsItemHtml).join("");
+    const seenK = new Set();
+    const river = [];
+    for (const n of [...D.news, ...history.flatMap((g) => g.items)]) {
+      const k = itemKey(n);
+      if (seenK.has(k)) continue;
+      seenK.add(k);
+      if (match(n)) river.push(n);
+    }
+    river.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+
+    const todayKey = dayKeyOf(Date.now());
+    const yesterdayKey = dayKeyOf(Date.now() - 86400000);
+    let lastDay = null;
+    let html = "";
+    for (const n of river) {
+      const d = n.ts ? dayKeyOf(n.ts) : todayKey;
+      if (d !== lastDay) {
+        lastDay = d;
+        if (d !== todayKey) {
+          html += `<div class="feed-day">${d === yesterdayKey ? "昨天" : formatDay(d)}</div>`;
+        }
+      }
+      html += newsItemHtml(n);
     }
     if (!html && q) html = `<p class="feed-empty">没有找到包含「${esc(searchQuery)}」的新闻<br><span>搜索范围是已加载的新闻,下滑加载更多历史后可再搜</span></p>`;
     $("#feedList").innerHTML = html;
+  }
+
+  // 加载历史后保持视口锚点,避免上方插入内容导致跳动
+  function renderFeedKeepAnchor() {
+    const anchor = [...document.querySelectorAll("#feedList .news-item")].find(
+      (el) => el.getBoundingClientRect().bottom > 80
+    );
+    const aId = anchor?.dataset.id;
+    const aTop = anchor ? anchor.getBoundingClientRect().top : 0;
+    renderFeed();
+    if (aId) {
+      const el = document.querySelector(`#feedList .news-item[data-id="${aId}"]`);
+      if (el) window.scrollBy(0, el.getBoundingClientRect().top - aTop);
+    }
   }
 
   function renderFlash() {
@@ -543,7 +577,7 @@
         const items = (day.items || []).map((n) => normalizeItem(n, ++historyIdSeq));
         history.push({ date: next, items });
         if (items.some((n) => !windowKeys.has(itemKey(n)))) {
-          renderFeed();
+          renderFeedKeepAnchor();
           more.textContent = "继续下滑加载更早";
           break;
         }

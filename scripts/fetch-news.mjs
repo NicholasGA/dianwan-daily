@@ -75,12 +75,13 @@ async function fetchRss(feed) {
     const title = stripTags(field(item, "title"));
     if (!title) continue;
     const descRaw = field(item, "description");
-    // 英文站文章页有 Cloudflare 防护抓不到全文,RSS 描述里的导语段落是唯一可用正文
+    // WordPress 系源(indienova/IGN)在 content:encoded 里带完整图文,优先用
+    const richRaw = field(item, "content:encoded") || descRaw;
     let descBlocks;
     if (feed.fullDesc) {
-      const html = decode(descRaw);
+      const html = decode(richRaw);
       const blocks = htmlToBlocks(html).filter((b) => b.t !== "img" || /^https?:/.test(b.v));
-      const plain = stripTags(descRaw);
+      const plain = stripTags(richRaw);
       descBlocks = blocks.some((b) => b.t !== "img") ? blocks : plain ? [{ t: "p", v: plain }] : undefined;
     }
     out.push({
@@ -88,7 +89,7 @@ async function fetchRss(feed) {
       summary: stripTags(descRaw).slice(0, 110),
       source: feed.source,
       url: link,
-      image: pickImage(item, descRaw),
+      image: pickImage(item, richRaw),
       isVideo: /\/videos?\//.test(link),
       ts: Date.parse(field(item, "pubDate")) || Date.now(),
       descBlocks,
@@ -450,7 +451,11 @@ await Promise.all(
     while (cursor < news.length) {
       const item = news[cursor++];
       const cached = contentCache.get(item.url || item.title);
-      if (cached) {
+      // RSS 自带的全文零成本,总是重新计算;比缓存更全(块数多)就升级
+      const fresh = item.descBlocks ? finalizeBlocks(item.descBlocks) : null;
+      if (fresh && (fresh.length > (cached?.length || 0))) {
+        item.content = fresh;
+      } else if (cached) {
         item.content = cached;
         contentCached++;
       } else {
@@ -463,17 +468,41 @@ await Promise.all(
 );
 console.log(`全文提取:${fullCount}/${news.length}(其中复用归档 ${contentCached})`);
 
-// 6) 英文条目的正文段落译为中文(导语级,段落数少)
+// 6) 英文条目的正文译为中文:整篇分块批量翻译(换行分隔还原),
+//    译文段数对不上时回退逐段,失败保留英文
+async function translateBlocks(blocks) {
+  const texts = blocks.filter((b) => b.t !== "img" && isEnglish(b.v));
+  let batch = [];
+  let len = 0;
+  const flush = async () => {
+    if (!batch.length) return;
+    const src = batch.map((b) => b.v).join("\n");
+    try {
+      const out = (await translate(src)).split("\n");
+      if (out.length === batch.length) {
+        batch.forEach((b, i) => (b.v = out[i].trim() || b.v));
+      } else {
+        for (const b of batch) {
+          try {
+            b.v = await translate(b.v);
+          } catch {}
+        }
+      }
+    } catch {}
+    batch = [];
+    len = 0;
+  };
+  for (const b of texts) {
+    if (len + b.v.length > 1600) await flush();
+    batch.push(b);
+    len += b.v.length;
+  }
+  await flush();
+}
+
 for (const n of news) {
   if (!n.titleEn || !n.content) continue;
-  for (const b of n.content) {
-    if (b.t === "img" || !isEnglish(b.v)) continue;
-    try {
-      b.v = await translate(b.v);
-    } catch {
-      /* 保留英文 */
-    }
-  }
+  await translateBlocks(n.content);
 }
 
 const flash = news.slice(0, 24).map((n) => ({ ts: n.ts, text: n.title, id: n.id }));
@@ -512,11 +541,11 @@ for (const [day, items] of Object.entries(byDay)) {
   for (const it of [...existing, ...items]) {
     const k = it.url || it.title;
     const prev = map.get(k);
-    // 同条新闻多次出现时保留信息更全的版本(有全文优先)
-    if (!prev || (!prev.content && it.content)) {
-      const { id, ...rest } = { ...prev, ...it, content: it.content || prev?.content || null };
-      map.set(k, rest);
-    }
+    // 同条新闻保留全文块数更多的版本(解析改进后能升级旧归档)
+    const content =
+      (it.content?.length || 0) >= (prev?.content?.length || 0) ? it.content : prev.content;
+    const { id, ...rest } = { ...prev, ...it, content: content || null };
+    map.set(k, rest);
   }
   const merged = [...map.values()].sort((a, b) => b.ts - a.ts);
   writeFileSync(file, JSON.stringify({ date: day, items: merged }, null, 1), "utf8");
