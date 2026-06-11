@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v19 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v20 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -98,6 +98,7 @@
   function sanitizeBlocks(content) {
     if (!Array.isArray(content)) return null;
     const blocks = content
+      .map((b) => (b && b.t === "img" && typeof b.v === "string" && b.v.startsWith("//") ? { t: "img", v: "https:" + b.v } : b))
       .filter(
         (b) =>
           b &&
@@ -165,7 +166,7 @@
   /* ---------- 即时增量抓取(刷新时直连源站) ---------- */
 
   function categorizeClient(text) {
-    if (/(手游|移动端|iOS|安卓|Android|原神|崩坏|鸣潮|明日方舟|王者荣耀|和平精英|二游|抽卡|mobile game|TapTap|App Store|开启预约|公测)/i.test(text)) return "手游";
+    if (/(手游|移动端|mobile game|TapTap|App ?Store|GooglePlay|开启预约|公测|内测|封测|抽卡|卡池|二次元|二游(?!戏)|原神|崩坏|星穹铁道|崩铁|绝区零|鸣潮|明日方舟|王者荣耀|和平精英|金铲铲|蛋仔|恋与深空|恋与制作人|无限暖暖|碧蓝航线|碧蓝档案|蔚蓝档案|FGO|公主连结|阴阳师|第五人格|光遇|尘白禁区|少女前线|战双|深空之眼|重返未来|白夜极光|雀魂|米哈游|米游社|库洛|鹰角|叠纸|莉莉丝|散爆|世界之外|如鸢|无期迷途|偶像梦幻祭)/i.test(text)) return "手游";
     if (/(PS5|PS4|PlayStation|Xbox|Switch|任天堂|Nintendo|主机|塞尔达|马里奥|console)/i.test(text)) return "主机";
     if (/(Steam|Epic|PC ?版|显卡|GOG|模组|\bMod\b|\bPC\b)/i.test(text)) return "PC";
     return "业界";
@@ -743,6 +744,7 @@
   }
 
   const CLIENT_CONTAINERS = [
+    { host: "17173.com", rx: /<div class="gb-final-mod-article[^"]*"[^>]*>([\s\S]*?)(?:class="mod-side-qrcode|class="mod-share|免责声明|$)/ },
     { host: "gamersky.com", rx: /<div class="Mid2L_con">([\s\S]*?)(?:<span id="pe100_page_contentpage|<!--文章内容导航|<a class="diggBtn|$)/ },
     { host: "3dmgame.com", rx: /<div class="news_warp_center">([\s\S]*?)(?:class="bq|$)/ },
     { host: "yystv.cn", rx: /<div class="doc-content[^"]*"[^>]*>([\s\S]*?)(?:class="article-links-container|class="qrcode-block|class="doc-share|$)/ },
@@ -1112,6 +1114,63 @@
     });
   }
 
+  /* ---------- 手势:主界面左右滑切换分区 ---------- */
+
+  function switchCategory(cat, dir) {
+    if (cat === activeCategory) return;
+    activeCategory = cat;
+    renderChips();
+    const fl = $("#feedList");
+    fl.classList.remove("slide-l", "slide-r");
+    void fl.offsetWidth; // 重置动画
+    renderFeed();
+    fl.classList.add(dir === "left" ? "slide-l" : "slide-r");
+    // 视口若深入旧列表,回到资讯区顶部
+    const feedTop = document.querySelector(".feed").getBoundingClientRect().top + window.scrollY - 64;
+    if (window.scrollY > feedTop) window.scrollTo({ top: Math.max(0, feedTop) });
+    toast(`「${cat}」`);
+  }
+
+  function bindCategorySwipe() {
+    const view = $("#view-home");
+    let sx = 0, sy = 0, mode = null;
+    view.addEventListener(
+      "touchstart",
+      (e) => {
+        // 头条轮播与分类胶囊本身横向滚动,不参与切区手势
+        if (e.target.closest(".shelf-scroll") || e.target.closest(".chips")) {
+          mode = "skip";
+          return;
+        }
+        const t = e.touches[0];
+        sx = t.clientX;
+        sy = t.clientY;
+        mode = null;
+      },
+      { passive: true }
+    );
+    view.addEventListener(
+      "touchmove",
+      (e) => {
+        if (mode) return;
+        const t = e.touches[0];
+        const mx = t.clientX - sx;
+        const my = t.clientY - sy;
+        if (Math.abs(mx) > 16 && Math.abs(mx) > Math.abs(my) * 1.6) mode = mx < 0 ? "left" : "right";
+        else if (Math.abs(my) > 16) mode = "skip";
+      },
+      { passive: true }
+    );
+    view.addEventListener("touchend", () => {
+      if (mode === "left" || mode === "right") {
+        const idx = CATEGORIES.indexOf(activeCategory);
+        const next = mode === "left" ? Math.min(CATEGORIES.length - 1, idx + 1) : Math.max(0, idx - 1);
+        switchCategory(CATEGORIES[next], mode);
+      }
+      mode = null;
+    });
+  }
+
   /* ---------- iOS 手势:列表下拉刷新 ---------- */
 
   function bindPullRefresh() {
@@ -1234,6 +1293,7 @@
   bindEvents();
   bindSwipeBack();
   bindPullRefresh();
+  bindCategorySwipe();
   refresh(true);
 
   new IntersectionObserver(

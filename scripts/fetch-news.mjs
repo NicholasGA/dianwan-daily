@@ -180,6 +180,40 @@ async function fetch3DM(feed) {
   return out;
 }
 
+/* ---------- 元数据收集:17173(网游/手游向,列表页解析) ---------- */
+
+async function fetch17173(feed) {
+  const html = await get("http://news.17173.com/index.shtml");
+  const out = [];
+  const seenUrl = new Set();
+  // 列表结构松散:按"链接 → 就近 alt 标题"配对解析
+  for (const m of html.matchAll(
+    /href="(?:https?:)?(\/\/news\.17173\.com\/content\/(\d{2})(\d{2})(\d{4})\/\d+\.shtml)"[^>]*>([\s\S]{0,400}?)<\/a>/g
+  )) {
+    const a = m;
+    const url = "http:" + a[1];
+    if (seenUrl.has(url)) continue;
+    const inner = a[5] || "";
+    const title = inner.match(/alt="([^"]+)"/)?.[1] || stripTags(inner);
+    if (!title || title.length < 8 || /\.(png|jpe?g|gif)$/i.test(title)) continue;
+    seenUrl.add(url);
+    const img = inner.match(/url\((?:https?:)?(\/\/i\.17173cdn\.com[^)!"']+)/)?.[1];
+    // 列表无精确时间,URL 含日期(MMDDYYYY);同日内按列表顺序排
+    const dayTs = Date.parse(`${a[4]}-${a[2]}-${a[3]}T12:00:00+08:00`) || Date.now();
+    out.push({
+      title: stripTags(title),
+      summary: "",
+      source: feed.source,
+      url,
+      image: img ? "https:" + img : null,
+      isVideo: false,
+      ts: dayTs + (200 - out.length) * 60000,
+    });
+    if (feed.max && out.length >= feed.max) break;
+  }
+  return out;
+}
+
 // 供给量全面放开:RSS 取整源,游民翻 5 页,3DM 整页(约 65 条)
 const FEEDS = [
   { source: "游民星空", fetcher: fetchGamersky, pages: 5, max: 90 },
@@ -187,13 +221,14 @@ const FEEDS = [
   { source: "机核", fetcher: fetchRss, url: "https://www.gcores.com/rss", skip: /\/radios\// },
   { source: "游研社", fetcher: fetchRss, url: "https://www.yystv.cn/rss/feed" },
   { source: "触乐", fetcher: fetchRss, url: "http://www.chuapp.com/feed" },
+  { source: "17173", fetcher: fetch17173, max: 25 },
   { source: "indienova", fetcher: fetchRss, url: "https://indienova.com/feed/", fullDesc: true },
   { source: "IGN", fetcher: fetchRss, url: "https://feeds.ign.com/ign/games-all", fullDesc: true },
   { source: "GameSpot", fetcher: fetchRss, url: "https://www.gamespot.com/feeds/game-news/", fullDesc: true },
 ];
 
 // 同题去重时的来源优先级:中文源有全文,优先保留
-const PRIORITY = { 游民星空: 0, "3DM": 0, 机核: 0, 游研社: 0, 触乐: 0, indienova: 0, IGN: 1, GameSpot: 1 };
+const PRIORITY = { 游民星空: 0, "3DM": 0, 机核: 0, 游研社: 0, 触乐: 0, "17173": 0, indienova: 0, IGN: 1, GameSpot: 1 };
 
 /* ---------- 全文提取 ---------- */
 
@@ -219,6 +254,7 @@ function htmlToBlocks(html) {
 
 // 站点正文容器(捕获组 1 为正文 HTML;结束标记不命中会吞进页脚广告,务必齐全)
 const CONTAINERS = {
+  "17173.com": /<div class="gb-final-mod-article[^"]*"[^>]*>([\s\S]*?)(?:class="mod-side-qrcode|class="mod-share|免责声明|<footer|$)/,
   "3dmgame.com": /<div class="news_warp_center">([\s\S]*?)(?:class="bq|<footer|$)/,
   "gamersky.com": /<div class="Mid2L_con">([\s\S]*?)(?:<span id="pe100_page_contentpage|<!--文章内容导航|<a class="diggBtn|<div class="Mid2L_extra|$)/,
   "yystv.cn": /<div class="doc-content[^"]*"[^>]*>([\s\S]*?)(?:class="article-links-container|class="qrcode-block|class="doc-share|class="footer|<footer|$)/,
@@ -277,6 +313,7 @@ function finalizeBlocks(blocks) {
     if (out.length >= MAX_BLOCKS) break;
     if (b.t === "img") {
       if (imgCount >= MAX_IMGS) continue;
+      if (b.v.startsWith("//")) b.v = "https:" + b.v; // 协议相对路径(17173 等)
       if (!/^https?:\/\//.test(b.v)) continue;
       // 站点装饰图/二维码/头像等非内容图
       if (/static\/pages\/|author_cover|avatar|qrcode|loading\.gif|\.gif\?|logo/i.test(b.v)) continue;
@@ -313,7 +350,7 @@ const isEnglish = (s) => {
 /* ---------- 分类 ---------- */
 
 function categorize(text) {
-  if (/(手游|移动端|iOS|安卓|Android|原神|崩坏|鸣潮|明日方舟|王者荣耀|和平精英|二游|抽卡|mobile game|TapTap|App Store|开启预约|公测|星穹铁道|绝区零|碧蓝航线|阴阳师|蛋仔)/i.test(text)) return "手游";
+  if (/(手游|移动端|mobile game|TapTap|App ?Store|GooglePlay|开启预约|公测|内测|封测|抽卡|卡池|二次元|二游(?!戏)|原神|崩坏|星穹铁道|崩铁|绝区零|鸣潮|明日方舟|王者荣耀|和平精英|金铲铲|蛋仔|恋与深空|恋与制作人|无限暖暖|碧蓝航线|碧蓝档案|蔚蓝档案|FGO|公主连结|阴阳师|第五人格|光遇|尘白禁区|少女前线|战双|深空之眼|重返未来|白夜极光|雀魂|米哈游|米游社|库洛|鹰角|叠纸|莉莉丝|散爆|世界之外|如鸢|无期迷途|偶像梦幻祭)/i.test(text)) return "手游";
   if (/(PS5|PS4|PlayStation|Xbox|Switch|任天堂|Nintendo|主机|塞尔达|马里奥|console)/i.test(text)) return "主机";
   if (/(Steam|Epic|PC ?版|显卡|GOG|模组|\bMod\b|\bPC\b)/i.test(text)) return "PC";
   return "业界";
