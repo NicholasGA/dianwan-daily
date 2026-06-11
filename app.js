@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v20 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v22 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -86,7 +86,7 @@
 
   function coverMedia(n) {
     if (n.image) {
-      return `<img class="cover-img" src="${esc(n.image)}" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('ld')" onerror="this.remove()">`;
+      return `<img class="cover-img" src="${esc(n.image)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`;
     }
     return `<span class="cover-deco">${esc(n.cover.glyph)}</span>`;
   }
@@ -112,9 +112,12 @@
   function normalizeItem(n, id) {
     const cleanUrl = /^https?:\/\//.test(n.url || "") ? n.url.replace(/["'\\]/g, "") : null;
     const cleanImg = /^https?:\/\//.test(n.image || "") ? httpsImage(n.image.replace(/["'\\]/g, "")) : null;
+    // 旧归档条目带着关键词扩充之前的旧分类,二游内容重新归入手游区
+    let category = CATEGORIES.includes(n.category) ? n.category : "业界";
+    if (category !== "手游" && categorizeClient(n.title + " " + (n.summary || "")) === "手游") category = "手游";
     return {
       id,
-      category: CATEGORIES.includes(n.category) ? n.category : "业界",
+      category,
       title: n.title || "",
       titleEn: n.titleEn || null,
       short: n.title || "",
@@ -450,7 +453,7 @@
           </div>
         </div>
         <div class="news-thumb" style="${coverStyle(n.cover)}">
-          ${n.image ? `<img class="thumb-img" src="${esc(n.image)}" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('ld')" onerror="this.remove()">` : `<span class="thumb-glyph">${esc(n.cover.glyph)}</span>`}
+          ${n.image ? `<img class="thumb-img" src="${esc(n.image)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="thumb-glyph">${esc(n.cover.glyph)}</span>`}
           ${videoBadge(n)}
         </div>
       </article>`;
@@ -810,7 +813,7 @@
       $("#detailContent").innerHTML = n.blocks
         .map((b) => {
           if (b.t === "img")
-            return `<img class="detail-img" src="${esc(b.v)}" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('ld')" onerror="this.remove()">`;
+            return `<img class="detail-img" src="${esc(b.v)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`;
           if (b.t === "h") return `<h3 class="detail-h">${esc(b.v)}</h3>`;
           return `<p>${esc(b.v)}</p>`;
         })

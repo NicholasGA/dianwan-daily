@@ -1,6 +1,6 @@
 /* 电玩日报 Service Worker — 离线缓存(stale-while-revalidate) */
 
-const CACHE = "dianwan-v20";
+const CACHE = "dianwan-v22";
 const ASSETS = [
   "./",
   "./index.html",
@@ -14,7 +14,10 @@ const ASSETS = [
 ];
 
 self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(ASSETS)));
+  // no-cache:防止 HTTP 缓存(Pages max-age=600)把旧文件喂进新版本缓存
+  e.waitUntil(
+    caches.open(CACHE).then((c) => c.addAll(ASSETS.map((u) => new Request(u, { cache: "no-cache" }))))
+  );
   self.skipWaiting();
 });
 
