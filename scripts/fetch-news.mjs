@@ -93,7 +93,7 @@ async function fetchRss(feed) {
       ts: Date.parse(field(item, "pubDate")) || Date.now(),
       descBlocks,
     });
-    if (out.length >= feed.max) break;
+    if (feed.max && out.length >= feed.max) break;
   }
   return out;
 }
@@ -174,20 +174,21 @@ async function fetch3DM(feed) {
       isVideo: false,
       ts,
     });
-    if (out.length >= feed.max) break;
+    if (feed.max && out.length >= feed.max) break;
   }
   return out;
 }
 
+// 供给量全面放开:RSS 取整源,游民翻 5 页,3DM 整页(约 65 条)
 const FEEDS = [
-  { source: "游民星空", fetcher: fetchGamersky, pages: 2, max: 40 }, // 新闻频道第 1-2 页全量
-  { source: "3DM", fetcher: fetch3DM, max: 12 },
-  { source: "机核", fetcher: fetchRss, url: "https://www.gcores.com/rss", skip: /\/radios\//, max: 15 },
-  { source: "游研社", fetcher: fetchRss, url: "https://www.yystv.cn/rss/feed", max: 15 },
-  { source: "触乐", fetcher: fetchRss, url: "http://www.chuapp.com/feed", max: 15 },
-  { source: "indienova", fetcher: fetchRss, url: "https://indienova.com/feed/", max: 6, fullDesc: true },
-  { source: "IGN", fetcher: fetchRss, url: "https://feeds.ign.com/ign/games-all", max: 8, fullDesc: true },
-  { source: "GameSpot", fetcher: fetchRss, url: "https://www.gamespot.com/feeds/game-news/", max: 8, fullDesc: true },
+  { source: "游民星空", fetcher: fetchGamersky, pages: 5, max: 90 },
+  { source: "3DM", fetcher: fetch3DM, max: 60 },
+  { source: "机核", fetcher: fetchRss, url: "https://www.gcores.com/rss", skip: /\/radios\// },
+  { source: "游研社", fetcher: fetchRss, url: "https://www.yystv.cn/rss/feed" },
+  { source: "触乐", fetcher: fetchRss, url: "http://www.chuapp.com/feed" },
+  { source: "indienova", fetcher: fetchRss, url: "https://indienova.com/feed/", fullDesc: true },
+  { source: "IGN", fetcher: fetchRss, url: "https://feeds.ign.com/ign/games-all", fullDesc: true },
+  { source: "GameSpot", fetcher: fetchRss, url: "https://www.gamespot.com/feeds/game-news/", fullDesc: true },
 ];
 
 // 同题去重时的来源优先级:中文源有全文,优先保留
@@ -349,10 +350,34 @@ if (candidates.length < 5) {
   process.exit(0);
 }
 
+// 1.5) 复用归档里的全文与译文(供给量放开后,避免每轮重复抓文章页/重复翻译)
+const dayOfTs = (ts) => new Date((ts || Date.now()) + 8 * 3600 * 1000).toISOString().slice(0, 10);
+const contentCache = new Map(); // url/title → 全文块
+const transCache = new Map(); // 英文原题 → { title, summary }
+for (const day of new Set(candidates.map((n) => dayOfTs(n.ts)))) {
+  try {
+    const arc = JSON.parse(readFileSync(new URL(`../archive/${day}.json`, import.meta.url), "utf8"));
+    for (const it of arc.items || []) {
+      const k = it.url || it.title;
+      if (it.content) contentCache.set(k, it.content);
+      if (it.titleEn) transCache.set(it.titleEn, { title: it.title, summary: it.summary });
+    }
+  } catch {}
+}
+
 // 2) 英文条目先译标题/摘要(原题存 titleEn)——跨语言查重需要中文标题可比
 let translated = 0;
+let transCached = 0;
 for (const n of candidates) {
   if (!isEnglish(n.title)) continue;
+  const cached = transCache.get(n.title);
+  if (cached && cached.title) {
+    n.titleEn = n.title;
+    n.title = cached.title;
+    if (cached.summary) n.summary = cached.summary;
+    transCached++;
+    continue;
+  }
   try {
     n.titleEn = n.title;
     n.title = await translate(n.title);
@@ -363,7 +388,7 @@ for (const n of candidates) {
     console.error(`翻译失败(保留英文): ${err.message}`);
   }
 }
-console.log(`英文翻译:${translated} 条`);
+console.log(`英文翻译:新译 ${translated} 条,复用 ${transCached} 条`);
 
 // 3) 同一事件跨来源查重:标题二元组相似度 + 《游戏名》共现,优先保留中文源
 const normT = (t) => t.toLowerCase().replace(/[^一-鿿a-z0-9]/g, "");
@@ -416,20 +441,27 @@ const news = winners
   .sort((a, b) => b.ts - a.ts)
   .map((n, i) => ({ id: i + 1, category: categorize(n.title + " " + n.summary), ...n, image: httpsImage(n.image) }));
 
-// 5) 并发提取全文(限流)
+// 5) 并发提取全文(限流;已归档过的直接复用)
 let cursor = 0;
 let fullCount = 0;
+let contentCached = 0;
 await Promise.all(
   Array.from({ length: CONCURRENCY }, async () => {
     while (cursor < news.length) {
       const item = news[cursor++];
-      item.content = await extractContent(item);
+      const cached = contentCache.get(item.url || item.title);
+      if (cached) {
+        item.content = cached;
+        contentCached++;
+      } else {
+        item.content = await extractContent(item);
+      }
       if (item.content) fullCount++;
       delete item.descBlocks; // 中间数据不写入 news.json
     }
   })
 );
-console.log(`全文提取成功:${fullCount}/${news.length}`);
+console.log(`全文提取:${fullCount}/${news.length}(其中复用归档 ${contentCached})`);
 
 // 6) 英文条目的正文段落译为中文(导语级,段落数少)
 for (const n of news) {

@@ -184,6 +184,33 @@
      "v": "从这个角度看，2025年在《盛世天下》媚娘篇推动下走出“新手村”的互动影视品类，随着女帝篇的上线踏上新征程——正因如此，我希望它能够成功，为这个品类走出一条可持续发展的路。"
     }
    ]
+  },
+  {
+   "category": "手游",
+   "title": "【闲谈速教 Action Game Maker】秘籍6.在Windows上配置Android导出",
+   "summary": "基于Godot的无编程2D动作游戏制作工具，动作游戏制作大师（Action Game Maker）。",
+   "source": "indienova",
+   "url": "https://indienova.com/indie-game-development/action-game-maker-tutorials-14/",
+   "image": null,
+   "isVideo": false,
+   "ts": 1780812000000,
+   "content": [
+    {
+     "t": "p",
+     "v": "基于Godot的无编程2D动作游戏制作工具，动作游戏制作大师（Action Game Maker）。"
+    }
+   ]
+  },
+  {
+   "category": "业界",
+   "title": "itch 一周游戏汇：5月25日-5月31日（下）",
+   "summary": "本期 itch 游戏汇编如期而至，开始阅读，随时试玩，享受时光吧！",
+   "source": "indienova",
+   "url": "https://indienova.com/indie-game-news/itch-new-games-summary-of-last-week-2026-0525-0531-part2/",
+   "image": null,
+   "isVideo": false,
+   "ts": 1780790400000,
+   "content": null
   }
  ]
 }

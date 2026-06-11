@@ -679,6 +679,12 @@ body {
   margin: 24px 0 12px;
   letter-spacing: -0.01em;
 }
+.detail-loading {
+  text-align: center;
+  font-size: 0.8rem !important;
+  color: var(--ink-3) !important;
+  padding: 8px 0;
+}
 .origin-link {
   display: block;
   text-align: center;

@@ -210,8 +210,31 @@
     throw lastErr;
   }
 
+  function parse3DMList(html) {
+    const out = [];
+    for (const m of html.matchAll(/<li class="selectpost">([\s\S]*?)<\/li>/g)) {
+      if (out.length >= 20) break;
+      const li = m[1];
+      const a = li.match(/<a href="(https:\/\/www\.3dmgame\.com\/news\/\d{6}\/\d+\.html)"[^>]*class="bt"[^>]*>([\s\S]*?)<\/a>/);
+      if (!a) continue;
+      const img = li.match(/<img[^>]+data-original="([^"]+)"/);
+      const txt = li.match(/<div class="miaoshu">([\s\S]*?)<\/div>/);
+      const time = li.match(/<span class="time">([^<]+)<\/span>/);
+      out.push({
+        title: stripTags(a[2]),
+        summary: txt ? stripTags(txt[1]).slice(0, 110) : "",
+        source: "3DM",
+        url: a[1],
+        image: img ? img[1] : null,
+        isVideo: false,
+        ts: time ? Date.parse(time[1].trim().replace(" ", "T") + "+08:00") || Date.now() : Date.now(),
+      });
+    }
+    return out;
+  }
+
   let jsonpSeq = 0;
-  function fetchGamerskyJsonp() {
+  function fetchGamerskyJsonp(page = 1) {
     return new Promise((resolve, reject) => {
       const cb = `__dwGsCb${++jsonpSeq}`;
       const s = document.createElement("script");
@@ -243,17 +266,22 @@
       };
       s.onerror = () => { cleanup(); reject(new Error("script error")); };
       s.src = `https://db2.gamersky.com/LabelJsonpAjax.aspx?callback=${cb}&jsondata=${encodeURIComponent(
-        JSON.stringify({ type: "updatenodelabel", isCache: true, cacheTime: 60, nodeId: "11007", isNodeId: "true", page: 1 })
+        JSON.stringify({ type: "updatenodelabel", isCache: true, cacheTime: 60, nodeId: "11007", isNodeId: "true", page })
       )}`;
       document.head.appendChild(s);
     });
   }
 
+  // 刷新时直连全部中文源(英文源更新慢且需翻译,交给流水线)
   async function fetchInstant() {
     const results = await Promise.allSettled([
-      fetchGamerskyJsonp(),
+      fetchGamerskyJsonp(1),
+      fetchGamerskyJsonp(2),
       proxyFetch("https://www.gcores.com/rss").then((x) => parseRss(x, "机核", /\/radios\//)),
       proxyFetch("https://www.yystv.cn/rss/feed").then((x) => parseRss(x, "游研社")),
+      proxyFetch("http://www.chuapp.com/feed").then((x) => parseRss(x, "触乐")),
+      proxyFetch("https://indienova.com/feed/").then((x) => parseRss(x, "indienova")),
+      proxyFetch("https://www.3dmgame.com/news/").then(parse3DMList),
     ]);
     return results.filter((r) => r.status === "fulfilled").flatMap((r) => r.value);
   }
@@ -280,7 +308,7 @@
       const fresh = instantResult
         .filter((n) => !baseUrls.has(n.url) && !baseTitles.has(n.title.slice(0, 18)))
         .filter((n, i, arr) => arr.findIndex((x) => x.title.slice(0, 18) === n.title.slice(0, 18)) === i)
-        .slice(0, 20)
+        .slice(0, 40)
         .map((n) => ({ ...n, category: categorizeClient(n.title + " " + n.summary), content: null }));
 
       const combinedNews = [...fresh, ...remote.news]
@@ -532,24 +560,85 @@
     });
   }
 
+  /* ---------- 详情页即时全文(条目无全文时现场抓原文解析) ---------- */
+
+  const decodeBox = document.createElement("textarea");
+  function clientStrip(s) {
+    decodeBox.innerHTML = (s || "").replace(/<[^>]+>/g, " ");
+    return decodeBox.value.replace(/\s+/g, " ").trim();
+  }
+
+  const CLIENT_BOILER = /(本文由游民星空|更多相关资讯请关注|转载请注明|责任编辑|关注游民星空|点击进入专题|友情提示|点此前往|游民星空APP|随时掌握游戏情报|出版物经营许可证|京ICP备|京公网安备|人喜欢$)/;
+
+  function htmlBlocksClient(html) {
+    const blocks = [];
+    let textLen = 0,
+      imgs = 0;
+    const re = /<(p|h[23])[^>]*>([\s\S]*?)<\/\1>|<img[^>]+src="([^"]+)"[^>]*\/?>/gi;
+    let m;
+    while ((m = re.exec(html)) && blocks.length < 60) {
+      if (m[3]) {
+        if (imgs < 12 && /^https?:\/\//.test(m[3]) && !/qrcode|avatar|author_cover|static\/pages|loading\.gif|logo/i.test(m[3])) {
+          imgs++;
+          blocks.push({ t: "img", v: m[3] });
+        }
+      } else {
+        const inner = m[2];
+        for (const im of inner.matchAll(/<img[^>]+src="([^"]+)"/gi)) {
+          if (imgs < 12 && /^https?:\/\//.test(im[1])) {
+            imgs++;
+            blocks.push({ t: "img", v: im[1] });
+          }
+        }
+        const v = clientStrip(inner);
+        if (v && !CLIENT_BOILER.test(v)) {
+          textLen += v.length;
+          blocks.push({ t: m[1].toLowerCase() === "p" ? "p" : "h", v });
+        }
+      }
+    }
+    return textLen >= 50 ? blocks : null;
+  }
+
+  const CLIENT_CONTAINERS = [
+    { host: "gamersky.com", rx: /<div class="Mid2L_con">([\s\S]*?)(?:<span id="pe100_page_contentpage|<!--文章内容导航|<a class="diggBtn|$)/ },
+    { host: "3dmgame.com", rx: /<div class="news_warp_center">([\s\S]*?)(?:class="bq|$)/ },
+    { host: "yystv.cn", rx: /<div class="doc-content[^"]*"[^>]*>([\s\S]*?)(?:class="article-links-container|class="qrcode-block|class="doc-share|$)/ },
+    { host: "chuapp.com", rx: /<div class="the-content[^"]*"[^>]*>([\s\S]*?)(?:<!--end-->|<!--评论start|相关文章|$)/ },
+  ];
+
+  const canFetchFullText = (n) =>
+    !!n.url && (/gcores\.com\/articles\/\d+/.test(n.url) || CLIENT_CONTAINERS.some((c) => n.url.includes(c.host)));
+
+  async function fetchFullText(n) {
+    const gc = (n.url || "").match(/gcores\.com\/articles\/(\d+)/);
+    if (gc) {
+      const j = JSON.parse(await proxyFetch(`https://www.gcores.com/gapi/v1/articles/${gc[1]}`));
+      const content = JSON.parse(j.data.attributes.content);
+      const blocks = [];
+      for (const b of content.blocks || []) {
+        if (b.type === "atomic") {
+          for (const er of b.entityRanges || []) {
+            const ent = content.entityMap?.[String(er.key)];
+            const p = ent && ent.type === "IMAGE" && ent.data && (ent.data.path || ent.data.src);
+            if (p) blocks.push({ t: "img", v: /^https?:/.test(p) ? p : `https://image.gcores.com/${p}` });
+          }
+        } else if (b.text?.trim() && b.text.trim() !== "-") {
+          blocks.push({ t: /header/.test(b.type) ? "h" : "p", v: b.text.trim() });
+        }
+      }
+      return blocks.length ? blocks : null;
+    }
+    const c = CLIENT_CONTAINERS.find((c) => (n.url || "").includes(c.host));
+    if (!c) return null;
+    const html = await proxyFetch(n.url);
+    const m = html.match(c.rx);
+    return m ? htmlBlocksClient(m[1]) : null;
+  }
+
   /* ---------- 文章详情 ---------- */
 
-  function openDetail(id) {
-    const n = findNews(id);
-    if (!n) return;
-    currentDetailId = id;
-    const cover = $("#detailCover");
-    cover.style.cssText = coverStyle(n.cover);
-    if (n.image) {
-      cover.style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.45)), url("${n.image}")`;
-      cover.style.backgroundSize = "cover";
-      cover.style.backgroundPosition = "center";
-    }
-    $("#detailTag").textContent = n.category;
-    $("#detailTitle").textContent = n.title;
-    $("#detailTitleEn").textContent = n.titleEn || "";
-    $("#detailTitleEn").classList.toggle("hidden", !n.titleEn);
-    $("#detailMeta").innerHTML = `<span>${esc(n.source)}</span><span>${esc(n.time)}</span>`;
+  function renderDetailBody(n) {
     if (n.blocks) {
       $("#detailContent").innerHTML = n.blocks
         .map((b) => {
@@ -567,6 +656,39 @@
       $("#detailLink").innerHTML = n.url
         ? `<a class="src-link" href="${esc(n.url)}" target="_blank" rel="noopener">${n.isVideo ? "▶ 观看视频" : "↗ 阅读原文"}<span>${esc(n.source)}</span></a>`
         : "";
+    }
+  }
+
+  function openDetail(id) {
+    const n = findNews(id);
+    if (!n) return;
+    currentDetailId = id;
+    const cover = $("#detailCover");
+    cover.style.cssText = coverStyle(n.cover);
+    if (n.image) {
+      cover.style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.45)), url("${n.image}")`;
+      cover.style.backgroundSize = "cover";
+      cover.style.backgroundPosition = "center";
+    }
+    $("#detailTag").textContent = n.category;
+    $("#detailTitle").textContent = n.title;
+    $("#detailTitleEn").textContent = n.titleEn || "";
+    $("#detailTitleEn").classList.toggle("hidden", !n.titleEn);
+    $("#detailMeta").innerHTML = `<span>${esc(n.source)}</span><span>${esc(n.time)}</span>`;
+    renderDetailBody(n);
+    // 无全文且来源可解析:现场抓原文(代理/机核 API),抓到后就地渲染
+    if (!n.blocks && canFetchFullText(n)) {
+      $("#detailContent").insertAdjacentHTML("beforeend", '<p class="detail-loading" id="detailLoading">正在加载全文…</p>');
+      const wantId = id;
+      fetchFullText(n)
+        .then((blocks) => {
+          const sb = sanitizeBlocks(blocks);
+          if (sb) n.blocks = sb;
+          if (currentDetailId === wantId) renderDetailBody(n);
+        })
+        .catch(() => {
+          if (currentDetailId === wantId) $("#detailLoading")?.remove();
+        });
     }
     $("#actLike").classList.remove("acted");
     $("#actFav").classList.toggle("acted", isFaved(n));
