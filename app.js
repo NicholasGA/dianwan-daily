@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v17 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v18 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -680,7 +680,7 @@
     if (!dayFileCache.has(day)) {
       dayFileCache.set(
         day,
-        fetch(`archive/${day}.json`)
+        fetch(`archive/${day}.json`, { signal: AbortSignal.timeout(15000) })
           .then((r) => (r.ok ? r.json() : { items: [] }))
           .then((j) => j.items || [])
           .catch(() => {
@@ -1093,24 +1093,49 @@
     });
   }
 
-  /* ---------- PWA:离线缓存 + 新版本一键启用 ---------- */
+  /* ---------- PWA:离线缓存 + 版本轮询更新(不依赖 SW 事件,iOS 可靠) ---------- */
 
   if ("serviceWorker" in navigator) {
-    const hadController = !!navigator.serviceWorker.controller;
     navigator.serviceWorker.register("./sw.js").catch(() => {});
-    let prompted = false;
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-      // 新 SW 接管(更新已就绪);首次安装不提示
-      if (!hadController || prompted) return;
-      prompted = true;
-      const el = $("#toast");
-      el.textContent = "新版本已就绪 · 点此立即启用";
-      el.classList.remove("hidden");
-      el.style.cursor = "pointer";
-      el.addEventListener("click", () => location.reload(), { once: true });
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => el.classList.add("hidden"), 8000);
-    });
+  }
+
+  let updatePrompted = false;
+  function showUpdatePrompt(remoteV) {
+    if (updatePrompted) return;
+    updatePrompted = true;
+    const el = $("#toast");
+    el.textContent = `发现新版本 v${remoteV} · 点此立即更新`;
+    el.classList.remove("hidden");
+    el.style.cursor = "pointer";
+    el.addEventListener(
+      "click",
+      async () => {
+        el.textContent = "更新中…";
+        try {
+          // 清空全部缓存,强制从网络取新版
+          const keys = await caches.keys();
+          await Promise.all(keys.map((k) => caches.delete(k)));
+          const reg = await navigator.serviceWorker?.getRegistration();
+          await reg?.update();
+        } catch {}
+        location.reload();
+      },
+      { once: true }
+    );
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      el.classList.add("hidden");
+      updatePrompted = false; // 错过可再提示
+    }, 15000);
+  }
+
+  async function checkForUpdate() {
+    try {
+      const txt = await fetch("sw.js", { cache: "no-store", signal: AbortSignal.timeout(8000) }).then((r) => r.text());
+      const remote = Number(txt.match(/dianwan-v(\d+)/)?.[1] || 0);
+      const local = Number(APP_BUILD.match(/v(\d+)/)?.[1] || 0);
+      if (remote > local) showUpdatePrompt(remote);
+    } catch {}
   }
 
   /* ---------- 启动 ---------- */
@@ -1145,6 +1170,8 @@
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.getRegistration().then((r) => r && r.update()).catch(() => {});
     }
+    checkForUpdate();
     refresh(true);
   });
+  checkForUpdate();
 })();

@@ -512,22 +512,17 @@ for (const n of news) {
 const flash = news.slice(0, 24).map((n) => ({ ts: n.ts, text: n.title, id: n.id }));
 
 // news.json 瘦身:仅最新 30 条内联全文(最常被点开),
-// 其余全文存当日归档文件,App 详情页按需取(fullArchived 标记)
-const slimNews = news.map((n, i) => {
-  if (i < 30 || !n.content) return n;
-  const { content, ...rest } = n;
-  return { ...rest, fullArchived: 1 };
-});
+// 瘦身已回滚:国内访问归档/代理不稳定,全文全部内联,可靠性优先于流量
 
 // 各源抓取健康度,App「我的」页可见
 const sources = Object.fromEntries(FEEDS.map((f, i) => [f.source, (collected[i] || []).length]));
 
 writeFileSync(
   new URL("../news.json", import.meta.url),
-  JSON.stringify({ generatedAt: new Date().toISOString(), sources, news: slimNews, flash }),
+  JSON.stringify({ generatedAt: new Date().toISOString(), sources, news, flash }),
   "utf8"
 );
-console.log(`news.json 已生成:${news.length} 条新闻(内联全文 ${Math.min(30, news.length)} 条)`);
+console.log(`news.json 已生成:${news.length} 条新闻(全文内联)`);
 
 /* ---------- 历史归档:按北京日期累积,供 App 下滑加载更早新闻 ---------- */
 
