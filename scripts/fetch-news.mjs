@@ -406,17 +406,39 @@ const overlap = (a, b) => {
   return n / Math.min(A.size, B.size);
 };
 const gameNames = (t) => [...t.matchAll(/《([^》]+)》/g)].map((m) => normT(m[1]));
-// 日期/平台/发售套话会虚抬相似度("将于2026年X月X日登陆Switch"),比较前剥掉
-const BOILER_RE = /(将于|正式|登陆|发售|公布|宣布|确认|推出|上线|预购|开启|即将|nintendoswitch2?|switch2?|playstation|ps5|ps4|xboxseries|xbox|steam|\d+)/g;
+// 日期/平台/发售套话会虚抬相似度,数字与"官宣/突破"类同义异形词会压低相似度,比较前统一剥掉
+const BOILER_RE = /(将于|正式|登陆|发售|公布|宣布|确认|推出|上线|预购|开启|即将|官方|官宣|致谢|发文|突破|曝|nintendoswitch2?|switch2?|playstation|ps5|ps4|xboxseries|xbox|steam|\d+)/g;
+// 游戏名归一:《生化危机RE:维罗妮卡》《生化:维罗妮卡RE》视为同名
+const normName = (s) => s.replace(/(remake|re|hd|重制版|代号)/gi, "");
+function namesMatch(na, nb) {
+  for (const a of na)
+    for (const b of nb) {
+      const x = normName(a), y = normName(b);
+      if (x.length < 2 || y.length < 2) continue;
+      if (x === y || x.includes(y) || y.includes(x)) return true;
+      if (overlap(x, y) >= 0.6) return true;
+    }
+  return false;
+}
 function sameStory(a, b) {
   const na = gameNames(a.title), nb = gameNames(b.title);
-  const shared = na.find((x) => nb.includes(x));
-  if (shared) {
-    // 同一游戏:去掉游戏名后比较剩余表述,避免"同游戏不同事"被误合并
-    const ra = normT(a.title).split(shared).join("");
-    const rb = normT(b.title).split(shared).join("");
+  if (na.length && nb.length && namesMatch(na, nb)) {
+    // 同一游戏且 36 小时内:先移除游戏名(原形+归一形),再剥套话,比较剩余表述
+    if (Math.abs((a.ts || 0) - (b.ts || 0)) > 36 * 3600 * 1000) return false;
+    let ra = normT(a.title);
+    let rb = normT(b.title);
+    for (const n of [...na, ...nb]) {
+      for (const v of [n, normName(n)]) {
+        if (v.length >= 2) {
+          ra = ra.split(v).join("");
+          rb = rb.split(v).join("");
+        }
+      }
+    }
+    ra = ra.replace(BOILER_RE, "");
+    rb = rb.replace(BOILER_RE, "");
     if (ra.length < 4 && rb.length < 4) return true;
-    return overlap(ra, rb) >= 0.35;
+    return overlap(ra, rb) >= 0.25;
   }
   const sa = normT(a.title).replace(BOILER_RE, "");
   const sb = normT(b.title).replace(BOILER_RE, "");
@@ -549,7 +571,20 @@ for (const [day, items] of Object.entries(byDay)) {
     const { id, ...rest } = { ...prev, ...it, content: content || null };
     map.set(k, rest);
   }
-  const merged = [...map.values()].sort((a, b) => b.ts - a.ts);
+  // 归档内同题去重:跨轮次保留的"同事件不同来源版本"在此合并(来源计入热点)
+  const sorted = [...map.values()].sort((a, b) => b.ts - a.ts);
+  const merged = [];
+  for (const it of sorted) {
+    const dup = merged.find((w) => sameStory(w, it));
+    if (dup) {
+      dup.hotSources ||= [dup.source];
+      if (!dup.hotSources.includes(it.source)) dup.hotSources.push(it.source);
+      dup.hot = dup.hotSources.length;
+      if ((it.content?.length || 0) > (dup.content?.length || 0)) dup.content = it.content;
+      continue;
+    }
+    merged.push(it);
+  }
   // 内容无变化不写盘:避免每轮重写全部归档文件造成 git 历史膨胀
   const out = JSON.stringify({ date: day, items: merged });
   let prevRaw = null;

@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v18 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v19 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -463,6 +463,61 @@
 
   const dayKeyOf = (ts) => new Date(ts + 8 * 3600 * 1000).toISOString().slice(0, 10);
 
+  /* ---------- 展示层同题去重(与流水线同款匹配器,兜住跨轮次漏网) ---------- */
+
+  const normT = (t) => t.toLowerCase().replace(/[^一-鿿a-z0-9]/g, "");
+  const bigramsOf = (s) => {
+    const o = new Set();
+    for (let i = 0; i < s.length - 1; i++) o.add(s.slice(i, i + 2));
+    return o;
+  };
+  const overlapOf = (a, b) => {
+    const A = bigramsOf(a), B = bigramsOf(b);
+    if (!A.size || !B.size) return 0;
+    let n = 0;
+    for (const x of A) if (B.has(x)) n++;
+    return n / Math.min(A.size, B.size);
+  };
+  const gameNamesOf = (t) => [...t.matchAll(/《([^》]+)》/g)].map((m) => normT(m[1]));
+  const STORY_BOILER = /(将于|正式|登陆|发售|公布|宣布|确认|推出|上线|预购|开启|即将|官方|官宣|致谢|发文|突破|曝|nintendoswitch2?|switch2?|playstation|ps5|ps4|xboxseries|xbox|steam|\d+)/g;
+  const normNameOf = (s) => s.replace(/(remake|re|hd|重制版|代号)/gi, "");
+  function sameStoryClient(a, b) {
+    const na = gameNamesOf(a.title), nb = gameNamesOf(b.title);
+    let named = false;
+    if (na.length && nb.length) {
+      outer: for (const x0 of na)
+        for (const y0 of nb) {
+          const x = normNameOf(x0), y = normNameOf(y0);
+          if (x.length < 2 || y.length < 2) continue;
+          if (x === y || x.includes(y) || y.includes(x) || overlapOf(x, y) >= 0.6) {
+            named = true;
+            break outer;
+          }
+        }
+    }
+    if (named) {
+      if (Math.abs((a.ts || 0) - (b.ts || 0)) > 36 * 3600 * 1000) return false;
+      let ra = normT(a.title);
+      let rb = normT(b.title);
+      for (const n of [...na, ...nb]) {
+        for (const v of [n, normNameOf(n)]) {
+          if (v.length >= 2) {
+            ra = ra.split(v).join("");
+            rb = rb.split(v).join("");
+          }
+        }
+      }
+      ra = ra.replace(STORY_BOILER, "");
+      rb = rb.replace(STORY_BOILER, "");
+      if (ra.length < 4 && rb.length < 4) return true;
+      return overlapOf(ra, rb) >= 0.25;
+    }
+    const sa = normT(a.title).replace(STORY_BOILER, "");
+    const sb = normT(b.title).replace(STORY_BOILER, "");
+    if (sa.length < 4 || sb.length < 4) return false;
+    return overlapOf(sa, sb) >= 0.6;
+  }
+
   // 窗口 + 已加载归档合并成一条连续时间长河(去重,按时间倒序,按天分隔)
   function renderFeed() {
     const q = searchQuery.toLowerCase();
@@ -478,6 +533,31 @@
       if (match(n)) river.push(n);
     }
     river.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+
+    // 跨轮次同题合并:72 小时内的同一事件只显示一条,被并入的来源计入🔥
+    const deduped = [];
+    for (const n of river) {
+      let dup = null;
+      for (let i = deduped.length - 1; i >= 0; i--) {
+        const k = deduped[i];
+        if ((k.ts || 0) - (n.ts || 0) > 72 * 3600 * 1000) break;
+        if (sameStoryClient(k, n)) {
+          dup = k;
+          break;
+        }
+      }
+      if (dup) {
+        dup.hotSources = dup.hotSources || [dup.source];
+        if (!dup.hotSources.includes(n.source)) {
+          dup.hotSources.push(n.source);
+          dup.hot = dup.hotSources.length;
+        }
+        continue;
+      }
+      deduped.push(n);
+    }
+    river.length = 0;
+    river.push(...deduped);
     riverOrder = river; // 详情页「下一篇」按当前信息流顺序
 
     const todayKey = dayKeyOf(Date.now());
