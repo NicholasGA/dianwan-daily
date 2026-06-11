@@ -85,7 +85,7 @@
 
   function coverMedia(n) {
     if (n.image) {
-      return `<img class="cover-img" src="${esc(n.image)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`;
+      return `<img class="cover-img" src="${esc(n.image)}" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('ld')" onerror="this.remove()">`;
     }
     return `<span class="cover-deco">${esc(n.cover.glyph)}</span>`;
   }
@@ -124,6 +124,7 @@
       url: cleanUrl,
       image: cleanImg,
       isVideo: !!n.isVideo,
+      fullArchived: !!n.fullArchived, // 全文在当日归档文件中,详情页按需取
       cover: { ...PALETTES[id % PALETTES.length], glyph: (n.source || "News").slice(0, 2) },
       blocks: sanitizeBlocks(n.content),
       content: n.summary ? [n.summary] : [],
@@ -137,7 +138,7 @@
     const topicIds = byImageFirst(news.filter((n) => !featuredIds.includes(n.id)))
       .slice(0, 4)
       .map((n) => n.id);
-    const flash = (remote.flash || []).slice(0, 16).map((f) => ({
+    const flash = (remote.flash || []).slice(0, 24).map((f) => ({
       time: new Date(f.ts || Date.now()).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" }),
       text: esc(f.text),
       id: f.id || null,
@@ -317,7 +318,7 @@
       const combined = {
         generatedAt: remote.generatedAt,
         news: combinedNews,
-        flash: combinedNews.slice(0, 16).map((n) => ({ ts: n.ts, text: n.title, id: n.id })),
+        flash: combinedNews.slice(0, 24).map((n) => ({ ts: n.ts, text: n.title, id: n.id })),
       };
       D = normalizeRemote(combined);
       renderAll();
@@ -434,7 +435,7 @@
           </div>
         </div>
         <div class="news-thumb" style="${coverStyle(n.cover)}">
-          ${n.image ? `<img class="thumb-img" src="${esc(n.image)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="thumb-glyph">${esc(n.cover.glyph)}</span>`}
+          ${n.image ? `<img class="thumb-img" src="${esc(n.image)}" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('ld')" onerror="this.remove()">` : `<span class="thumb-glyph">${esc(n.cover.glyph)}</span>`}
           ${videoBadge(n)}
         </div>
       </article>`;
@@ -610,6 +611,29 @@
   const canFetchFullText = (n) =>
     !!n.url && (/gcores\.com\/articles\/\d+/.test(n.url) || CLIENT_CONTAINERS.some((c) => n.url.includes(c.host)));
 
+  // 从当日归档文件取全文(news.json 瘦身后,较旧条目的全文存在归档里)
+  const dayFileCache = new Map(); // day → Promise<items>
+  function contentFromArchive(n) {
+    if (!n.ts) return Promise.resolve(null);
+    const day = new Date(n.ts + 8 * 3600 * 1000).toISOString().slice(0, 10);
+    if (!dayFileCache.has(day)) {
+      dayFileCache.set(
+        day,
+        fetch(`archive/${day}.json`)
+          .then((r) => (r.ok ? r.json() : { items: [] }))
+          .then((j) => j.items || [])
+          .catch(() => {
+            dayFileCache.delete(day); // 失败不缓存,允许重试
+            return [];
+          })
+      );
+    }
+    return dayFileCache.get(day).then((items) => {
+      const hit = items.find((it) => (it.url && it.url === n.url) || it.title === n.title);
+      return hit && hit.content ? hit.content : null;
+    });
+  }
+
   async function fetchFullText(n) {
     const gc = (n.url || "").match(/gcores\.com\/articles\/(\d+)/);
     if (gc) {
@@ -643,7 +667,7 @@
       $("#detailContent").innerHTML = n.blocks
         .map((b) => {
           if (b.t === "img")
-            return `<img class="detail-img" src="${esc(b.v)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`;
+            return `<img class="detail-img" src="${esc(b.v)}" loading="lazy" referrerpolicy="no-referrer" onload="this.classList.add('ld')" onerror="this.remove()">`;
           if (b.t === "h") return `<h3 class="detail-h">${esc(b.v)}</h3>`;
           return `<p>${esc(b.v)}</p>`;
         })
@@ -676,19 +700,26 @@
     $("#detailTitleEn").classList.toggle("hidden", !n.titleEn);
     $("#detailMeta").innerHTML = `<span>${esc(n.source)}</span><span>${esc(n.time)}</span>`;
     renderDetailBody(n);
-    // 无全文且来源可解析:现场抓原文(代理/机核 API),抓到后就地渲染
-    if (!n.blocks && canFetchFullText(n)) {
+    // 无全文时的三级管道:当日归档 → 现场抓原文(代理/机核 API) → 摘要兜底
+    if (!n.blocks && (n.fullArchived || canFetchFullText(n))) {
       $("#detailContent").insertAdjacentHTML("beforeend", '<p class="detail-loading" id="detailLoading">正在加载全文…</p>');
       const wantId = id;
-      fetchFullText(n)
-        .then((blocks) => {
-          const sb = sanitizeBlocks(blocks);
-          if (sb) n.blocks = sb;
-          if (currentDetailId === wantId) renderDetailBody(n);
-        })
-        .catch(() => {
-          if (currentDetailId === wantId) $("#detailLoading")?.remove();
-        });
+      (async () => {
+        let blocks = null;
+        if (n.fullArchived) {
+          try {
+            blocks = await contentFromArchive(n);
+          } catch {}
+        }
+        if (!blocks && canFetchFullText(n)) {
+          try {
+            blocks = await fetchFullText(n);
+          } catch {}
+        }
+        const sb = sanitizeBlocks(blocks);
+        if (sb) n.blocks = sb;
+        if (currentDetailId === wantId) renderDetailBody(n);
+      })();
     }
     $("#actLike").classList.remove("acted");
     $("#actFav").classList.toggle("acted", isFaved(n));
@@ -741,6 +772,7 @@
         ts: n.ts,
         category: n.category,
         content: n.blocks,
+        fullArchived: n.fullArchived || undefined,
       });
       favs = favs.slice(-100);
       toast("已收藏,可在「收藏」页查看");

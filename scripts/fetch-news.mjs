@@ -476,14 +476,22 @@ for (const n of news) {
   }
 }
 
-const flash = news.slice(0, 16).map((n) => ({ ts: n.ts, text: n.title, id: n.id }));
+const flash = news.slice(0, 24).map((n) => ({ ts: n.ts, text: n.title, id: n.id }));
+
+// news.json 瘦身:仅最新 30 条内联全文(最常被点开),
+// 其余全文存当日归档文件,App 详情页按需取(fullArchived 标记)
+const slimNews = news.map((n, i) => {
+  if (i < 30 || !n.content) return n;
+  const { content, ...rest } = n;
+  return { ...rest, fullArchived: 1 };
+});
 
 writeFileSync(
   new URL("../news.json", import.meta.url),
-  JSON.stringify({ generatedAt: new Date().toISOString(), news, flash }, null, 1),
+  JSON.stringify({ generatedAt: new Date().toISOString(), news: slimNews, flash }, null, 1),
   "utf8"
 );
-console.log(`news.json 已生成:${news.length} 条新闻`);
+console.log(`news.json 已生成:${news.length} 条新闻(内联全文 ${Math.min(30, news.length)} 条)`);
 
 /* ---------- 历史归档:按北京日期累积,供 App 下滑加载更早新闻 ---------- */
 

@@ -785,6 +785,13 @@ body {
 
 /* ============ 动效 ============ */
 
+/* 图片加载完成后淡入 */
+.thumb-img, .cover-img, .detail-img {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.thumb-img.ld, .cover-img.ld, .detail-img.ld { opacity: 1; }
+
 .news-item, .cover, .topic-cover, .act, .tab, .chip, .search-btn {
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
