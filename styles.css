@@ -844,6 +844,12 @@ body {
 .me-block h4 { font-size: 0.92rem; font-weight: 800; margin-bottom: 8px; }
 .me-sources { font-size: 0.84rem; color: var(--ink-2); line-height: 1.7; }
 .me-tip { font-size: 0.74rem; color: var(--ink-3); margin-top: 10px; line-height: 1.7; }
+.me-build {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--ink-3);
+  padding: 18px 0 4px;
+}
 
 /* ============ 动效 ============ */
 

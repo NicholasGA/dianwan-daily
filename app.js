@@ -5,6 +5,7 @@
    ============================================================ */
 
 (function () {
+  const APP_BUILD = "v16 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -528,6 +529,7 @@
     $("#meRead").textContent = readSet.size;
     $("#meFavs").textContent = getFavs().length;
     $("#meDate").textContent = new Date().toLocaleDateString("zh-CN", { month: "long", day: "numeric", weekday: "long" });
+    $("#meBuild").textContent = `电玩日报 ${APP_BUILD}`;
     // 来源健康度:最近一轮各源抓取条数,挂了的一眼可见
     const stats = D.sourceStats;
     $("#meSources").innerHTML = stats
@@ -1122,4 +1124,14 @@
     },
     { rootMargin: "500px" }
   ).observe($("#feedMore"));
+
+  // iOS 从主屏幕唤醒 PWA 时常常不重新加载页面:
+  // 回到前台主动检查新版本 + 静默刷新新闻,不依赖"重新打开"
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState !== "visible") return;
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.getRegistration().then((r) => r && r.update()).catch(() => {});
+    }
+    refresh(true);
+  });
 })();
