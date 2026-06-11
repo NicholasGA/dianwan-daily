@@ -274,18 +274,18 @@
       const remote = await res.json();
       if (!remote.news || !remote.news.length) throw new Error("empty");
 
-      // 即时增量:只收"比基线最新一条更新"的
-      const cutoff = Math.max(...remote.news.map((n) => n.ts || 0));
+      // 即时增量:全量合并(按 URL/标题去重),整体按时间重排
       const baseTitles = new Set(remote.news.map((n) => (n.title || "").slice(0, 18)));
       const baseUrls = new Set(remote.news.map((n) => n.url));
       const fresh = instantResult
-        .filter((n) => n.ts > cutoff && !baseUrls.has(n.url) && !baseTitles.has(n.title.slice(0, 18)))
+        .filter((n) => !baseUrls.has(n.url) && !baseTitles.has(n.title.slice(0, 18)))
         .filter((n, i, arr) => arr.findIndex((x) => x.title.slice(0, 18) === n.title.slice(0, 18)) === i)
-        .sort((a, b) => b.ts - a.ts)
-        .slice(0, 15)
+        .slice(0, 20)
         .map((n) => ({ ...n, category: categorizeClient(n.title + " " + n.summary), content: null }));
 
-      const combinedNews = [...fresh, ...remote.news].map((n, i) => ({ ...n, id: i + 1 }));
+      const combinedNews = [...fresh, ...remote.news]
+        .sort((a, b) => (b.ts || 0) - (a.ts || 0))
+        .map((n, i) => ({ ...n, id: i + 1 }));
       const combined = {
         generatedAt: remote.generatedAt,
         news: combinedNews,

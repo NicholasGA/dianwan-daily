@@ -7,8 +7,6 @@
 
 import { writeFileSync, readFileSync, mkdirSync, readdirSync, unlinkSync } from "node:fs";
 
-const MAX_TOTAL = 80;
-const PER_SOURCE_CAP = 18; // 单一来源不挤占整个列表
 const CONCURRENCY = 6;
 const MAX_BLOCKS = 60;
 const MAX_TEXT = 7000;
@@ -334,7 +332,7 @@ const collected = await Promise.all(
   })
 );
 
-// 1) 粗去重(同标题前缀)+ 按时间取候选池
+// 1) 粗去重(同标题前缀),不设数量上限
 const seen = new Set();
 const candidates = collected
   .flat()
@@ -344,8 +342,7 @@ const candidates = collected
     if (seen.has(k)) return false;
     seen.add(k);
     return true;
-  })
-  .slice(0, 90);
+  });
 
 if (candidates.length < 5) {
   console.error(`仅抓到 ${candidates.length} 条,保留原 news.json 不更新`);
@@ -414,15 +411,9 @@ for (const c of ranked) {
   winners.push(c);
 }
 
-// 4) 按时间排序 + 单源上限 + 总量,定稿
-const perSource = {};
+// 4) 按时间排序定稿(无数量上限,有多少放多少)
 const news = winners
   .sort((a, b) => b.ts - a.ts)
-  .filter((n) => {
-    perSource[n.source] = (perSource[n.source] || 0) + 1;
-    return perSource[n.source] <= PER_SOURCE_CAP;
-  })
-  .slice(0, MAX_TOTAL)
   .map((n, i) => ({ id: i + 1, category: categorize(n.title + " " + n.summary), ...n, image: httpsImage(n.image) }));
 
 // 5) 并发提取全文(限流)
