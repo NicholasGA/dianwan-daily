@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v23 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v24 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -55,6 +55,7 @@
   let searchQuery = "";
   let streakDays = 1;
   let currentDetailId = null;
+  let currentDetailKey = null;
   let favViewItems = [];
 
   /* ---------- 工具 ---------- */
@@ -206,22 +207,17 @@
     return out;
   }
 
-  async function proxyFetch(url) {
-    const proxies = [
-      (u) => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
-      (u) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
-    ];
-    let lastErr;
-    for (const p of proxies) {
-      try {
-        const res = await fetch(p(url), { signal: AbortSignal.timeout(8000) });
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return await res.text();
-      } catch (err) {
-        lastErr = err;
-      }
-    }
-    throw lastErr;
+  // 两个代理并行竞速:能通时更快,全挂时 6.5 秒即放弃(不再串行干等)
+  function proxyFetch(url) {
+    const wrap = (p) =>
+      fetch(p, { signal: AbortSignal.timeout(6500) }).then((r) => {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.text();
+      });
+    return Promise.any([
+      wrap(`https://corsproxy.io/?url=${encodeURIComponent(url)}`),
+      wrap(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`),
+    ]);
   }
 
   function parse3DMList(html) {
@@ -337,6 +333,15 @@
       D = normalizeRemote(combined);
       renderAll();
       store.set(CACHE_KEY, combined); // 下次启动秒开
+
+      // 正在阅读的文章若在新数据里有了全文,就地补全
+      if (currentDetailKey && !$("#detail").classList.contains("hidden")) {
+        const freshItem = D.news.find((x) => itemKey(x) === currentDetailKey);
+        if (freshItem && freshItem.blocks) {
+          currentDetailId = freshItem.id;
+          renderDetailBody(freshItem);
+        }
+      }
 
       // 新增统计:只在手动刷新时记账(启动静默刷新不算"看过")
       if (!silent) {
@@ -833,6 +838,7 @@
     const n = findNews(id);
     if (!n) return;
     currentDetailId = id;
+    currentDetailKey = itemKey(n);
     const cover = $("#detailCover");
     cover.style.cssText = coverStyle(n.cover);
     if (n.image) {
@@ -865,8 +871,13 @@
           } catch {}
         }
         const sb = sanitizeBlocks(blocks);
-        if (sb) n.blocks = sb;
-        if (currentDetailId === wantId) renderDetailBody(n);
+        if (sb) {
+          n.blocks = sb;
+          if (currentDetailId === wantId) renderDetailBody(n);
+        } else if (currentDetailId === wantId) {
+          const el = $("#detailLoading");
+          if (el) el.textContent = "原文暂时取不到 · 全文将在 15 分钟内随自动更新补全,可先看摘要或跳转原文";
+        }
       })();
     }
     // 下一篇(按当前信息流顺序)
