@@ -515,9 +515,12 @@ const slimNews = news.map((n, i) => {
   return { ...rest, fullArchived: 1 };
 });
 
+// 各源抓取健康度,App「我的」页可见
+const sources = Object.fromEntries(FEEDS.map((f, i) => [f.source, (collected[i] || []).length]));
+
 writeFileSync(
   new URL("../news.json", import.meta.url),
-  JSON.stringify({ generatedAt: new Date().toISOString(), news: slimNews, flash }, null, 1),
+  JSON.stringify({ generatedAt: new Date().toISOString(), sources, news: slimNews, flash }),
   "utf8"
 );
 console.log(`news.json 已生成:${news.length} 条新闻(内联全文 ${Math.min(30, news.length)} 条)`);
@@ -548,7 +551,13 @@ for (const [day, items] of Object.entries(byDay)) {
     map.set(k, rest);
   }
   const merged = [...map.values()].sort((a, b) => b.ts - a.ts);
-  writeFileSync(file, JSON.stringify({ date: day, items: merged }, null, 1), "utf8");
+  // 内容无变化不写盘:避免每轮重写全部归档文件造成 git 历史膨胀
+  const out = JSON.stringify({ date: day, items: merged });
+  let prevRaw = null;
+  try {
+    prevRaw = readFileSync(file, "utf8");
+  } catch {}
+  if (prevRaw !== out) writeFileSync(file, out, "utf8");
 }
 
 // 索引(日期倒序)+ 清理 30 天前的归档
@@ -558,5 +567,10 @@ const allDates = readdirSync(ARCHIVE_DIR)
   .map((f) => f.slice(0, 10));
 for (const d of allDates.filter((d) => d < pruneBefore)) unlinkSync(new URL(`${d}.json`, ARCHIVE_DIR));
 const dates = allDates.filter((d) => d >= pruneBefore).sort().reverse();
-writeFileSync(new URL("index.json", ARCHIVE_DIR), JSON.stringify(dates), "utf8");
+const idxOut = JSON.stringify(dates);
+let idxPrev = null;
+try {
+  idxPrev = readFileSync(new URL("index.json", ARCHIVE_DIR), "utf8");
+} catch {}
+if (idxPrev !== idxOut) writeFileSync(new URL("index.json", ARCHIVE_DIR), idxOut, "utf8");
 console.log(`归档完成:本轮 ${Object.keys(byDay).sort().join(", ")},可翻 ${dates.length} 天`);

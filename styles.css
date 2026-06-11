@@ -713,6 +713,68 @@ body {
 .src-link span { font-weight: 500; font-size: 0.76rem; opacity: 0.6; }
 .src-link:active { opacity: 0.85; }
 
+/* 下一篇卡片 */
+.next-card {
+  display: block;
+  width: 100%;
+  margin-top: 22px;
+  padding: 14px 16px;
+  border: none;
+  border-radius: var(--radius-md);
+  background: #F3F4F8;
+  text-align: left;
+  font-family: inherit;
+  cursor: pointer;
+}
+.next-card span {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--indigo);
+  margin-bottom: 4px;
+}
+.next-card b {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.next-card:active { transform: scale(0.98); }
+
+/* 图片灯箱 */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 8, 12, 0.92);
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.15s ease;
+}
+.lightbox img {
+  max-width: 100vw;
+  max-height: 92vh;
+  object-fit: contain;
+}
+
+/* 来源健康度 */
+.src-pill {
+  display: inline-block;
+  background: #FFFFFF;
+  border-radius: 99px;
+  padding: 4px 10px;
+  margin: 0 6px 6px 0;
+  font-size: 0.74rem;
+  color: var(--ink-2);
+}
+.src-pill b { color: var(--ink); }
+.src-pill.src-dead { background: #FDE8E8; color: #B91C1C; }
+
 .detail-actions {
   display: flex;
   gap: 12px;
@@ -884,6 +946,9 @@ body {
   .flash-text { color: #D5D6E2; }
   .feed-day::before, .feed-day::after { background: #23242F; }
   .me-stat, .me-block { background: #20212C; }
+  .next-card { background: #262736; }
+  .src-pill { background: #2A2B38; }
+  .src-pill.src-dead { background: #4A1D1D; color: #F87171; }
   .shelf-bar { background: rgba(255, 255, 255, 0.12); }
   .toast { background: rgba(240, 240, 246, 0.94); color: #15151C; }
   .refresh-btn { background: rgba(255, 255, 255, 0.16); color: #E4E2FB; }

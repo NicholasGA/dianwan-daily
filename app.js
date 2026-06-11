@@ -146,6 +146,7 @@
     return {
       date: (remote.generatedAt || "").slice(0, 10),
       generatedAt: remote.generatedAt,
+      sourceStats: remote.sources || null,
       featuredIds,
       topicIds,
       news,
@@ -317,6 +318,7 @@
         .map((n, i) => ({ ...n, id: i + 1 }));
       const combined = {
         generatedAt: remote.generatedAt,
+        sources: remote.sources || null,
         news: combinedNews,
         flash: combinedNews.slice(0, 24).map((n) => ({ ts: n.ts, text: n.title, id: n.id })),
       };
@@ -464,6 +466,7 @@
       if (match(n)) river.push(n);
     }
     river.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+    riverOrder = river; // 详情页「下一篇」按当前信息流顺序
 
     const todayKey = dayKeyOf(Date.now());
     const yesterdayKey = dayKeyOf(Date.now() - 86400000);
@@ -525,6 +528,16 @@
     $("#meRead").textContent = readSet.size;
     $("#meFavs").textContent = getFavs().length;
     $("#meDate").textContent = new Date().toLocaleDateString("zh-CN", { month: "long", day: "numeric", weekday: "long" });
+    // 来源健康度:最近一轮各源抓取条数,挂了的一眼可见
+    const stats = D.sourceStats;
+    $("#meSources").innerHTML = stats
+      ? Object.entries(stats)
+          .map(
+            ([name, count]) =>
+              `<span class="src-pill${count === 0 ? " src-dead" : ""}">${esc(name)} <b>${count}</b></span>`
+          )
+          .join("")
+      : "游民星空 · 3DM · 机核 · 游研社 · 触乐 · indienova · IGN · GameSpot";
   }
 
   function renderAll() {
@@ -544,6 +557,7 @@
   /* ---------- 历史新闻:滑到底部加载更早(archive/) ---------- */
 
   let archiveDates = null;
+  let riverOrder = [];
   const loadedDates = new Set();
   const history = [];
   let historyLoading = false;
@@ -755,6 +769,12 @@
         if (currentDetailId === wantId) renderDetailBody(n);
       })();
     }
+    // 下一篇(按当前信息流顺序)
+    const idx = riverOrder.findIndex((r) => r.id === id);
+    const next = idx >= 0 ? riverOrder[idx + 1] : null;
+    $("#detailNext").innerHTML = next
+      ? `<button class="next-card" data-id="${next.id}"><span>下一篇</span><b>${esc(next.title)}</b></button>`
+      : "";
     $("#actLike").classList.remove("acted");
     $("#actFav").classList.toggle("acted", isFaved(n));
     // 标记已读
@@ -865,8 +885,19 @@
 
     document.body.addEventListener("click", (e) => {
       if (e.target.closest("a")) return;
+      // 正文图片 → 灯箱大图
+      if (e.target.classList.contains("detail-img")) {
+        $("#lightboxImg").src = e.target.src;
+        $("#lightbox").classList.remove("hidden");
+        return;
+      }
       const card = e.target.closest("[data-id]");
       if (card && !e.target.closest(".chip")) openDetail(Number(card.dataset.id));
+    });
+
+    $("#lightbox").addEventListener("click", () => {
+      $("#lightbox").classList.add("hidden");
+      $("#lightboxImg").src = "";
     });
 
     $("#detailBack").addEventListener("click", (e) => {
@@ -1047,10 +1078,24 @@
     });
   }
 
-  /* ---------- PWA:离线缓存 ---------- */
+  /* ---------- PWA:离线缓存 + 新版本一键启用 ---------- */
 
   if ("serviceWorker" in navigator) {
+    const hadController = !!navigator.serviceWorker.controller;
     navigator.serviceWorker.register("./sw.js").catch(() => {});
+    let prompted = false;
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      // 新 SW 接管(更新已就绪);首次安装不提示
+      if (!hadController || prompted) return;
+      prompted = true;
+      const el = $("#toast");
+      el.textContent = "新版本已就绪 · 点此立即启用";
+      el.classList.remove("hidden");
+      el.style.cursor = "pointer";
+      el.addEventListener("click", () => location.reload(), { once: true });
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.add("hidden"), 8000);
+    });
   }
 
   /* ---------- 启动 ---------- */
