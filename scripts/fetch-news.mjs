@@ -431,6 +431,10 @@ const winners = [];
 for (const c of ranked) {
   const dup = winners.find((w) => sameStory(w, c));
   if (dup) {
+    // 多源同报 = 热点信号:记录在保留版本上
+    dup.hotSources ||= [dup.source];
+    if (!dup.hotSources.includes(c.source)) dup.hotSources.push(c.source);
+    dup.hot = dup.hotSources.length;
     console.log(`同题剔除: [${c.source}] ${c.title.slice(0, 28)} ≈ [${dup.source}] ${dup.title.slice(0, 28)}`);
     continue;
   }
@@ -560,8 +564,8 @@ for (const [day, items] of Object.entries(byDay)) {
   if (prevRaw !== out) writeFileSync(file, out, "utf8");
 }
 
-// 索引(日期倒序)+ 清理 30 天前的归档
-const pruneBefore = dayOf(Date.now() - 30 * 86400000);
+// 索引(日期倒序)+ 清理 90 天前的归档
+const pruneBefore = dayOf(Date.now() - 90 * 86400000);
 const allDates = readdirSync(ARCHIVE_DIR)
   .filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f))
   .map((f) => f.slice(0, 10));

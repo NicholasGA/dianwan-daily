@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v16 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v17 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -125,6 +125,8 @@
       url: cleanUrl,
       image: cleanImg,
       isVideo: !!n.isVideo,
+      hot: n.hot || 0, // 多源同报数(≥2 即热点)
+      hotSources: Array.isArray(n.hotSources) ? n.hotSources : null,
       fullArchived: !!n.fullArchived, // 全文在当日归档文件中,详情页按需取
       cover: { ...PALETTES[id % PALETTES.length], glyph: (n.source || "News").slice(0, 2) },
       blocks: sanitizeBlocks(n.content),
@@ -136,9 +138,13 @@
     const news = (remote.news || []).map((n, i) => normalizeItem(n, n.id || i + 1));
     const byImageFirst = (arr) => [...arr].sort((a, b) => (b.image ? 1 : 0) - (a.image ? 1 : 0));
     const featuredIds = byImageFirst(news).slice(0, 5).map((n) => n.id);
-    const topicIds = byImageFirst(news.filter((n) => !featuredIds.includes(n.id)))
-      .slice(0, 4)
-      .map((n) => n.id);
+    // 专题区优先展示热点(多源同报);不足 2 条时回退编辑精选
+    const hotItems = news.filter((n) => n.hot > 1);
+    const topicPool =
+      hotItems.length >= 2
+        ? [...hotItems].sort((a, b) => b.hot - a.hot || (b.image ? 1 : 0) - (a.image ? 1 : 0))
+        : byImageFirst(news.filter((n) => !featuredIds.includes(n.id)));
+    const topicIds = topicPool.slice(0, 4).map((n) => n.id);
     const flash = (remote.flash || []).slice(0, 24).map((f) => ({
       time: new Date(f.ts || Date.now()).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" }),
       text: esc(f.text),
@@ -150,6 +156,7 @@
       sourceStats: remote.sources || null,
       featuredIds,
       topicIds,
+      hotCount: hotItems.length,
       news,
       flash,
     };
@@ -413,6 +420,10 @@
   }
 
   function renderTopics() {
+    const hot = D.hotCount || 0;
+    $("#topicTitle").textContent = hot >= 2 ? "今日热点" : "编辑精选";
+    $("#topicSub").innerHTML = hot >= 2 ? "多家媒体同时在报<br>的热门事件" : "本时段最值得看的<br>游戏新闻";
+    $("#topicNum").innerHTML = `${hot >= 2 ? hot : D.news.length}<span>${hot >= 2 ? "热点" : "条"}</span>`;
     $("#topicGrid").innerHTML = D.topicIds
       .map(findNews)
       .filter(Boolean)
@@ -431,7 +442,7 @@
     return `
       <article class="news-item${read}" data-id="${n.id}">
         <div class="news-main">
-          <span class="news-cat">${esc(n.category)}</span>
+          <span class="news-cat">${esc(n.category)}</span>${n.hot > 1 ? `<span class="hot-badge">🔥 ${n.hot} 源同报</span>` : ""}
           <h4 class="news-title">${esc(n.title)}</h4>
           <div class="news-meta">
             <span>${esc(n.source)}</span><span>${esc(n.time)}</span>
@@ -748,7 +759,9 @@
     $("#detailTitle").textContent = n.title;
     $("#detailTitleEn").textContent = n.titleEn || "";
     $("#detailTitleEn").classList.toggle("hidden", !n.titleEn);
-    $("#detailMeta").innerHTML = `<span>${esc(n.source)}</span><span>${esc(n.time)}</span>`;
+    $("#detailMeta").innerHTML =
+      `<span>${esc(n.source)}</span><span>${esc(n.time)}</span>` +
+      (n.hot > 1 ? `<span class="hot-meta">🔥 ${n.hotSources ? esc(n.hotSources.join("、")) : n.hot + " 家媒体"}同报</span>` : "");
     renderDetailBody(n);
     // 无全文时的三级管道:当日归档 → 现场抓原文(代理/机核 API) → 摘要兜底
     if (!n.blocks && (n.fullArchived || canFetchFullText(n))) {

@@ -430,6 +430,17 @@ body {
   padding: 2px 6px;
   margin-bottom: 6px;
 }
+.hot-badge {
+  display: inline-block;
+  font-size: 0.64rem;
+  font-weight: 700;
+  color: #C2410C;
+  background: #FFF1E6;
+  border-radius: 5px;
+  padding: 2px 6px;
+  margin: 0 0 6px 6px;
+}
+.hot-meta { color: #E0742C; font-weight: 600; }
 .news-title {
   font-size: 0.96rem;
   font-weight: 700;
@@ -953,6 +964,8 @@ body {
   .feed-day::before, .feed-day::after { background: #23242F; }
   .me-stat, .me-block { background: #20212C; }
   .next-card { background: #262736; }
+  .hot-badge { background: #3D2417; color: #FB923C; }
+  .hot-meta { color: #FB923C; }
   .src-pill { background: #2A2B38; }
   .src-pill.src-dead { background: #4A1D1D; color: #F87171; }
   .shelf-bar { background: rgba(255, 255, 255, 0.12); }
