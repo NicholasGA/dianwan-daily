@@ -636,7 +636,25 @@ body {
   height: 215px;
   background: linear-gradient(160deg, var(--c1, #2C2C35), var(--c2, #17171C));
   position: relative;
+  overflow: hidden;
 }
+.detail-cover-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.detail-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(10,10,13,0.05) 40%, rgba(10,10,13,0.55));
+  pointer-events: none;
+}
+.detail-back, .detail-tag { z-index: 2; }
 .detail-back {
   position: absolute;
   top: calc(16px + env(safe-area-inset-top)); left: 16px;

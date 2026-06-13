@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v24 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v25 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -85,16 +85,86 @@
 
   const videoBadge = (n) => (n.isVideo ? '<span class="video-badge">▶</span>' : "");
 
-  function coverMedia(n) {
-    if (n.image) {
-      return `<img class="cover-img" src="${esc(n.image)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`;
+  /* ---------- 图片加载:四级兜底级联 ----------
+     直连原图 → wsrv.nl 代理 → Photon(i0.wp.com,独立基础设施)→ 占位字形。
+     任一级失败自动重试下一级,而非永久删除。覆盖:防盗链 403 / 混合内容 /
+     国外被墙 / 单代理(Cloudflare 在华)失效 四种失败模式。
+     国外源与 http-only 源直连必失败,直接从代理起跳(proxyByDefaultHosts)。 */
+
+  const FOREIGN_RE = /ignimgs\.com|gamespot|cbsistatic\.com|chuapp\.com/i;
+  const IMG_W = { thumb: 360, cover: 720, detail: 900, full: 1280 };
+
+  // 旧数据可能已把图改写成 wsrv 链接,还原出原始 URL
+  function unwrapProxy(u) {
+    if (!u) return u;
+    const m = u.match(/wsrv\.nl\/\?url=([^&]+)/) || u.match(/i0\.wp\.com\/(.+)$/);
+    if (m) {
+      let inner = decodeURIComponent(m[1]).replace(/^ssl:/, "").replace(/\?.*$/, "");
+      return /^https?:\/\//.test(inner) ? inner : "https://" + inner;
     }
+    return u;
+  }
+
+  const stripScheme = (u) => u.replace(/^https?:\/\//, "").replace(/^\/\//, "");
+  const isHttpsSrc = (u) => /^https:/.test(u) || u.startsWith("//");
+
+  function viaWsrv(u, w) {
+    const s = (isHttpsSrc(u) ? "ssl:" : "") + stripScheme(u);
+    return `https://wsrv.nl/?url=${encodeURIComponent(s)}${w ? `&w=${w}&output=webp&q=78` : ""}`;
+  }
+  function viaPhoton(u, w) {
+    const p = [];
+    if (isHttpsSrc(u)) p.push("ssl=1");
+    if (w) { p.push("w=" + w); p.push("quality=78"); }
+    return `https://i0.wp.com/${stripScheme(u)}${p.length ? "?" + p.join("&") : ""}`;
+  }
+
+  // 决定初始 src:国外/协议相对/http 源跳过注定失败的直连,从代理起
+  function imgSrc(orig, kind) {
+    if (!orig) return "";
+    const w = IMG_W[kind] || 0;
+    if (/^http:\/\//.test(orig) || orig.startsWith("//") || FOREIGN_RE.test(orig)) {
+      return viaWsrv(orig, w);
+    }
+    return orig; // 国内 https(含防盗链,由 no-referrer 绕过)直连最快
+  }
+
+  // 渲染一个带兜底链的 <img>;kind 决定压缩宽度,glyph 为终级占位字形
+  function imgTag(cls, orig, kind, glyph) {
+    const startProxied = /^http:\/\//.test(orig) || orig.startsWith("//") || FOREIGN_RE.test(orig);
+    const stage = startProxied ? 1 : 0; // 1 = 初始已是 wsrv
+    return `<img class="${cls}" src="${esc(imgSrc(orig, kind))}" loading="lazy" referrerpolicy="no-referrer"` +
+      ` data-orig="${esc(orig)}" data-kind="${kind}" data-stage="${stage}"` +
+      (glyph ? ` data-glyph="${esc(glyph)}"` : "") + ` onerror="dwImgError(this)">`;
+  }
+
+  // 全局错误处理:逐级降级
+  window.dwImgError = function (img) {
+    const orig = img.dataset.orig;
+    const w = IMG_W[img.dataset.kind] || 0;
+    const stage = (+img.dataset.stage || 0) + 1;
+    img.dataset.stage = stage;
+    if (stage === 1) { img.src = viaWsrv(orig, w); return; }
+    if (stage === 2) { img.src = viaPhoton(orig, w); return; }
+    // 终级:撤掉图片,缩略图/封面容器留渐变 + 字形,不塌不空
+    img.onerror = null;
+    const glyph = img.dataset.glyph;
+    const parent = img.parentElement;
+    img.remove();
+    if (glyph && parent && /news-thumb|cover|topic-cover/.test(parent.className) && !parent.querySelector(".thumb-glyph,.cover-deco")) {
+      const span = document.createElement("span");
+      span.className = parent.className.includes("news-thumb") ? "thumb-glyph" : "cover-deco";
+      span.textContent = glyph;
+      parent.appendChild(span);
+    }
+  };
+
+  function coverMedia(n) {
+    if (n.image) return imgTag("cover-img", n.image, "cover", n.cover.glyph);
     return `<span class="cover-deco">${esc(n.cover.glyph)}</span>`;
   }
 
   /* ---------- 数据归一化 ---------- */
-
-  const httpsImage = (u) => (u && u.startsWith("http://") ? `https://wsrv.nl/?url=${encodeURIComponent(u.slice(7))}` : u);
 
   function sanitizeBlocks(content) {
     if (!Array.isArray(content)) return null;
@@ -106,13 +176,15 @@
           typeof b.v === "string" &&
           (b.t === "p" || b.t === "h" || (b.t === "img" && /^https?:\/\//.test(b.v)))
       )
-      .map((b) => (b.t === "img" ? { t: "img", v: httpsImage(b.v) } : b));
+      .map((b) => (b.t === "img" ? { t: "img", v: unwrapProxy(b.v) } : b));
     return blocks.length ? blocks : null;
   }
 
   function normalizeItem(n, id) {
     const cleanUrl = /^https?:\/\//.test(n.url || "") ? n.url.replace(/["'\\]/g, "") : null;
-    const cleanImg = /^https?:\/\//.test(n.image || "") ? httpsImage(n.image.replace(/["'\\]/g, "")) : null;
+    const rawImg = (n.image || "").replace(/["'\\]/g, "");
+    // 存原始 URL(还原旧数据里已代理的链接),代理决策延后到渲染时
+    const cleanImg = /^https?:\/\//.test(rawImg) || rawImg.startsWith("//") ? unwrapProxy(rawImg) : null;
     // 旧归档条目带着关键词扩充之前的旧分类,二游内容重新归入手游区
     let category = CATEGORIES.includes(n.category) ? n.category : "业界";
     if (category !== "手游" && categorizeClient(n.title + " " + (n.summary || "")) === "手游") category = "手游";
@@ -458,7 +530,7 @@
           </div>
         </div>
         <div class="news-thumb" style="${coverStyle(n.cover)}">
-          ${n.image ? `<img class="thumb-img" src="${esc(n.image)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : `<span class="thumb-glyph">${esc(n.cover.glyph)}</span>`}
+          ${n.image ? imgTag("thumb-img", n.image, "thumb", n.cover.glyph) : `<span class="thumb-glyph">${esc(n.cover.glyph)}</span>`}
           ${videoBadge(n)}
         </div>
       </article>`;
@@ -817,8 +889,7 @@
     if (n.blocks) {
       $("#detailContent").innerHTML = n.blocks
         .map((b) => {
-          if (b.t === "img")
-            return `<img class="detail-img" src="${esc(b.v)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`;
+          if (b.t === "img") return imgTag("detail-img", b.v, "detail", "");
           if (b.t === "h") return `<h3 class="detail-h">${esc(b.v)}</h3>`;
           return `<p>${esc(b.v)}</p>`;
         })
@@ -841,10 +912,10 @@
     currentDetailKey = itemKey(n);
     const cover = $("#detailCover");
     cover.style.cssText = coverStyle(n.cover);
+    // 封面用真实 <img> + 兜底链(CSS background 既不吃 referrerpolicy 也无法 onerror 重试)
+    cover.querySelector(".detail-cover-img")?.remove();
     if (n.image) {
-      cover.style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.45)), url("${n.image}")`;
-      cover.style.backgroundSize = "cover";
-      cover.style.backgroundPosition = "center";
+      cover.insertAdjacentHTML("afterbegin", imgTag("detail-cover-img", n.image, "cover", ""));
     }
     $("#detailTag").textContent = n.category;
     $("#detailTitle").textContent = n.title;
@@ -998,7 +1069,8 @@
       if (e.target.closest("a")) return;
       // 正文图片 → 灯箱大图
       if (e.target.classList.contains("detail-img")) {
-        $("#lightboxImg").src = e.target.src;
+        const orig = e.target.dataset.orig;
+        $("#lightboxImg").src = orig ? imgSrc(orig, "full") : e.target.src;
         $("#lightbox").classList.remove("hidden");
         return;
       }

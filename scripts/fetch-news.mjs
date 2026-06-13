@@ -36,7 +36,8 @@ function field(xml, tag) {
 const stripTags = (s) => decode(s.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
 
 // http 图床(如触乐)在 HTTPS 站点会被混合内容策略拦截,经 wsrv.nl 图片代理转 https
-const httpsImage = (u) => (u && u.startsWith("http://") ? `https://wsrv.nl/?url=${encodeURIComponent(u.slice(7))}` : u);
+// 不在抓取端预代理:存原始 URL,代理/兜底决策全部交给客户端的四级级联
+const httpsImage = (u) => u || null;
 
 async function get(url) {
   // 触乐等 http 源从 Actions 运行器抓取偶发超时,失败重试一次
