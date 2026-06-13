@@ -781,6 +781,44 @@ body {
 .src-link span { font-weight: 500; font-size: 0.74rem; opacity: 0.7; }
 .src-link:active { opacity: 0.85; }
 
+/* 各家怎么说(多源同报聚合) */
+.src-panel {
+  margin-top: 24px;
+  background: var(--surface-1);
+  border-radius: var(--radius-lg);
+  padding: 6px 14px 8px;
+}
+.src-panel-h {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.16em;
+  padding: 12px 0 8px;
+}
+.src-row {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-top: 1px solid var(--hairline);
+  text-decoration: none;
+}
+.src-row .src-name {
+  flex: 0 0 56px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-3);
+}
+.src-row .src-t {
+  flex: 1;
+  font-size: 0.84rem;
+  color: var(--ink-2);
+  line-height: 1.45;
+}
+.src-row-cur .src-name { color: var(--gold); }
+.src-row-cur .src-t { color: var(--ink); }
+.src-row:not(.src-row-cur):active { opacity: 0.6; }
+
 .next-card {
   display: block;
   width: 100%;

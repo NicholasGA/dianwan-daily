@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v28 · 2026-06-13"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v29 · 2026-06-13"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -222,6 +222,7 @@
       isVideo: !!n.isVideo,
       hot: n.hot || 0, // 多源同报数(≥2 即热点)
       hotSources: Array.isArray(n.hotSources) ? n.hotSources : null,
+      others: Array.isArray(n.others) ? n.others.filter((o) => o && o.url && /^https?:\/\//.test(o.url)) : null,
       fullArchived: !!n.fullArchived, // 全文在当日归档文件中,详情页按需取
       cover: { ...PALETTES[id % PALETTES.length], glyph: (n.source || "News").slice(0, 2) },
       blocks: sanitizeBlocks(n.content),
@@ -837,9 +838,10 @@
     return decodeBox.value.replace(/\s+/g, " ").trim();
   }
 
-  const CLIENT_BOILER = /(本文由游民星空|更多相关资讯请关注|转载请注明|责任编辑|关注游民星空|点击进入专题|友情提示|点此前往|游民星空APP|随时掌握游戏情报|出版物经营许可证|京ICP备|京公网安备|人喜欢$)/;
+  const CLIENT_BOILER = /(本文由游民星空|更多相关资讯请关注|转载请注明|责任编辑|关注游民星空|点击进入专题|友情提示|点此前往|游民星空APP|随时掌握游戏情报|出版物经营许可证|京ICP备|京公网安备|人喜欢$|猜你喜欢|点此进入|点击查看更多|怀旧频道|>>>|<<<|\.text\(\)|gb-final-)/;
 
   function htmlBlocksClient(html) {
+    html = html.replace(/<script[\s\S]*?<\/script>/gi, "").replace(/<style[\s\S]*?<\/style>/gi, "");
     const blocks = [];
     let textLen = 0,
       imgs = 0;
@@ -870,7 +872,7 @@
   }
 
   const CLIENT_CONTAINERS = [
-    { host: "17173.com", rx: /<div class="gb-final-mod-article[^"]*"[^>]*>([\s\S]*?)(?:class="mod-side-qrcode|class="mod-share|免责声明|$)/ },
+    { host: "17173.com", rx: /<div class="gb-final-mod-article[^"]*"[^>]*>([\s\S]*?)(?:gb-final-pn|gb-final-mod-recommend|猜你喜欢|class="mod-side-qrcode|class="mod-share|免责声明|$)/ },
     { host: "gamersky.com", rx: /<div class="Mid2L_con">([\s\S]*?)(?:<span id="pe100_page_contentpage|<!--文章内容导航|<a class="diggBtn|$)/ },
     { host: "3dmgame.com", rx: /<div class="news_warp_center">([\s\S]*?)(?:class="bq|$)/ },
     { host: "yystv.cn", rx: /<div class="doc-content[^"]*"[^>]*>([\s\S]*?)(?:class="article-links-container|class="qrcode-block|class="doc-share|$)/ },
@@ -949,6 +951,19 @@
         ? `<a class="src-link" href="${esc(n.url)}" target="_blank" rel="noopener">${n.isVideo ? "▶ 观看视频" : "↗ 阅读原文"}<span>${esc(n.source)}</span></a>`
         : "";
     }
+    // "各家怎么说":多源同报事件,列出其它媒体的报道入口
+    const others = (n.others || []).filter((o) => o.url !== n.url);
+    $("#detailSources").innerHTML = others.length
+      ? `<div class="src-panel"><div class="src-panel-h">各家怎么说 · ${others.length + 1} 源同报</div>` +
+        `<a class="src-row src-row-cur"><span class="src-name">${esc(n.source)}</span><span class="src-t">${esc(n.title)}</span></a>` +
+        others
+          .map(
+            (o) =>
+              `<a class="src-row" href="${esc(o.url)}" target="_blank" rel="noopener"><span class="src-name">${esc(o.source)}</span><span class="src-t">${esc(o.title)}</span></a>`
+          )
+          .join("") +
+        `</div>`
+      : "";
   }
 
   function openDetail(id) {

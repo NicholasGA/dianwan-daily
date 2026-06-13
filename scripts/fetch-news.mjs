@@ -238,6 +238,8 @@ const PRIORITY = { 游民星空: 0, "3DM": 0, 机核: 0, 游研社: 0, 触乐: 0
 
 // HTML 片段 → 结构化块:按出现顺序提取段落与图片
 function htmlToBlocks(html) {
+  // 先剥离脚本/样式,避免 JS 模板代码、CSS 漏进正文
+  html = html.replace(/<script[\s\S]*?<\/script>/gi, "").replace(/<style[\s\S]*?<\/style>/gi, "");
   const blocks = [];
   const re = /<(p|h[23])[^>]*>([\s\S]*?)<\/\1>|<img[^>]+src="([^"]+)"[^>]*\/?>/gi;
   let m;
@@ -258,7 +260,7 @@ function htmlToBlocks(html) {
 
 // 站点正文容器(捕获组 1 为正文 HTML;结束标记不命中会吞进页脚广告,务必齐全)
 const CONTAINERS = {
-  "17173.com": /<div class="gb-final-mod-article[^"]*"[^>]*>([\s\S]*?)(?:class="mod-side-qrcode|class="mod-share|免责声明|<footer|$)/,
+  "17173.com": /<div class="gb-final-mod-article[^"]*"[^>]*>([\s\S]*?)(?:gb-final-pn|gb-final-mod-recommend|猜你喜欢|class="mod-side-qrcode|class="mod-share|免责声明|<footer|$)/,
   "3dmgame.com": /<div class="news_warp_center">([\s\S]*?)(?:class="bq|<footer|$)/,
   "gamersky.com": /<div class="Mid2L_con">([\s\S]*?)(?:<span id="pe100_page_contentpage|<!--文章内容导航|<a class="diggBtn|<div class="Mid2L_extra|$)/,
   "yystv.cn": /<div class="doc-content[^"]*"[^>]*>([\s\S]*?)(?:class="article-links-container|class="qrcode-block|class="doc-share|class="footer|<footer|$)/,
@@ -307,7 +309,7 @@ async function extractContent(item) {
   }
 }
 
-const BOILERPLATE = /(本文由游民星空|更多相关资讯请关注|转载请注明|责任编辑|关注游民星空|点击进入专题|友情提示：支持键盘|点此前往|游民星空APP|随时掌握游戏情报|出版物经营许可证|京ICP备|京公网安备|人喜欢$|This story is developing|Sign up for|Subscribe to our|Got a news tip)/i;
+const BOILERPLATE = /(本文由游民星空|更多相关资讯请关注|转载请注明|责任编辑|关注游民星空|点击进入专题|友情提示：支持键盘|点此前往|游民星空APP|随时掌握游戏情报|出版物经营许可证|京ICP备|京公网安备|人喜欢$|猜你喜欢|点此进入|点击查看更多|怀旧频道|>>>|<<<|\.text\(\)|gb-final-|This story is developing|Sign up for|Subscribe to our|Got a news tip)/i;
 
 function finalizeBlocks(blocks) {
   const out = [];
@@ -332,6 +334,13 @@ function finalizeBlocks(blocks) {
     }
   }
   return textLen >= 50 ? out : null; // 正文太短视为提取失败
+}
+
+// 清洗已有(可能来自旧缓存的)正文块:剔除后来才加入黑名单的垃圾块
+function cleanContent(blocks) {
+  if (!Array.isArray(blocks)) return blocks;
+  const out = blocks.filter((b) => b && (b.t === "img" ? true : !BOILERPLATE.test(b.v || "")));
+  return out.length ? out : null;
 }
 
 /* ---------- 英文内容翻译(Google 免费接口,无需密钥;Actions 美国节点可达) ---------- */
@@ -498,6 +507,12 @@ for (const c of ranked) {
     dup.hotSources ||= [dup.source];
     if (!dup.hotSources.includes(c.source)) dup.hotSources.push(c.source);
     dup.hot = dup.hotSources.length;
+    // 保留落败源的可跳转报道(供客户端"各家怎么说"面板),按源去重、限量
+    dup.others ||= [];
+    if (c.url && !dup.others.some((o) => o.source === c.source) && dup.source !== c.source) {
+      dup.others.push({ source: c.source, url: c.url, title: c.title, ts: c.ts });
+      if (dup.others.length > 6) dup.others.length = 6;
+    }
     console.log(`同题剔除: [${c.source}] ${c.title.slice(0, 28)} ≈ [${dup.source}] ${dup.title.slice(0, 28)}`);
     continue;
   }
@@ -528,6 +543,7 @@ await Promise.all(
       } else {
         item.content = await extractContent(item);
       }
+      item.content = cleanContent(item.content); // 清洗旧缓存里的垃圾块
       if (item.content) fullCount++;
       delete item.descBlocks; // 中间数据不写入 news.json
     }
@@ -607,8 +623,9 @@ for (const [day, items] of Object.entries(byDay)) {
     const k = it.url || it.title;
     const prev = map.get(k);
     // 同条新闻保留全文块数更多的版本(解析改进后能升级旧归档)
-    const content =
-      (it.content?.length || 0) >= (prev?.content?.length || 0) ? it.content : prev.content;
+    const content = cleanContent(
+      (it.content?.length || 0) >= (prev?.content?.length || 0) ? it.content : prev.content
+    );
     const { id, ...rest } = { ...prev, ...it, content: content || null };
     map.set(k, rest);
   }
@@ -622,6 +639,13 @@ for (const [day, items] of Object.entries(byDay)) {
       if (!dup.hotSources.includes(it.source)) dup.hotSources.push(it.source);
       dup.hot = dup.hotSources.length;
       if ((it.content?.length || 0) > (dup.content?.length || 0)) dup.content = it.content;
+      // 累积各家报道(合并双方已有的 others + 落败条目自身)
+      dup.others ||= [];
+      const merge = [...(it.others || []), { source: it.source, url: it.url, title: it.title, ts: it.ts }];
+      for (const o of merge) {
+        if (o.url && o.source !== dup.source && !dup.others.some((x) => x.source === o.source)) dup.others.push(o);
+      }
+      if (dup.others.length > 6) dup.others.length = 6;
       continue;
     }
     merged.push(it);
