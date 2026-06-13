@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v27 · 2026-06-13"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v28 · 2026-06-13"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -297,17 +297,19 @@
     return out;
   }
 
-  // 两个代理并行竞速:能通时更快,全挂时 6.5 秒即放弃(不再串行干等)
+  // 文本代理并行竞速:优先用户自建 Worker(配置后最可靠),并行公共代理兜底
+  // (allorigins 已失效移除;corsproxy 校验浏览器来源、浏览器内可用但 Cloudflare 在华不稳)
   function proxyFetch(url) {
     const wrap = (p) =>
-      fetch(p, { signal: AbortSignal.timeout(6500) }).then((r) => {
+      fetch(p, { signal: AbortSignal.timeout(7000) }).then((r) => {
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.text();
       });
-    return Promise.any([
-      wrap(`https://corsproxy.io/?url=${encodeURIComponent(url)}`),
-      wrap(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`),
-    ]);
+    const arms = [];
+    if (WORKER_PROXY) arms.push(wrap(`${WORKER_PROXY.replace(/\/$/, "")}/?url=${encodeURIComponent(url)}`));
+    arms.push(wrap(`https://corsproxy.io/?url=${encodeURIComponent(url)}`));
+    arms.push(wrap(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`));
+    return Promise.any(arms);
   }
 
   function parse3DMList(html) {
@@ -447,6 +449,14 @@
               ? `比上次刷新新增 ${freshCount} 条`
               : "已是最新,没有新内容"
         );
+        // 抓到新内容时回到顶部、切回全部,确保新条目可见
+        if (freshCount > 0 && activeTab === "home") {
+          activeCategory = "全部";
+          searchQuery = "";
+          renderChips();
+          renderFeed();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
       }
     } catch (err) {
       if (!silent) toast("刷新失败,显示已缓存内容");
