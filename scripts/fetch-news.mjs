@@ -187,26 +187,29 @@ async function fetch17173(feed) {
   const html = await get("http://news.17173.com/index.shtml");
   const out = [];
   const seenUrl = new Set();
-  // 列表结构松散:按"链接 → 就近 alt 标题"配对解析
-  for (const m of html.matchAll(
-    /href="(?:https?:)?(\/\/news\.17173\.com\/content\/(\d{2})(\d{2})(\d{4})\/\d+\.shtml)"[^>]*>([\s\S]{0,400}?)<\/a>/g
-  )) {
-    const a = m;
-    const url = "http:" + a[1];
+  // 按 <li class="item"> 整块解析:同一块内含缩略图(懒加载,真实图在
+  // <img style="background:url(...)"> 里)与标题(.tit 内的链接)
+  for (const m of html.matchAll(/<li class="item"[^>]*>([\s\S]*?)<\/li>/g)) {
+    const li = m[1];
+    const linkM = li.match(/\/\/news\.17173\.com\/content\/(\d{2})(\d{2})(\d{4})\/\d+\.shtml/);
+    if (!linkM) continue;
+    const url = "http:" + linkM[0];
     if (seenUrl.has(url)) continue;
-    const inner = a[5] || "";
-    const title = inner.match(/alt="([^"]+)"/)?.[1] || stripTags(inner);
-    if (!title || title.length < 8 || /\.(png|jpe?g|gif)$/i.test(title)) continue;
+    // 标题取 .tit 里的链接文字
+    const titleM = li.match(/<div class="tit">[\s\S]*?<a[^>]*>([\s\S]*?)<\/a>/);
+    const title = stripTags(titleM ? titleM[1] : "");
+    if (!title || title.length < 6) continue;
     seenUrl.add(url);
-    const img = inner.match(/url\((?:https?:)?(\/\/i\.17173cdn\.com[^)!"']+)/)?.[1];
-    // 列表无精确时间,URL 含日期(MMDDYYYY);同日内按列表顺序排
-    const dayTs = Date.parse(`${a[4]}-${a[2]}-${a[3]}T12:00:00+08:00`) || Date.now();
+    // 缩略图:style 里 background:url(...) 的真实地址(保留 !a-3-240x 缩略后缀,更小更快)
+    const imgM = li.match(/background:\s*url\((?:https?:)?(\/\/i\.17173cdn\.com[^)\s"']+)/);
+    const mm = String(linkM[1]).padStart(2, "0"), dd = linkM[2], yyyy = linkM[3];
+    const dayTs = Date.parse(`${yyyy}-${mm}-${dd}T12:00:00+08:00`) || Date.now();
     out.push({
-      title: stripTags(title),
+      title,
       summary: "",
       source: feed.source,
       url,
-      image: img ? "https:" + img : null,
+      image: imgM ? "https:" + imgM[1] : null,
       isVideo: false,
       ts: dayTs + (200 - out.length) * 60000,
     });
