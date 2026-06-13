@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v29 · 2026-06-13"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v30 · 2026-06-13"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -223,6 +223,7 @@
       hot: n.hot || 0, // 多源同报数(≥2 即热点)
       hotSources: Array.isArray(n.hotSources) ? n.hotSources : null,
       others: Array.isArray(n.others) ? n.others.filter((o) => o && o.url && /^https?:\/\//.test(o.url)) : null,
+      official: !!n.official, // 官方一手公告(Steam 等)
       fullArchived: !!n.fullArchived, // 全文在当日归档文件中,详情页按需取
       cover: { ...PALETTES[id % PALETTES.length], glyph: (n.source || "News").slice(0, 2) },
       blocks: sanitizeBlocks(n.content),
@@ -552,7 +553,7 @@
     return `
       <article class="news-item${read}" data-id="${n.id}">
         <div class="news-main">
-          <span class="news-cat">${esc(n.category)}</span>${n.hot > 1 ? `<span class="hot-badge">🔥 ${n.hot} 源同报</span>` : ""}
+          <span class="news-cat">${esc(n.category)}</span>${n.official ? `<span class="off-badge">官方</span>` : ""}${n.hot > 1 ? `<span class="hot-badge">🔥 ${n.hot} 源同报</span>` : ""}
           <h4 class="news-title">${esc(n.title)}</h4>
           <div class="news-meta">
             <span>${esc(n.source)}</span><span>${esc(n.time)}</span>
@@ -984,6 +985,7 @@
     $("#detailTitleEn").classList.toggle("hidden", !n.titleEn);
     $("#detailMeta").innerHTML =
       `<span>${esc(n.source)}</span><span>${esc(n.time)}</span>` +
+      (n.official ? `<span class="hot-meta">官方公告</span>` : "") +
       (n.hot > 1 ? `<span class="hot-meta">🔥 ${n.hotSources ? esc(n.hotSources.join("、")) : n.hot + " 家媒体"}同报</span>` : "");
     renderDetailBody(n);
     // 无全文时的三级管道:当日归档 → 现场抓原文(代理/机核 API) → 摘要兜底

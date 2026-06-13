@@ -406,6 +406,17 @@ body {
   letter-spacing: 0.02em;
 }
 .hot-meta { color: var(--gold); font-weight: 600; }
+.off-badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #0E0E11;
+  background: #6FB7FF;
+  border-radius: 4px;
+  padding: 2px 7px;
+  margin: 0 0 6px 6px;
+  letter-spacing: 0.04em;
+}
 .news-title {
   font-size: 0.95rem;
   font-weight: 600;

@@ -218,6 +218,76 @@ async function fetch17173(feed) {
   return out;
 }
 
+/* ---------- 官方源:Steam 新闻 API(无需密钥,一手公告/更新) ---------- */
+
+// 追踪的 appid(主流单机/3A/服务型 + 国产标杆),只展示近三周有更新的
+const STEAM_APPS = [
+  730, 570, 578080, 1245620, 2358720, 1086940, 1091500, 292030, 1174180, 271590,
+  990080, 1593500, 2050650, 1817190, 1888930, 1030300, 413150, 1145360, 1599340,
+  553850, 381210, 1948280, 1716740, 1086940, 489830, 1817070, 2767030, 1144200,
+];
+
+const STEAM_CLAN_IMG = "https://clan.cloudflare.steamstatic.com/images";
+const stripBB = (s) => decode((s || "").replace(/\[\/?[a-z*][^\]]*\]/gi, " ")).replace(/\s+/g, " ").trim();
+
+function steamBlocks(raw) {
+  const s = (raw || "").replace(/\{STEAM_CLAN_IMAGE\}/g, STEAM_CLAN_IMG);
+  const blocks = [];
+  const re = /\[img\]([^\[\]]+)\[\/img\]|\[p\]([\s\S]*?)\[\/p\]/gi;
+  const pushImg = (u) => {
+    u = (u || "").trim();
+    if (u.startsWith("//")) u = "https:" + u;
+    if (/^https?:\/\//.test(u)) blocks.push({ t: "img", v: u });
+  };
+  let m;
+  while ((m = re.exec(s)) && blocks.length < 40) {
+    if (m[1] != null) pushImg(m[1]);
+    else {
+      const inner = m[2] || "";
+      for (const im of inner.matchAll(/\[img\]([^\[\]]+)\[\/img\]/gi)) pushImg(im[1]);
+      const txt = stripBB(inner);
+      if (txt) blocks.push({ t: "p", v: txt });
+    }
+  }
+  return blocks;
+}
+
+async function fetchSteam(feed) {
+  const cutoff = Date.now() - 21 * 86400000;
+  const lists = await Promise.all(
+    [...new Set(STEAM_APPS)].map(async (appid) => {
+      try {
+        const raw = await get(`https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=${appid}&count=2&maxlength=0&l=schinese`);
+        return (JSON.parse(raw).appnews?.newsitems || []).map((n) => ({ ...n, appid }));
+      } catch {
+        return [];
+      }
+    })
+  );
+  const out = [];
+  const seen = new Set();
+  for (const n of lists.flat()) {
+    const ts = (n.date || 0) * 1000;
+    if (ts < cutoff || !n.title || seen.has(n.gid)) continue;
+    seen.add(n.gid);
+    const blocks = steamBlocks(n.contents);
+    const plain = blocks.filter((b) => b.t !== "img").map((b) => b.v).join(" ");
+    if (plain.length < 20) continue;
+    out.push({
+      title: stripBB(n.title),
+      summary: plain.slice(0, 110),
+      source: feed.source,
+      official: true,
+      url: n.url,
+      image: blocks.find((b) => b.t === "img")?.v || null,
+      isVideo: false,
+      ts,
+      descBlocks: blocks,
+    });
+  }
+  return out.sort((a, b) => b.ts - a.ts).slice(0, feed.max);
+}
+
 // 供给量全面放开:RSS 取整源,游民翻 5 页,3DM 整页(约 65 条)
 const FEEDS = [
   { source: "游民星空", fetcher: fetchGamersky, pages: 5, max: 90 },
@@ -229,10 +299,11 @@ const FEEDS = [
   { source: "indienova", fetcher: fetchRss, url: "https://indienova.com/feed/", fullDesc: true },
   { source: "IGN", fetcher: fetchRss, url: "https://feeds.ign.com/ign/games-all", fullDesc: true },
   { source: "GameSpot", fetcher: fetchRss, url: "https://www.gamespot.com/feeds/game-news/", fullDesc: true },
+  { source: "Steam", fetcher: fetchSteam, max: 10 },
 ];
 
-// 同题去重时的来源优先级:中文源有全文,优先保留
-const PRIORITY = { 游民星空: 0, "3DM": 0, 机核: 0, 游研社: 0, 触乐: 0, "17173": 0, indienova: 0, IGN: 1, GameSpot: 1 };
+// 同题去重时的来源优先级:中文源有全文优先保留;英文/官方源需翻译,略降
+const PRIORITY = { 游民星空: 0, "3DM": 0, 机核: 0, 游研社: 0, 触乐: 0, "17173": 0, indienova: 0, IGN: 1, GameSpot: 1, Steam: 1 };
 
 /* ---------- 全文提取 ---------- */
 
@@ -522,7 +593,11 @@ for (const c of ranked) {
 // 4) 按时间排序定稿(无数量上限,有多少放多少)
 const news = winners
   .sort((a, b) => b.ts - a.ts)
-  .map((n, i) => ({ id: i + 1, category: categorize(n.title + " " + n.summary), ...n, image: httpsImage(n.image) }));
+  .map((n, i) => {
+    let cat = categorize(n.title + " " + n.summary);
+    if (n.source === "Steam" && cat === "业界") cat = "PC"; // Steam 公告默认归 PC
+    return { id: i + 1, category: cat, ...n, image: httpsImage(n.image) };
+  });
 
 // 5) 并发提取全文(限流;已归档过的直接复用)
 let cursor = 0;
