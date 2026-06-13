@@ -307,20 +307,36 @@ const PRIORITY = { 游民星空: 0, "3DM": 0, 机核: 0, 游研社: 0, 触乐: 0
 
 /* ---------- 全文提取 ---------- */
 
+// 占位图特征:懒加载站点 src 常先放 1x1/空白/loading 图,真图在 data-* 属性里
+const PLACEHOLDER_IMG = /blank\.(png|gif|jpe?g)|loading|placeholder|grey\.gif|spacer|1x1\.|data:image/i;
+
+// 从单个 <img> 标签里挑出"真实大图":懒加载属性优先于占位 src
+function pickImgUrl(tag) {
+  const attrs = ["data-large", "data-origin", "sourceimageurl", "data-original", "data-src", "contentimageurl", "original", "src"];
+  for (const a of attrs) {
+    const m = tag.match(new RegExp(a + '\\s*=\\s*["\']([^"\']+)["\']', "i"));
+    if (m && m[1] && !PLACEHOLDER_IMG.test(m[1])) return decode(m[1]);
+  }
+  const s = tag.match(/\bsrc\s*=\s*["']([^"']+)["']/i); // 全是占位也退回 src
+  return s ? decode(s[1]) : null;
+}
+
 // HTML 片段 → 结构化块:按出现顺序提取段落与图片
 function htmlToBlocks(html) {
   // 先剥离脚本/样式,避免 JS 模板代码、CSS 漏进正文
   html = html.replace(/<script[\s\S]*?<\/script>/gi, "").replace(/<style[\s\S]*?<\/style>/gi, "");
   const blocks = [];
-  const re = /<(p|h[23])[^>]*>([\s\S]*?)<\/\1>|<img[^>]+src="([^"]+)"[^>]*\/?>/gi;
+  const re = /<(p|h[23])[^>]*>([\s\S]*?)<\/\1>|(<img[^>]+>)/gi;
   let m;
   while ((m = re.exec(html))) {
     if (m[3]) {
-      blocks.push({ t: "img", v: decode(m[3]) });
+      const u = pickImgUrl(m[3]);
+      if (u) blocks.push({ t: "img", v: u });
     } else {
       const inner = m[2];
-      for (const im of inner.matchAll(/<img[^>]+src="([^"]+)"[^>]*\/?>/gi)) {
-        blocks.push({ t: "img", v: decode(im[1]) });
+      for (const im of inner.matchAll(/<img[^>]+>/gi)) {
+        const u = pickImgUrl(im[0]);
+        if (u) blocks.push({ t: "img", v: u });
       }
       const text = stripTags(inner);
       if (text) blocks.push({ t: m[1].toLowerCase() === "p" ? "p" : "h", v: text });
@@ -334,6 +350,8 @@ const CONTAINERS = {
   "17173.com": /<div class="gb-final-mod-article[^"]*"[^>]*>([\s\S]*?)(?:gb-final-pn|gb-final-mod-recommend|猜你喜欢|class="mod-side-qrcode|class="mod-share|免责声明|<footer|$)/,
   "3dmgame.com": /<div class="news_warp_center">([\s\S]*?)(?:class="bq|<footer|$)/,
   "gamersky.com": /<div class="Mid2L_con">([\s\S]*?)(?:<span id="pe100_page_contentpage|<!--文章内容导航|<a class="diggBtn|<div class="Mid2L_extra|$)/,
+  // 游民社区(club)话题贴:部分"趣闻/话题"新闻只是个跳转壳,真身在这里
+  "club.gamersky.com": /<div class="qzcmt-content-txt GSContent">([\s\S]*?)(?:<div class="qzcmt-bot1|<div class="qzcmt-action|<\/div>\s*<\/div>\s*<div|$)/,
   "yystv.cn": /<div class="doc-content[^"]*"[^>]*>([\s\S]*?)(?:class="article-links-container|class="qrcode-block|class="doc-share|class="footer|<footer|$)/,
   "chuapp.com": /<div class="the-content[^"]*"[^>]*>([\s\S]*?)(?:<!--end-->|<!--评论start|相关文章|<footer|$)/,
 };
@@ -365,13 +383,28 @@ async function extractContent(item) {
       return finalizeBlocks(blocks);
     }
 
-    const domain = Object.keys(CONTAINERS).find((d) => item.url.includes(d));
+    // 取最具体(最长)的匹配域名:club.gamersky.com 必须胜过 gamersky.com
+    const matchDomain = (u) => Object.keys(CONTAINERS).filter((d) => u.includes(d)).sort((a, b) => b.length - a.length)[0];
+    const domain = matchDomain(item.url);
     if (!domain) {
       // IGN / GameSpot 等:文章页抓不到,退而用 RSS 导语段落
       return item.descBlocks ? finalizeBlocks(item.descBlocks) : null;
     }
-    const html = await get(item.url);
-    const m = html.match(CONTAINERS[domain]);
+    let url = item.url;
+    let html = await get(url);
+
+    // 游民星空:部分"趣闻/话题"条目的新闻页只是个 JS 跳转壳(<div id="redirectTips" data-link=...>),
+    // 真正的图文在游民社区(club.gamersky.com)的话题贴里 —— 跟着 data-link 再抓一次
+    if (domain === "gamersky.com") {
+      const redir = html.match(/id="redirectTips"[^>]*\bdata-link\s*=\s*["']([^"']+)["']/i);
+      if (redir && /gamersky\.com/i.test(redir[1])) {
+        url = decode(redir[1]);
+        html = await get(url);
+      }
+    }
+
+    const cdomain = matchDomain(url) || domain;
+    const m = html.match(CONTAINERS[cdomain]);
     if (!m) return null;
     return finalizeBlocks(htmlToBlocks(m[1]));
   } catch (err) {
@@ -394,6 +427,8 @@ function finalizeBlocks(blocks) {
       if (!/^https?:\/\//.test(b.v)) continue;
       // 站点装饰图/二维码/头像等非内容图
       if (/static\/pages\/|author_cover|avatar|qrcode|loading\.gif|\.gif\?|logo/i.test(b.v)) continue;
+      // 游民图集缩略图(/image2026/06/.../NN_S.jpg)升级为原图(同名去 _S/_B 后缀即全尺寸)
+      b.v = b.v.replace(/(\/image\d{4}\/\d{2}\/[^"'\s]*?\/\d+)_[SB](\.jpg)/i, "$1$2");
       imgCount++;
       out.push({ t: "img", v: httpsImage(b.v.replace(/["'\\]/g, "")) });
     } else {
@@ -404,7 +439,8 @@ function finalizeBlocks(blocks) {
       out.push({ t: b.t, v });
     }
   }
-  return textLen >= 50 ? out : null; // 正文太短视为提取失败
+  // 正文够长,或是图集(纯图、3 张以上)即视为有效提取
+  return textLen >= 50 || imgCount >= 3 ? out : null;
 }
 
 // 清洗已有(可能来自旧缓存的)正文块:剔除后来才加入黑名单的垃圾块
