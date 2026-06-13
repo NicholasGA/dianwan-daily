@@ -141,6 +141,15 @@
         <p class="me-sources" id="meSources">游民星空 · 3DM · 机核 · 游研社 · 触乐 · indienova · IGN · GameSpot</p>
         <p class="me-tip">每 15 分钟自动抓取,英文新闻自动翻译为中文;下拉可即时刷新;滑到列表底部可翻看 90 天内的历史新闻(新闻按天归档保留,不会因更新而丢失)。内容版权归原站所有,本应用仅作个人阅读使用。</p>
       </div>
+      <div class="me-block">
+        <h4>图片加速服务(可选)</h4>
+        <p class="me-tip" style="margin-top:0">部署你自己的 Cloudflare Worker 图片代理,改善图片加载稳定性。部署方法见项目 CLOUDFLARE-SETUP.md。把 Worker 网址粘到下面保存即生效。</p>
+        <div class="worker-row">
+          <input id="meWorker" type="url" inputmode="url" placeholder="https://xxx.workers.dev">
+          <button id="meWorkerSave">保存</button>
+        </div>
+        <p class="me-worker-state" id="meWorkerState">未配置(默认用公共代理)</p>
+      </div>
       <p class="me-build" id="meBuild"></p>
     </main>
   </div>

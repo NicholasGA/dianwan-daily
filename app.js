@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v25 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v26 · 2026-06-11"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -44,6 +44,9 @@
   const READ_KEY = "dianwanRead";   // 已读
   const FAV_KEY = "dianwanFavs";    // 收藏
   const VISIT_KEY = "dianwanVisits";// 打卡日期
+  const WORKER_KEY = "dwWorker";    // 用户自建图片代理(Cloudflare Worker)网址
+
+  let WORKER_PROXY = store.get(WORKER_KEY, "");
 
   const readSet = new Set(store.get(READ_KEY, []));
   const itemKey = (n) => n.url || (n.title || "").slice(0, 24);
@@ -108,6 +111,10 @@
   const stripScheme = (u) => u.replace(/^https?:\/\//, "").replace(/^\/\//, "");
   const isHttpsSrc = (u) => /^https:/.test(u) || u.startsWith("//");
 
+  function viaWorker(u, w) {
+    if (!WORKER_PROXY) return null;
+    return `${WORKER_PROXY.replace(/\/$/, "")}/?url=${encodeURIComponent(u)}`;
+  }
   function viaWsrv(u, w) {
     const s = (isHttpsSrc(u) ? "ssl:" : "") + stripScheme(u);
     return `https://wsrv.nl/?url=${encodeURIComponent(s)}${w ? `&w=${w}&output=webp&q=78` : ""}`;
@@ -119,33 +126,44 @@
     return `https://i0.wp.com/${stripScheme(u)}${p.length ? "?" + p.join("&") : ""}`;
   }
 
-  // 决定初始 src:国外/协议相对/http 源跳过注定失败的直连,从代理起
+  // 代理优先级:用户自建 Worker(若配置)> wsrv.nl > Photon。返回有序生成器列表。
+  function proxyChain() {
+    const list = [];
+    if (WORKER_PROXY) list.push(viaWorker);
+    list.push(viaWsrv, viaPhoton);
+    return list;
+  }
+  let PROXIES = proxyChain();
+
+  const shouldStartProxied = (u) => /^http:\/\//.test(u) || u.startsWith("//") || FOREIGN_RE.test(u);
+
+  // 决定初始 src:国外/协议相对/http 源跳过注定失败的直连,从首选代理起
   function imgSrc(orig, kind) {
     if (!orig) return "";
     const w = IMG_W[kind] || 0;
-    if (/^http:\/\//.test(orig) || orig.startsWith("//") || FOREIGN_RE.test(orig)) {
-      return viaWsrv(orig, w);
-    }
-    return orig; // 国内 https(含防盗链,由 no-referrer 绕过)直连最快
+    return shouldStartProxied(orig) ? PROXIES[0](orig, w) : orig;
   }
 
   // 渲染一个带兜底链的 <img>;kind 决定压缩宽度,glyph 为终级占位字形
+  // data-stage = 已尝试的代理个数(0=正显示直连;n=正显示 PROXIES[n-1])
   function imgTag(cls, orig, kind, glyph) {
-    const startProxied = /^http:\/\//.test(orig) || orig.startsWith("//") || FOREIGN_RE.test(orig);
-    const stage = startProxied ? 1 : 0; // 1 = 初始已是 wsrv
+    const w = IMG_W[kind] || 0;
+    const proxied = shouldStartProxied(orig);
     return `<img class="${cls}" src="${esc(imgSrc(orig, kind))}" loading="lazy" referrerpolicy="no-referrer"` +
-      ` data-orig="${esc(orig)}" data-kind="${kind}" data-stage="${stage}"` +
+      ` data-orig="${esc(orig)}" data-w="${w}" data-stage="${proxied ? 1 : 0}"` +
       (glyph ? ` data-glyph="${esc(glyph)}"` : "") + ` onerror="dwImgError(this)">`;
   }
 
-  // 全局错误处理:逐级降级
+  // 全局错误处理:沿 PROXIES 逐级降级,耗尽后占位
   window.dwImgError = function (img) {
     const orig = img.dataset.orig;
-    const w = IMG_W[img.dataset.kind] || 0;
-    const stage = (+img.dataset.stage || 0) + 1;
-    img.dataset.stage = stage;
-    if (stage === 1) { img.src = viaWsrv(orig, w); return; }
-    if (stage === 2) { img.src = viaPhoton(orig, w); return; }
+    const w = +img.dataset.w || 0;
+    const stage = +img.dataset.stage || 0; // 已用代理数
+    if (stage < PROXIES.length) {
+      const next = PROXIES[stage](orig, w);
+      img.dataset.stage = stage + 1;
+      if (next) { img.src = next; return; }
+    }
     // 终级:撤掉图片,缩略图/封面容器留渐变 + 字形,不塌不空
     img.onerror = null;
     const glyph = img.dataset.glyph;
@@ -712,6 +730,24 @@
           )
           .join("")
       : "游民星空 · 3DM · 机核 · 游研社 · 触乐 · indienova · IGN · GameSpot";
+    const wi = $("#meWorker");
+    if (wi) wi.value = WORKER_PROXY;
+    const ws = $("#meWorkerState");
+    if (ws) ws.textContent = WORKER_PROXY ? "已启用自建图片代理" : "未配置(默认用公共代理)";
+  }
+
+  function saveWorker() {
+    const v = ($("#meWorker").value || "").trim().replace(/\s/g, "");
+    if (v && !/^https:\/\/.+/.test(v)) {
+      toast("请填写完整的 https:// 网址");
+      return;
+    }
+    WORKER_PROXY = v;
+    store.set(WORKER_KEY, v);
+    PROXIES = proxyChain(); // 重建代理链,立即生效
+    renderMe();
+    renderAll();
+    toast(v ? "图片代理已启用" : "已清除,恢复默认");
   }
 
   function renderAll() {
@@ -1139,6 +1175,8 @@
       $("#searchRow").classList.add("hidden");
       renderFeed();
     });
+
+    $("#meWorkerSave").addEventListener("click", saveWorker);
   }
 
   /* ---------- iOS 手势:详情页任意位置右滑返回 ---------- */
