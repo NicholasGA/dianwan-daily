@@ -792,6 +792,64 @@ body {
 .src-link span { font-weight: 500; font-size: 0.74rem; opacity: 0.7; }
 .src-link:active { opacity: 0.85; }
 
+/* AI 主编简报卡 */
+.digest {
+  background: linear-gradient(165deg, #1C1A2E, var(--surface-1));
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  padding: 16px 16px 8px;
+  margin: 4px 0 22px;
+}
+.digest-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.digest-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
+.digest-date { font-size: 0.72rem; color: var(--ink-4); font-variant-numeric: tabular-nums; }
+.digest-overview {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--ink-2);
+  margin-bottom: 14px;
+}
+.digest-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--ink-4);
+  padding: 8px 0 4px;
+  border-top: 1px solid var(--hairline);
+}
+.digest-pick {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--hairline);
+  padding: 11px 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+.digest-pick:last-child { border-bottom: none; }
+.digest-pick b {
+  display: block;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.digest-pick span {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--ink-3);
+  line-height: 1.5;
+  margin-top: 3px;
+}
+.digest-pick:active { opacity: 0.6; }
+
 /* 各家怎么说(多源同报聚合) */
 .src-panel {
   margin-top: 24px;

@@ -22,6 +22,8 @@ jobs:
           node-version: 24
       - name: 抓取新闻生成 news.json
         run: node scripts/fetch-news.mjs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }} # 配置后启用 AI 主编简报;未配置则跳过
       - name: 有变化则提交
         run: |
           git config user.name "dianwan-news-bot"

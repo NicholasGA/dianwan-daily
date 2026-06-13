@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v30 · 2026-06-13"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v31 · 2026-06-14"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -254,6 +254,7 @@
       featuredIds,
       topicIds,
       hotCount: hotItems.length,
+      digest: remote.digest && Array.isArray(remote.digest.picks) && remote.digest.picks.length ? remote.digest : null,
       news,
       flash,
     };
@@ -421,6 +422,7 @@
       const combined = {
         generatedAt: remote.generatedAt,
         sources: remote.sources || null,
+        digest: remote.digest || null,
         news: combinedNews,
         flash: combinedNews.slice(0, 24).map((n) => ({ ts: n.ts, text: n.title, id: n.id })),
       };
@@ -762,10 +764,38 @@
     toast(v ? "图片代理已启用" : "已清除,恢复默认");
   }
 
+  function resolvePick(p) {
+    return D.news.find(
+      (n) => (n.url && n.url === p.key) || (n.title || "").slice(0, 18) === p.key || n.title === p.title
+    );
+  }
+
+  function renderDigest() {
+    const el = $("#digestCard");
+    const d = D.digest;
+    if (!d || !d.picks || !d.picks.length) {
+      el.innerHTML = "";
+      el.classList.add("hidden");
+      return;
+    }
+    el.classList.remove("hidden");
+    const rows = d.picks
+      .map((p) => {
+        const n = resolvePick(p);
+        return `<button class="digest-pick"${n ? ` data-id="${n.id}"` : ""}><b>${esc(p.title)}</b><span>${esc(p.why)}</span></button>`;
+      })
+      .join("");
+    el.innerHTML =
+      `<div class="digest-head"><span class="digest-tag">✦ AI 主编</span><span class="digest-date">${esc(d.date || "")}</span></div>` +
+      (d.overview ? `<p class="digest-overview">${esc(d.overview)}</p>` : "") +
+      `<div class="digest-label">今天值得读</div>${rows}`;
+  }
+
   function renderAll() {
     renderHero();
     renderFeatured();
     renderChips();
+    renderDigest();
     renderTopics();
     renderFeed();
     renderFlash();

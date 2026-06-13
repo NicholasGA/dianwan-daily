@@ -663,6 +663,77 @@ for (const n of news) {
   await translateBlocks(n.content);
 }
 
+/* ---------- AI 主编简报(Claude,每北京日一次) ---------- */
+
+const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
+const pickKey = (n) => n.url || (n.title || "").slice(0, 18);
+
+async function makeDigest(items, prevDigest) {
+  const today = new Date(Date.now() + 8 * 3600 * 1000).toISOString().slice(0, 10);
+  if (prevDigest && prevDigest.date === today) return prevDigest; // 每天一次,省 token
+  if (!ANTHROPIC_KEY) return prevDigest || null; // 未配置密钥则优雅降级
+  const list = items
+    .slice(0, 100)
+    .map((n) => `[${pickKey(n)}] (${n.source}/${n.category}${n.hot > 1 ? ` 🔥${n.hot}源` : ""}) ${n.title}${n.summary ? " — " + n.summary.slice(0, 50) : ""}`)
+    .join("\n");
+  const system =
+    "你是电玩日报的 AI 主编。读者是一位 AIGC 叙事/世界观创业者,关注游戏行业的结构性信号(行业趋势、技术变革、商业动向、叙事与内容创作方法),而非促销打折类资讯。";
+  const prompt =
+    `下面是今天抓取到的游戏新闻列表,每行格式:[key] (来源/分类) 标题 — 摘要\n\n${list}\n\n` +
+    `请做今天的「主编导读」:\n` +
+    `1. overview:一段不超过 140 字的今日行业风向速览,点出今天的主线。\n` +
+    `2. picks:挑 3-5 条最值得这位创作者读的新闻。每条给 key(必须从上面列表方括号里精确复制)、title(该新闻标题)、why(一句话说明为何对叙事/世界观创业者值得读)。优先结构性信号与行业变化,淡化单纯促销。`;
+  const schema = {
+    type: "object",
+    additionalProperties: false,
+    required: ["overview", "picks"],
+    properties: {
+      overview: { type: "string" },
+      picks: {
+        type: "array",
+        items: {
+          type: "object",
+          additionalProperties: false,
+          required: ["key", "title", "why"],
+          properties: { key: { type: "string" }, title: { type: "string" }, why: { type: "string" } },
+        },
+      },
+    },
+  };
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-api-key": ANTHROPIC_KEY, "anthropic-version": "2023-06-01" },
+      body: JSON.stringify({
+        model: "claude-opus-4-8",
+        max_tokens: 3000,
+        thinking: { type: "adaptive" },
+        output_config: { format: { type: "json_schema", schema } },
+        system,
+        messages: [{ role: "user", content: prompt }],
+      }),
+      signal: AbortSignal.timeout(120000),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status} ${(await res.text()).slice(0, 160)}`);
+    const j = await res.json();
+    const text = (j.content || []).find((b) => b.type === "text")?.text;
+    const parsed = JSON.parse(text);
+    const picks = (parsed.picks || []).filter((p) => p && p.key && p.title && p.why).slice(0, 5);
+    if (!picks.length) throw new Error("无有效 picks");
+    console.log(`主编简报:${picks.length} 条精选`);
+    return { date: today, generatedAt: new Date().toISOString(), overview: parsed.overview || "", picks };
+  } catch (err) {
+    console.error(`主编简报失败(保留旧版): ${err.message}`);
+    return prevDigest || null;
+  }
+}
+
+let prevDigest = null;
+try {
+  prevDigest = JSON.parse(readFileSync(new URL("../news.json", import.meta.url), "utf8")).digest || null;
+} catch {}
+const digest = await makeDigest(news, prevDigest);
+
 const flash = news.slice(0, 24).map((n) => ({ ts: n.ts, text: n.title, id: n.id }));
 
 // news.json 瘦身:仅最新 30 条内联全文(最常被点开),
@@ -673,7 +744,7 @@ const sources = Object.fromEntries(FEEDS.map((f, i) => [f.source, (collected[i] 
 
 writeFileSync(
   new URL("../news.json", import.meta.url),
-  JSON.stringify({ generatedAt: new Date().toISOString(), sources, news, flash }),
+  JSON.stringify({ generatedAt: new Date().toISOString(), sources, digest, news, flash }),
   "utf8"
 );
 console.log(`news.json 已生成:${news.length} 条新闻(全文内联)`);
