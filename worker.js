@@ -1,14 +1,19 @@
 /* ============================================================
-   电玩日报 — 通用代理 Cloudflare Worker
-   作用:为 App 代理图片 + RSS/列表页文本,统一解决三类问题:
-   - 绕过源站防盗链(不转发 Referer)
-   - http→https(消除混合内容拦截)
-   - 国外源/被墙源由 Worker 在边缘回源 + 缓存
-   既是图片兜底链的首选代理,也是「即时刷新」抓取各源列表的可靠通道。
+   电玩日报 — 通用代理 + 定时触发 Cloudflare Worker
 
-   部署:见 CLOUDFLARE-SETUP.md(浏览器内复制粘贴,5 分钟,免费,无需命令行)
-   用法:https://<你的worker>.workers.dev/?url=<目标URL>
+   两个职责:
+   1) fetch:代理图片 + RSS/列表页文本(绕防盗链 / http→https / 边缘缓存),
+      既是图片兜底链首选代理,也是「即时刷新」抓各源列表的可靠通道。
+   2) scheduled(Cron Trigger):用 Cloudflare 可靠的钟,定时调用 GitHub
+      workflow_dispatch 接口触发抓取流水线 —— workflow_dispatch 不受 GitHub
+      schedule 的限流影响,从而把"标称 15 分钟实际 1-3.5 小时"修成真 15 分钟。
+
+   部署 + 配置 Cron 与密钥:见 CLOUDFLARE-SETUP.md
    ============================================================ */
+
+// 触发的 GitHub 仓库与工作流(可用 Worker 环境变量 GH_REPO / GH_WORKFLOW 覆盖)
+const DEFAULT_REPO = "NicholasGA/dianwan-daily";
+const DEFAULT_WORKFLOW = "update-news.yml";
 
 // 只允许这些新闻相关主机,避免变成开放代理被滥用
 const ALLOW = [
@@ -91,5 +96,34 @@ export default {
     const resp = new Response(upstream.body, { status: 200, headers });
     ctx.waitUntil(cache.put(cacheKey, resp.clone()));
     return resp;
+  },
+
+  // Cron Trigger:到点用可靠的 Cloudflare 钟触发 GitHub 抓取流水线
+  async scheduled(event, env, ctx) {
+    if (!env.GH_PAT) {
+      console.log("未配置 GH_PAT,跳过触发(仅图片/RSS 代理仍可用)");
+      return;
+    }
+    const repo = env.GH_REPO || DEFAULT_REPO;
+    const workflow = env.GH_WORKFLOW || DEFAULT_WORKFLOW;
+    const url = `https://api.github.com/repos/${repo}/actions/workflows/${workflow}/dispatches`;
+    ctx.waitUntil(
+      fetch(url, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${env.GH_PAT}`,
+          Accept: "application/vnd.github+json",
+          "X-GitHub-Api-Version": "2022-11-28",
+          "User-Agent": "dianwan-cron-worker",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ref: "main" }),
+      })
+        .then(async (r) => {
+          // 成功返回 204 No Content
+          console.log(`dispatch ${workflow}: ${r.status}${r.ok ? "" : " " + (await r.text()).slice(0, 160)}`);
+        })
+        .catch((e) => console.error("dispatch failed: " + e.message))
+    );
   },
 };
