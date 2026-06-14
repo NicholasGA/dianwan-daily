@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v31 · 2026-06-14"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v32 · 2026-06-14"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -39,6 +39,145 @@
     },
   };
 
+  /* ---------- 离线归档(IndexedDB):容量远超 localStorage 5MB,断网可秒开+翻历史 ----------
+     只存 JSON/文字 + 图片 URL,不存图片二进制(图片由 SW 尽力缓存)。
+     设计要点:每个操作开全新事务且绝不跨 await 持有(规避 iOS WKWebView 自动关闭事务);
+     open 三秒看门狗超时即降级为 null;safeIdb 把任何失败/超时折叠成 undefined(≡未命中),
+     于是各读取点已有的"未命中就走网络"分支天然成为兜底,无需新增判断。 */
+  const HAS_IDB = (() => { try { return "indexedDB" in self && indexedDB != null; } catch { return false; } })();
+  const IDB_NAME = "dianwan";
+  const IDB_VERSION = 1;
+  const SCHEMA = 1; // 数据形状版本:仅在 item 结构发生不兼容变更时才 +1(与 APP_BUILD 解耦)
+
+  const idb = (() => {
+    let dbPromise = null;
+    function openDB() {
+      return new Promise((resolve) => {
+        let settled = false;
+        const done = (v) => { if (!settled) { settled = true; resolve(v); } };
+        const watchdog = setTimeout(() => done(null), 3000); // iOS 偶发 open 卡死/空库
+        let req;
+        try { req = indexedDB.open(IDB_NAME, IDB_VERSION); }
+        catch { clearTimeout(watchdog); return done(null); }
+        req.onupgradeneeded = (e) => {
+          const db = req.result;
+          switch (e.oldVersion) {
+            case 0:
+              if (!db.objectStoreNames.contains("snapshot")) db.createObjectStore("snapshot");
+              if (!db.objectStoreNames.contains("days")) db.createObjectStore("days", { keyPath: "date" });
+              if (!db.objectStoreNames.contains("meta")) db.createObjectStore("meta");
+            // 后续版本在此向下贯穿追加迁移
+          }
+        };
+        req.onsuccess = () => { clearTimeout(watchdog); done(req.result); };
+        req.onerror = () => { clearTimeout(watchdog); done(null); };
+        req.onblocked = () => { clearTimeout(watchdog); done(null); };
+      });
+    }
+    function open() {
+      if (!HAS_IDB) return Promise.resolve(null);
+      if (!dbPromise) dbPromise = openDB().catch(() => null);
+      return dbPromise;
+    }
+    // 一个逻辑操作 = 一个全新事务;请求同步发出,在 oncomplete 时取 req.result,绝不跨 await
+    function run(stores, mode, fn) {
+      return open().then((db) => {
+        if (!db) return undefined;
+        return new Promise((resolve, reject) => {
+          let tx;
+          try { tx = db.transaction(stores, mode); }
+          catch (e) { return reject(e); }
+          let out;
+          try {
+            const req = fn(tx);
+            // 用 addEventListener 而非 .onsuccess,以免覆盖 fn 自己设的 onsuccess(如 pruneDays 的删除逻辑)
+            if (req) req.addEventListener("success", () => { out = req.result; });
+          } catch (e) {
+            try { tx.abort(); } catch {}
+            return reject(e);
+          }
+          tx.oncomplete = () => resolve(out);
+          tx.onabort = () => reject(tx.error || new Error("idb abort"));
+          tx.onerror = () => reject(tx.error || new Error("idb error"));
+        });
+      });
+    }
+    return {
+      open,
+      get: (s, k) => run(s, "readonly", (tx) => tx.objectStore(s).get(k)),
+      keys: (s) => run(s, "readonly", (tx) => tx.objectStore(s).getAllKeys()),
+      put: (s, v, k) => run(s, "readwrite", (tx) => (k === undefined ? tx.objectStore(s).put(v) : tx.objectStore(s).put(v, k))),
+      clearAll: () => run(["snapshot", "days", "meta"], "readwrite", (tx) => {
+        tx.objectStore("snapshot").clear();
+        tx.objectStore("days").clear();
+        tx.objectStore("meta").clear();
+      }),
+      // LRU 修剪:全量读出(天数有上限,记录小),按 lastAccess 升序删到满足上限
+      pruneDays: (maxDays, softBytes) => run("days", "readwrite", (tx) => {
+        const store = tx.objectStore("days");
+        const all = store.getAll();
+        all.onsuccess = () => {
+          const recs = all.result || [];
+          let total = recs.reduce((s, r) => s + (r.bytes || 0), 0);
+          let count = recs.length;
+          if (count <= maxDays && total <= softBytes) return;
+          const order = recs.slice().sort((a, b) => (a.lastAccess || 0) - (b.lastAccess || 0));
+          for (const r of order) {
+            if (count <= maxDays && total <= softBytes) break;
+            store.delete(r.date);
+            count--;
+            total -= r.bytes || 0;
+          }
+        };
+        return all;
+      }),
+    };
+  })();
+
+  // 把任意 IDB 操作的失败/超时折叠成 undefined(与"键不存在"无法区分,于是兜底无需新分支)
+  // 超时设 3.5s,长于 open 的 3s 看门狗,避免首个操作在 open 即将就绪前就误超时
+  const safeIdb = (p) =>
+    Promise.race([Promise.resolve(p), new Promise((r) => setTimeout(() => r(undefined), 3500))]).catch(() => undefined);
+
+  // 瘦身镜像:剥掉每条 news 的 content(大头),其余字段全留 → localStorage 秒开且不撑配额
+  function slimSnapshot(combined) {
+    return {
+      generatedAt: combined.generatedAt,
+      sources: combined.sources || null,
+      digest: combined.digest || null,
+      news: (combined.news || []).map((n) => { const { content, ...rest } = n; return rest; }),
+      flash: combined.flash || [],
+    };
+  }
+  const approxBytes = (items) => { try { return JSON.stringify(items).length; } catch { return 0; } };
+  const snapshotHasContent = (snap) => !!(snap && Array.isArray(snap.news) && snap.news.some((n) => n && n.content));
+
+  const IDB_MAX_DAYS = 40;                 // > 流水线 30 天保留:被淘汰的天仍可重新下载
+  const IDB_SOFT_BYTES = 40 * 1024 * 1024; // 软上限,主要靠天数封顶
+  const HYDRATE_MAX_DAYS = 10;             // 启动只预载最近 N 天进内存,更早的随下滑按需从 IDB 取
+  let prunedThisSession = false;
+  let lastSnapshotGen = null;              // 上次写入 IDB 快照对应的 generatedAt,数据没变就不重复写 1.2MB
+  function maybePrune() {
+    if (!HAS_IDB || prunedThisSession) return;
+    prunedThisSession = true; // 每会话最多修剪一次
+    safeIdb(idb.pruneDays(IDB_MAX_DAYS, IDB_SOFT_BYTES));
+  }
+  const touchedDays = new Set();
+  function touchDay(date) { // 更新 lastAccess(每会话每天一次,避免下滑时写抖动)
+    if (!HAS_IDB || touchedDays.has(date)) return;
+    touchedDays.add(date);
+    safeIdb(idb.get("days", date)).then((rec) => { if (rec) safeIdb(idb.put("days", { ...rec, lastAccess: Date.now() })); });
+  }
+  async function requestPersistence() {
+    try {
+      if (navigator.storage && navigator.storage.persist) {
+        const already = navigator.storage.persisted ? await navigator.storage.persisted() : false;
+        const granted = already || (await navigator.storage.persist());
+        safeIdb(idb.put("meta", !!granted, "persistGranted"));
+      }
+    } catch {}
+  }
+
   const SEEN_KEY = "dianwanSeen";   // 手动刷新时已见过的新闻(算"新增"用)
   const CACHE_KEY = "dianwanCache"; // 上次成功拉取的数据(秒开用)
   const READ_KEY = "dianwanRead";   // 已读
@@ -54,6 +193,7 @@
   /* ---------- 状态 ---------- */
 
   let D = window.GameNewsData; // 当前数据(缓存/演示兜底,刷新后替换)
+  let renderGen = 0;           // 单调令牌:每次设置 D 都 +1,网络刷新永远盖过在途的 IDB 注水
   let activeCategory = "全部";
   let searchQuery = "";
   let streakDays = 1;
@@ -426,9 +566,17 @@
         news: combinedNews,
         flash: combinedNews.slice(0, 24).map((n) => ({ ts: n.ts, text: n.title, id: n.id })),
       };
+      renderGen++; // 网络数据优先:让任何在途的 IDB 启动注水自动作废
       D = normalizeRemote(combined);
       renderAll();
-      store.set(CACHE_KEY, combined); // 下次启动秒开
+      store.set(CACHE_KEY, slimSnapshot(combined)); // 瘦身镜像 → localStorage,秒开且不撑 5MB 配额
+      // 全量快照(含正文)落 IndexedDB,断网时供秒开;失败被 safeIdb 吞掉,不影响渲染。
+      // 仅当流水线数据真的更新(generatedAt 变化)才写 ~1.2MB,避免前台切换静默刷新时反复写
+      if (combined.generatedAt && combined.generatedAt !== lastSnapshotGen) {
+        lastSnapshotGen = combined.generatedAt;
+        safeIdb(idb.put("snapshot", { ...combined, savedAt: Date.now(), schemaTag: SCHEMA }, "current"));
+        safeIdb(idb.put("meta", combined.generatedAt, "windowGeneratedAt"));
+      }
 
       // 正在阅读的文章若在新数据里有了全文,就地补全
       if (currentDetailKey && !$("#detail").classList.contains("hidden")) {
@@ -748,6 +896,27 @@
     if (wi) wi.value = WORKER_PROXY;
     const ws = $("#meWorkerState");
     if (ws) ws.textContent = WORKER_PROXY ? "已启用自建图片代理" : "未配置(默认用公共代理)";
+
+    const cs = $("#meCacheState");
+    if (cs) {
+      if (!HAS_IDB) {
+        cs.textContent = "离线归档不可用(浏览器限制),仍可在线使用";
+      } else {
+        cs.textContent = "统计中…";
+        (async () => {
+          const dates = (await safeIdb(idb.keys("days"))) || [];
+          const persisted = await safeIdb(idb.get("meta", "persistGranted"));
+          let sizeStr = "";
+          try {
+            if (navigator.storage && navigator.storage.estimate) {
+              const est = await navigator.storage.estimate();
+              if (est && est.usage) sizeStr = ` · 约 ${(est.usage / 1048576).toFixed(1)} MB`;
+            }
+          } catch {}
+          cs.textContent = `已离线缓存 ${dates.length} 天历史${sizeStr}${persisted ? " · 持久化已开启" : ""}`;
+        })();
+      }
+    }
   }
 
   function saveWorker() {
@@ -818,14 +987,17 @@
   async function loadMoreHistory() {
     if (historyLoading) return;
     historyLoading = true;
+    let errored = false;
     const more = $("#feedMore");
     try {
       if (archiveDates === null) {
         try {
           const r = await fetch("archive/index.json", { cache: "no-store" });
           archiveDates = r.ok ? await r.json() : [];
+          if (archiveDates.length) safeIdb(idb.put("meta", archiveDates, "archiveIndex")); // 供离线枚举
         } catch {
-          archiveDates = [];
+          // 离线:用 IDB 里缓存过的归档索引兜底
+          archiveDates = (await safeIdb(idb.get("meta", "archiveIndex"))) || [];
         }
       }
       while (true) {
@@ -835,12 +1007,25 @@
           return;
         }
         more.textContent = "加载更早的新闻…";
-        const r = await fetch(`archive/${next}.json`);
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        const day = await r.json();
+        let dayItems = null;
+        const cachedDay = await safeIdb(idb.get("days", next));
+        if (cachedDay && Array.isArray(cachedDay.items)) {
+          dayItems = cachedDay.items; // 命中 IDB:离线可用 + 免重复下载
+          touchDay(next);
+        } else if (!navigator.onLine) {
+          loadedDates.add(next); // 离线且未缓存该天:跳过,避免空转重试
+          continue;
+        } else {
+          const r = await fetch(`archive/${next}.json`);
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          const day = await r.json();
+          dayItems = day.items || [];
+          safeIdb(idb.put("days", { date: next, items: dayItems, savedAt: Date.now(), lastAccess: Date.now(), bytes: approxBytes(dayItems) }));
+          maybePrune();
+        }
         loadedDates.add(next);
         const windowKeys = new Set(D.news.map(itemKey));
-        const items = (day.items || []).map((n) => normalizeItem(n, ++historyIdSeq));
+        const items = dayItems.map((n) => normalizeItem(n, ++historyIdSeq));
         history.push({ date: next, items });
         if (items.some((n) => !windowKeys.has(itemKey(n)))) {
           renderFeedKeepAnchor();
@@ -850,9 +1035,11 @@
       }
     } catch {
       more.textContent = "加载失败,继续下滑重试";
+      errored = true; // 出错就不自动重试,改由用户真正再下滑(IntersectionObserver)触发,避免空转死循环
     } finally {
       historyLoading = false;
     }
+    if (errored) return;
     requestAnimationFrame(() => {
       const rect = more.getBoundingClientRect();
       if (rect.top < window.innerHeight + 400 && (archiveDates || []).some((d) => !loadedDates.has(d))) {
@@ -921,13 +1108,24 @@
     if (!dayFileCache.has(day)) {
       dayFileCache.set(
         day,
-        fetch(`archive/${day}.json`, { signal: AbortSignal.timeout(15000) })
-          .then((r) => (r.ok ? r.json() : { items: [] }))
-          .then((j) => j.items || [])
-          .catch(() => {
+        (async () => {
+          // 先读 IDB(离线可用 + 免重复下载),命中即返回当天 items
+          const cached = await safeIdb(idb.get("days", day));
+          if (cached && Array.isArray(cached.items) && cached.items.length) {
+            touchDay(day);
+            return cached.items;
+          }
+          try {
+            const r = await fetch(`archive/${day}.json`, { signal: AbortSignal.timeout(15000) });
+            if (!r.ok) { dayFileCache.delete(day); return []; }
+            const items = (await r.json()).items || [];
+            if (items.length) safeIdb(idb.put("days", { date: day, items, savedAt: Date.now(), lastAccess: Date.now(), bytes: approxBytes(items) }));
+            return items;
+          } catch {
             dayFileCache.delete(day); // 失败不缓存,允许重试
             return [];
-          })
+          }
+        })()
       );
     }
     return dayFileCache.get(day).then((items) => {
@@ -1234,6 +1432,21 @@
     });
 
     $("#meWorkerSave").addEventListener("click", saveWorker);
+
+    const cc = $("#meCacheClear");
+    if (cc)
+      cc.addEventListener("click", async () => {
+        await safeIdb(idb.clearAll());
+        store.set(CACHE_KEY, null); // 清掉瘦身镜像(下次启动回到演示兜底直至刷新)
+        closeDetail(false); // 关掉可能开着的详情页,避免显示已清数据
+        history.length = 0; // 丢掉内存里的历史,避免显示已清的数据
+        loadedDates.clear();
+        touchedDays.clear();
+        dayFileCache.clear();
+        renderFeed(); // 重渲信息流,移除已清的历史条目
+        toast("离线缓存已清除");
+        renderMe();
+      });
   }
 
   /* ---------- iOS 手势:详情页任意位置右滑返回 ---------- */
@@ -1458,11 +1671,77 @@
     } catch {}
   }
 
+  /* ---------- 启动后异步注水:从 IndexedDB 补全正文 + 预载离线历史(绝不阻塞/清空首屏) ---------- */
+
+  async function hydrateFromIdb() {
+    if (!HAS_IDB) return;
+    // gen 记下本次注水代次;refresh 成功时会 ++renderGen,使下面的 gen===renderGen 失败 → 网络数据优先。
+    // 真正防"旧盖新"的是 snap.generatedAt >= D.generatedAt 这条时间戳护栏,gen 只是省掉无谓的重渲。
+    const gen = ++renderGen;
+    const db = await idb.open();
+    if (!db) return; // 纯 localStorage 模式(open 失败/超时)
+
+    // 一次性迁移:旧版把完整快照(含正文)塞 localStorage 撑配额;搬进 IDB 后镜像瘦身。
+    // 加 gen===renderGen:若期间已有 refresh 落地,它已写了更新的快照,迁移就别拿旧的覆盖
+    try {
+      const existing = await safeIdb(idb.get("snapshot", "current"));
+      const lsCache = store.get(CACHE_KEY, null);
+      if (!existing && lsCache && snapshotHasContent(lsCache) && gen === renderGen) {
+        safeIdb(idb.put("snapshot", { ...lsCache, savedAt: Date.now(), schemaTag: SCHEMA }, "current"));
+        store.set(CACHE_KEY, slimSnapshot(lsCache));
+      }
+    } catch {}
+
+    // 1) 快照升级:仅当期间无 refresh 抢先(网络优先)、形状兼容、且比瘦身镜像多带正文
+    const snap = await safeIdb(idb.get("snapshot", "current"));
+    if (
+      snap && snap.news && snap.news.length &&
+      gen === renderGen &&
+      (snap.schemaTag == null || snap.schemaTag === SCHEMA) &&
+      snapshotHasContent(snap) &&
+      (!D.generatedAt || !snap.generatedAt || snap.generatedAt >= D.generatedAt)
+    ) {
+      try {
+        D = normalizeRemote(snap);
+        renderAll();
+        // 注水前若已打开某篇详情(那时还只有摘要),正文到了就地补全
+        if (currentDetailId != null && !$("#detail").classList.contains("hidden")) {
+          const upgraded = findNews(currentDetailId);
+          if (upgraded && upgraded.blocks) renderDetailBody(upgraded);
+        }
+      } catch {}
+    }
+
+    // 2) 预载最近 N 天历史 → 离线时间线即时可见,且跨会话复用;更早的天随下滑按需从 IDB 取
+    const dates = (await safeIdb(idb.keys("days"))) || [];
+    if (dates.length) {
+      let added = false;
+      for (const date of [...dates].sort().reverse().slice(0, HYDRATE_MAX_DAYS)) {
+        if (loadedDates.has(date)) continue;
+        const rec = await safeIdb(idb.get("days", date));
+        if (!rec || !Array.isArray(rec.items) || !rec.items.length) continue;
+        history.push({ date, items: rec.items.map((n) => normalizeItem(n, ++historyIdSeq)) });
+        loadedDates.add(date);
+        touchDay(date); // 本会话访问过 → 刷新 lastAccess,LRU 不会把刚看的天当冷数据淘汰
+        added = true;
+      }
+      // 不加 gen 护栏:renderFeed 把 window∪history 按 itemKey 去重再渲,无论 refresh 是否抢先都一致;
+      // 反而加护栏会在"缓存天数≤预载上限且 refresh 已落地"时让预载历史这一会话不显示
+      if (added) renderFeedKeepAnchor();
+    }
+
+    // 3) 离线也能枚举有哪些归档天
+    if (archiveDates === null) {
+      const idx = await safeIdb(idb.get("meta", "archiveIndex"));
+      if (Array.isArray(idx)) archiveDates = idx;
+    }
+  }
+
   /* ---------- 启动 ---------- */
 
   streakDays = updateVisits();
 
-  // 本地缓存秒开(消除演示数据闪屏)
+  // 本地缓存秒开(消除演示数据闪屏)。迁移后 CACHE_KEY 是瘦身镜像(无正文),正文由 IDB 注水补全
   const cached = store.get(CACHE_KEY, null);
   if (cached && cached.news && cached.news.length) {
     try {
@@ -1475,6 +1754,9 @@
   bindSwipeBack();
   bindPullRefresh();
   bindCategorySwipe();
+
+  hydrateFromIdb(); // 异步、fire-and-forget:只会补充不会清空,首屏秒开不受影响
+  requestPersistence();
   refresh(true);
 
   new IntersectionObserver(
