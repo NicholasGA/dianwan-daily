@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v32 · 2026-06-14"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v33 · 2026-06-17"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -194,6 +194,7 @@
 
   let D = window.GameNewsData; // 当前数据(缓存/演示兜底,刷新后替换)
   let renderGen = 0;           // 单调令牌:每次设置 D 都 +1,网络刷新永远盖过在途的 IDB 注水
+  let threadIndexByKey = new Map(); // itemKey → 事件脉络 VM;仅在数据变化时由 rebuildThreads 重建
   let activeCategory = "全部";
   let searchQuery = "";
   let streakDays = 1;
@@ -568,6 +569,7 @@
       };
       renderGen++; // 网络数据优先:让任何在途的 IDB 启动注水自动作废
       D = normalizeRemote(combined);
+      rebuildThreads(); // 数据变化点重算事件脉络(在 renderAll 之前,使徽章/脉络面板即时正确)
       renderAll();
       store.set(CACHE_KEY, slimSnapshot(combined)); // 瘦身镜像 → localStorage,秒开且不撑 5MB 配额
       // 全量快照(含正文)落 IndexedDB,断网时供秒开;失败被 safeIdb 吞掉,不影响渲染。
@@ -698,12 +700,20 @@
       .join("");
   }
 
+  // 事件脉络徽章:只挂在脉络最新一条上(headKey),且不凑成第三枚徽章
+  function threadBadge(n) {
+    const t = threadIndexByKey.get(itemKey(n));
+    if (!t || t.headKey !== itemKey(n)) return "";
+    if (n.official && n.hot > 1) return ""; // 已有 官方+🔥 两枚,脉络让位(详情页仍展示)
+    return `<span class="thread-badge">脉络</span>`;
+  }
+
   function newsItemHtml(n) {
     const read = readSet.has(itemKey(n)) ? " is-read" : "";
     return `
       <article class="news-item${read}" data-id="${n.id}">
         <div class="news-main">
-          <span class="news-cat">${esc(n.category)}</span>${n.official ? `<span class="off-badge">官方</span>` : ""}${n.hot > 1 ? `<span class="hot-badge">🔥 ${n.hot} 源同报</span>` : ""}
+          <span class="news-cat">${esc(n.category)}</span>${n.official ? `<span class="off-badge">官方</span>` : ""}${n.hot > 1 ? `<span class="hot-badge">🔥 ${n.hot} 源同报</span>` : ""}${threadBadge(n)}
           <h4 class="news-title">${esc(n.title)}</h4>
           <div class="news-meta">
             <span>${esc(n.source)}</span><span>${esc(n.time)}</span>
@@ -777,6 +787,136 @@
     const sb = normT(b.title).replace(STORY_BOILER, "");
     if (sa.length < 4 || sb.length < 4) return false;
     return overlapOf(sa, sb) >= 0.6;
+  }
+
+  /* ---------- 事件脉络:把同一主体(《》游戏名)的多源连续报道串成时间线 ----------
+     纯前端,仅在数据变化时重算(刷新/翻历史/注水/清缓存),绝不在滚动/筛选时跑。
+     只串"有命名实体 + 跨源(≥2 家) + 多进展(≥2 条) + 14 天内"的发展中事件,
+     无实体/单源/陈旧的一概不串(否则就是噪声)。横向同刻同报已由「各家怎么说」覆盖。 */
+  const THREAD_SPAN = 14 * 864e5;   // 簇首尾跨度硬上限:14 天(防贪心串成长尾杂烩)
+  const MAX_THREAD_ITEMS = 12;      // 资格阶段每簇最多保留的进展数
+  const THREAD_DISPLAY = 7;         // 详情页时间线最多显示
+  // 实体键:只剥版本/边缘词(remake/hd/重制版…),保留结尾数字 —— 数字常是编号系列的身份
+  // (最终幻想7 ≠ 最终幻想16;但 最终幻想7重制版 == 最终幻想7)。宁可少合并,不可错合并不同正作。
+  const threadKeyOf = (name) => normNameOf(name).trim();
+
+  function rebuildThreads() {
+    threadIndexByKey = new Map();
+    if (!D || !D.news) return;
+    // 1) 按 itemKey 去重(窗口副本优先,带 blocks),按 ts 降序
+    const seen = new Set();
+    const items = [];
+    for (const n of [...D.news, ...history.flatMap((g) => g.items)]) {
+      const k = itemKey(n);
+      if (seen.has(k)) continue;
+      seen.add(k);
+      items.push(n);
+    }
+    items.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+
+    // 2) 实体分桶 + 贪心成簇(新条须在簇内最新一条的 14 天跨度内,否则另起一簇)
+    const clustersByEk = new Map();
+    for (const n of items) {
+      const ents = [...new Set(gameNamesOf(n.title).map(threadKeyOf).filter((s) => s.length >= 2))].sort();
+      if (!ents.length) continue; // 无命名实体:不串脉络
+      const ek = ents.join("|");
+      const list = clustersByEk.get(ek);
+      let c = list && list.find((cand) => (cand.latestTs - (n.ts || 0)) <= THREAD_SPAN);
+      if (!c) {
+        c = { items: [], latestTs: n.ts || 0 };
+        if (list) list.push(c);
+        else clustersByEk.set(ek, [c]);
+      }
+      c.items.push(n); // items 已降序,故 latestTs 恒为簇首条
+    }
+
+    const now = Date.now();
+    for (const [, clusters] of clustersByEk) {
+      const qualified = [];
+      for (const c of clusters) {
+        const beats = collapseBeats(c.items); // 同日同事去重 → 按 ts 降序的"进展"
+        const sources = new Set();
+        beats.forEach((b) => b.sources.forEach((s) => sources.add(s)));
+        const span = (beats[0]?.ts || 0) - (beats[beats.length - 1]?.ts || 0);
+        const recent = now - (beats[0]?.ts || 0) <= THREAD_SPAN;
+        const distinctDays = new Set(beats.map((b) => b.day)).size;
+        // 资格:≥2 进展 + ≥2 来源 + 跨≥2 天(脉络须随时间演进,同刻多家同报归「各家怎么说」)
+        //       + 跨度≤14 天 + 14 天内仍活跃
+        if (beats.length >= 2 && sources.size >= 2 && distinctDays >= 2 && span <= THREAD_SPAN && recent) {
+          qualified.push({
+            beats: beats.slice(0, MAX_THREAD_ITEMS),
+            latestTs: beats[0].ts,
+            official: beats.some((b) => b.official),
+          });
+        }
+      }
+      // 同实体最多留 2 条最近脉络(有官方公告时放宽到 3),避免常青游戏刷屏
+      qualified.sort((a, b) => b.latestTs - a.latestTs);
+      const cap = qualified.some((q) => q.official) ? 3 : 2;
+      for (const thread of qualified.slice(0, cap)) {
+        const vm = {
+          total: thread.beats.length,
+          headKey: thread.beats[0].key, // 最新一条:信息流徽章只挂在它上面,避免同一脉络重复刷屏
+          beats: thread.beats.map((b) => ({
+            key: b.key,
+            title: b.title,
+            source: b.source,
+            ts: b.ts,
+            day: b.day,
+            sourceCount: b.sources.size,
+          })),
+        };
+        for (const b of vm.beats) if (!threadIndexByKey.has(b.key)) threadIndexByKey.set(b.key, vm);
+      }
+    }
+  }
+
+  // 簇内同日同事件合并为一条"进展"(复用 sameStoryClient),来源并集计入 sources;不改原对象
+  function collapseBeats(clusterItems) {
+    const beats = [];
+    for (const n of clusterItems) {
+      const day = dayKeyOf(n.ts || 0);
+      const nt = normT(n.title);
+      let merged = null;
+      for (const b of beats) {
+        // 跨任意天:标题归一后相同 = 同一条被重复报道,合并(保留更新的,即已在 beats 里的)
+        // 同一天:标题不同但同事件,也并为一条
+        if (b.nt === nt || (b.day === day && sameStoryClient(b.rep, n))) { merged = b; break; }
+      }
+      const extra = Array.isArray(n.hotSources) ? n.hotSources : [];
+      if (merged) {
+        merged.sources.add(n.source);
+        extra.forEach((s) => merged.sources.add(s));
+      } else {
+        const sources = new Set([n.source]);
+        extra.forEach((s) => sources.add(s));
+        beats.push({ key: itemKey(n), rep: n, title: n.title, nt, source: n.source, ts: n.ts || 0, day, sources, official: !!n.official });
+      }
+    }
+    return beats; // ts 降序(clusterItems 已降序)
+  }
+
+  // 详情页事件脉络面板(复用 .src-panel/.src-row 外壳)
+  function renderDetailThread(n) {
+    const el = $("#detailThread");
+    if (!el) return;
+    const thread = n ? threadIndexByKey.get(itemKey(n)) : null;
+    if (!thread || thread.total < 2) { el.innerHTML = ""; return; }
+    const curKey = itemKey(n);
+    const rows = thread.beats
+      .slice(0, THREAD_DISPLAY)
+      .map((b) => {
+        const dayLabel = formatDay(b.day).replace(/ · 周.$/, "");
+        // 来源作为正文后的浅色内联补充:多源时标"· N 源"(佐证强度),单源标来源名;不占独立列以免窄屏挤压
+        const srcSuffix = b.sourceCount > 1 ? `<span class="src-meta"> · ${b.sourceCount} 源</span>` : "";
+        const inner = `<span class="src-name">${esc(dayLabel)}</span><span class="src-t">${esc(b.title)}${srcSuffix}</span>`;
+        return b.key === curKey
+          ? `<div class="src-row src-row-cur">${inner}</div>`
+          : `<a class="src-row" data-key="${esc(b.key)}">${inner}</a>`;
+      })
+      .join("");
+    const more = thread.total > THREAD_DISPLAY ? `<div class="src-row thread-more">…更早 ${thread.total - THREAD_DISPLAY} 条</div>` : "";
+    el.innerHTML = `<div class="src-panel thread-panel"><div class="src-panel-h">事件脉络 · ${thread.total} 条进展</div>${rows}${more}</div>`;
   }
 
   // 窗口 + 已加载归档合并成一条连续时间长河(去重,按时间倒序,按天分隔)
@@ -1028,6 +1168,7 @@
         const items = dayItems.map((n) => normalizeItem(n, ++historyIdSeq));
         history.push({ date: next, items });
         if (items.some((n) => !windowKeys.has(itemKey(n)))) {
+          rebuildThreads(); // 历史增长 → 脉络可能新增进展
           renderFeedKeepAnchor();
           more.textContent = "继续下滑加载更早";
           break;
@@ -1193,6 +1334,7 @@
           .join("") +
         `</div>`
       : "";
+    renderDetailThread(n); // 事件脉络面板(随 body 一起渲染,覆盖所有重渲路径)
   }
 
   function openDetail(id) {
@@ -1369,6 +1511,15 @@
       if (card && !e.target.closest(".chip")) openDetail(Number(card.dataset.id));
     });
 
+    // 事件脉络的进展行(<a data-key>,无 href,被上面的 body 委托忽略),按 itemKey 解析并优先窗口副本
+    $("#detailThread").addEventListener("click", (e) => {
+      const row = e.target.closest(".src-row[data-key]");
+      if (!row) return;
+      const key = row.dataset.key;
+      const live = D.news.find((x) => itemKey(x) === key) || history.flatMap((g) => g.items).find((x) => itemKey(x) === key);
+      if (live) openDetail(live.id);
+    });
+
     $("#lightbox").addEventListener("click", () => {
       $("#lightbox").classList.add("hidden");
       $("#lightboxImg").src = "";
@@ -1443,6 +1594,7 @@
         loadedDates.clear();
         touchedDays.clear();
         dayFileCache.clear();
+        rebuildThreads(); // 历史已清,脉络随之重算(仅剩窗口数据)
         renderFeed(); // 重渲信息流,移除已清的历史条目
         toast("离线缓存已清除");
         renderMe();
@@ -1703,6 +1855,7 @@
     ) {
       try {
         D = normalizeRemote(snap);
+        rebuildThreads();
         renderAll();
         // 注水前若已打开某篇详情(那时还只有摘要),正文到了就地补全
         if (currentDetailId != null && !$("#detail").classList.contains("hidden")) {
@@ -1727,7 +1880,7 @@
       }
       // 不加 gen 护栏:renderFeed 把 window∪history 按 itemKey 去重再渲,无论 refresh 是否抢先都一致;
       // 反而加护栏会在"缓存天数≤预载上限且 refresh 已落地"时让预载历史这一会话不显示
-      if (added) renderFeedKeepAnchor();
+      if (added) { rebuildThreads(); renderFeedKeepAnchor(); }
     }
 
     // 3) 离线也能枚举有哪些归档天
@@ -1749,6 +1902,7 @@
     } catch {}
   }
 
+  rebuildThreads();
   renderAll();
   bindEvents();
   bindSwipeBack();

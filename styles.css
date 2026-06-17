@@ -417,6 +417,18 @@ body {
   margin: 0 0 6px 6px;
   letter-spacing: 0.04em;
 }
+.thread-badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: transparent;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin: 0 0 6px 6px;
+  letter-spacing: 0.02em;
+}
 .news-title {
   font-size: 0.95rem;
   font-weight: 600;
@@ -887,6 +899,10 @@ body {
 .src-row-cur .src-name { color: var(--gold); }
 .src-row-cur .src-t { color: var(--ink); }
 .src-row:not(.src-row-cur):active { opacity: 0.6; }
+/* 事件脉络:复用 src-panel 外壳;来源数作为标题后的浅色内联补充 */
+.thread-panel .src-meta { font-size: 0.72rem; color: var(--ink-4); white-space: nowrap; }
+.thread-panel .src-row-cur .src-t { font-weight: 600; }
+.thread-more { color: var(--ink-4); font-size: 0.74rem; justify-content: center; }
 
 .next-card {
   display: block;
