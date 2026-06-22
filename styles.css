@@ -1043,3 +1043,46 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ============ 阅读时长 ============ */
+.read-time {
+  font-size: 0.74rem;
+  color: var(--ink-4);
+  letter-spacing: 0.04em;
+  margin: 0 0 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============ 我的:开关行(主题切换等) ============ */
+.me-toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; }
+.me-toggle-label { font-size: 0.88rem; color: var(--ink-2); }
+.seg {
+  display: inline-flex; background: var(--surface-2); border-radius: 999px; padding: 3px; gap: 2px; flex-shrink: 0;
+}
+.seg button {
+  border: none; background: none; color: var(--ink-3); font-family: inherit;
+  font-size: 0.78rem; font-weight: 600; padding: 6px 14px; border-radius: 999px; cursor: pointer;
+}
+.seg button.seg-on { background: var(--gold); color: var(--on-gold); }
+
+/* ============ 浅色主题(曜石的明面)============ */
+:root[data-theme="light"] {
+  --bg-page: #DCD6C7;
+  --bg-app: #F4F1E9;
+  --surface-1: #FBFAF5;
+  --surface-2: #FFFFFF;
+  --surface-3: #E7E2D6;
+  --hairline: #E0DACB;
+  --ink: #1B1813;
+  --ink-2: #46423A;
+  --ink-3: #74716A;
+  --ink-4: #9C988D;
+  --gold: #9A7B3C;
+  --gold-deep: #7E6330;
+  --on-gold: #FFF8EA;
+  color-scheme: light;
+}
+/* 暗色硬编码处在浅色下的修正(其余靠 var 自适应,封面色块刻意保持彩色) */
+:root[data-theme="light"] .digest { background: linear-gradient(165deg, #F0EAD9, var(--surface-1)); }
+:root[data-theme="light"] .src-pill.src-dead { background: #F3DADA; color: #A23B3B; }
+:root[data-theme="light"] .ptr-ready { color: var(--gold-deep); }

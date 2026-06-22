@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v34 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v35 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -184,8 +184,32 @@
   const FAV_KEY = "dianwanFavs";    // 收藏
   const VISIT_KEY = "dianwanVisits";// 打卡日期
   const WORKER_KEY = "dwWorker";    // 用户自建图片代理(Cloudflare Worker)网址
+  const THEME_KEY = "dwTheme";      // 主题:auto | light | dark
 
   let WORKER_PROXY = store.get(WORKER_KEY, "");
+
+  /* ---------- 主题(曜石暗 / 明)---------- */
+  let themePref = store.get(THEME_KEY, "auto");
+  const resolveTheme = (p) =>
+    p === "light" || p === "dark" ? p : (window.matchMedia && matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+  function applyTheme(pref) {
+    const t = resolveTheme(pref);
+    if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+    else document.documentElement.removeAttribute("data-theme");
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", t === "light" ? "#F4F1E9" : "#0E0E11");
+  }
+  applyTheme(themePref); // 尽早应用,避免首屏闪烁
+  // 选「跟随系统」时,系统切换即时跟随
+  if (window.matchMedia) {
+    try { matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => { if (themePref === "auto") applyTheme("auto"); }); } catch {}
+  }
+  function setTheme(pref) {
+    themePref = pref;
+    store.set(THEME_KEY, pref);
+    applyTheme(pref);
+    renderMe();
+  }
 
   const readSet = new Set(store.get(READ_KEY, []));
   const itemKey = (n) => n.url || (n.title || "").slice(0, 24);
@@ -1156,6 +1180,9 @@
         })();
       }
     }
+
+    const seg = $("#themeSeg");
+    if (seg) seg.querySelectorAll("button").forEach((b) => b.classList.toggle("seg-on", b.dataset.themePref === themePref));
   }
 
   function saveWorker() {
@@ -1402,15 +1429,31 @@
 
   /* ---------- 文章详情 ---------- */
 
+  // 阅读时长:中文按 ~350 字/分,英文按 ~200 词/分,取整至少 1 分钟
+  function readMinutes(n) {
+    let cjk = 0, en = 0;
+    const add = (s) => {
+      if (!s) return;
+      cjk += (s.match(/[一-鿿]/g) || []).length;
+      en += (s.match(/[a-zA-Z]+/g) || []).length;
+    };
+    (Array.isArray(n.blocks) ? n.blocks : []).forEach((b) => { if (b.t !== "img") add(b.v); });
+    return Math.max(1, Math.round(cjk / 350 + en / 200));
+  }
+
   function renderDetailBody(n) {
     if (n.blocks) {
-      $("#detailContent").innerHTML = n.blocks
-        .map((b) => {
-          if (b.t === "img") return imgTag("detail-img", b.v, "detail", "");
-          if (b.t === "h") return `<h3 class="detail-h">${esc(b.v)}</h3>`;
-          return `<p>${esc(b.v)}</p>`;
-        })
-        .join("");
+      const imgs = n.blocks.filter((b) => b.t === "img").length;
+      const rt = `<p class="read-time">约 ${readMinutes(n)} 分钟读完${imgs ? ` · ${imgs} 图` : ""}</p>`;
+      $("#detailContent").innerHTML =
+        rt +
+        n.blocks
+          .map((b) => {
+            if (b.t === "img") return imgTag("detail-img", b.v, "detail", "");
+            if (b.t === "h") return `<h3 class="detail-h">${esc(b.v)}</h3>`;
+            return `<p>${esc(b.v)}</p>`;
+          })
+          .join("");
       $("#detailLink").innerHTML = n.url
         ? `<a class="origin-link" href="${esc(n.url)}" target="_blank" rel="noopener">内容整理自 ${esc(n.source)} · 查看原文 ↗</a>`
         : "";
@@ -1439,6 +1482,7 @@
   function openDetail(id) {
     const n = findNews(id);
     if (!n) return;
+    stopSpeak(); // 切换文章先停掉上一篇的朗读
     currentDetailId = id;
     currentDetailKey = itemKey(n);
     const cover = $("#detailCover");
@@ -1504,6 +1548,7 @@
   }
 
   function closeDetail(animate = true) {
+    stopSpeak(); // 关闭详情停掉朗读
     const detail = $("#detail");
     if (!animate) {
       detail.classList.add("hidden");
@@ -1551,20 +1596,114 @@
     if (!$("#view-favs").classList.contains("hidden")) renderFavs();
   }
 
+  // 纯链接分享(图卡不可用时的兜底)
+  function shareLink(n) {
+    const url = n.url || location.href;
+    if (navigator.share) navigator.share({ title: n.title, url }).catch(() => {});
+    else if (navigator.clipboard) navigator.clipboard.writeText(`${n.title} ${url}`).then(() => toast("链接已复制")).catch(() => {});
+    else toast("此设备不支持分享");
+  }
+
+  // canvas 文字按宽换行(CJK 无空格,逐字测量);超出末行省略号
+  function wrapLines(ctx, text, maxW, maxLines) {
+    const chars = [...(text || "")];
+    const out = [];
+    let cur = "";
+    for (const ch of chars) {
+      if (cur && ctx.measureText(cur + ch).width > maxW) {
+        out.push(cur);
+        cur = ch;
+        if (out.length === maxLines) { out[maxLines - 1] = out[maxLines - 1].slice(0, -1) + "…"; return out; }
+      } else cur += ch;
+    }
+    if (cur) out.push(cur);
+    return out.slice(0, maxLines);
+  }
+
+  // 生成一张曜石黑金分享图卡(不引用远程图片以免污染 canvas);能分享文件就分享,否则进灯箱可长按保存
+  async function shareCard(n) {
+    try {
+      const W = 1080, H = 1350;
+      const cv = document.createElement("canvas");
+      cv.width = W; cv.height = H;
+      const ctx = cv.getContext("2d");
+      const SANS = '-apple-system,"PingFang SC","Microsoft YaHei",sans-serif';
+      const SERIF = '"Songti SC","Noto Serif SC","STSong",Georgia,serif';
+
+      let g = ctx.createLinearGradient(0, 0, 0, H);
+      g.addColorStop(0, "#1A1A20"); g.addColorStop(1, "#0B0B0E");
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+
+      const c = n.cover || {};
+      g = ctx.createLinearGradient(0, 0, W, 300);
+      g.addColorStop(0, c.c1 || "#3D5BF5"); g.addColorStop(1, c.c2 || "#1B2A8A");
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, 300);
+      ctx.fillStyle = "rgba(255,255,255,0.95)"; ctx.font = `700 36px ${SANS}`;
+      ctx.fillText(n.category || "业界", 72, 132);
+      ctx.fillStyle = "rgba(255,255,255,0.72)"; ctx.font = `500 30px ${SANS}`;
+      ctx.fillText((n.source || "") + (n.hot > 1 ? "  · 🔥 多源同报" : ""), 72, 184);
+
+      ctx.fillStyle = "#F4F1EA"; ctx.font = `700 66px ${SERIF}`;
+      let y = 470;
+      for (const line of wrapLines(ctx, n.title || "", W - 144, 5)) { ctx.fillText(line, 72, y); y += 90; }
+
+      if (n.summary) {
+        ctx.fillStyle = "#9C988D"; ctx.font = `400 34px ${SANS}`;
+        y += 18;
+        for (const line of wrapLines(ctx, n.summary, W - 144, 3)) { ctx.fillText(line, 72, y); y += 52; }
+      }
+
+      ctx.strokeStyle = "#C8A96A"; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.moveTo(72, H - 176); ctx.lineTo(W - 72, H - 176); ctx.stroke();
+      ctx.fillStyle = "#C8A96A"; ctx.font = `700 46px ${SERIF}`;
+      ctx.fillText("电玩日报", 72, H - 108);
+      ctx.fillStyle = "#74716A"; ctx.font = `400 30px ${SANS}`; ctx.textAlign = "right";
+      const dateStr = n.ts ? dayKeyOf(n.ts).replace(/-/g, ".") : "";
+      ctx.fillText(`每日游戏速递${dateStr ? " · " + dateStr : ""}`, W - 72, H - 108);
+      ctx.textAlign = "left";
+
+      const blob = await new Promise((res) => cv.toBlob(res, "image/png"));
+      const file = blob && new File([blob], "电玩日报.png", { type: "image/png" });
+      if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], text: `${n.title}${n.url ? "\n" + n.url : ""}` });
+      } else {
+        $("#lightboxImg").src = cv.toDataURL("image/png");
+        $("#lightbox").classList.remove("hidden");
+        toast("长按图片即可保存分享卡");
+      }
+    } catch {
+      shareLink(n); // canvas/分享失败 → 退回链接分享
+    }
+  }
+
   async function shareNews(id) {
     const n = findNews(id);
+    if (n) await shareCard(n);
+  }
+
+  /* ---------- 朗读(TTS,系统 speechSynthesis,免费免密钥)---------- */
+  let speaking = false;
+  function stopSpeak() {
+    try { if ("speechSynthesis" in window) speechSynthesis.cancel(); } catch {}
+    speaking = false;
+    const b = $("#actSpeak");
+    if (b) { b.classList.remove("acted"); b.querySelector("span").textContent = "朗读"; }
+  }
+  function toggleSpeak(id) {
+    if (!("speechSynthesis" in window)) { toast("此设备不支持朗读"); return; }
+    if (speaking) { stopSpeak(); return; }
+    const n = findNews(id);
     if (!n) return;
-    const url = n.url || location.href;
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: n.title, url });
-      } catch {}
-    } else if (navigator.clipboard) {
-      try {
-        await navigator.clipboard.writeText(`${n.title} ${url}`);
-        toast("链接已复制");
-      } catch {}
-    }
+    const parts = [n.title];
+    if (Array.isArray(n.blocks)) n.blocks.forEach((b) => { if (b.t === "p" || b.t === "h") parts.push(b.v); });
+    else if (n.summary) parts.push(n.summary);
+    const u = new SpeechSynthesisUtterance(parts.join("。 ").slice(0, 4000));
+    u.lang = "zh-CN"; u.rate = 1;
+    u.onend = stopSpeak; u.onerror = stopSpeak;
+    try { speechSynthesis.cancel(); speechSynthesis.speak(u); } catch { toast("朗读启动失败"); return; }
+    speaking = true;
+    const b = $("#actSpeak");
+    if (b) { b.classList.add("acted"); b.querySelector("span").textContent = "停止"; }
   }
 
   /* ---------- 标签栏 ---------- */
@@ -1657,9 +1796,18 @@
       e.stopPropagation();
       if (currentDetailId != null) toggleFav(currentDetailId);
     });
+    $("#actSpeak").addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (currentDetailId != null) toggleSpeak(currentDetailId);
+    });
     $("#actShare").addEventListener("click", (e) => {
       e.stopPropagation();
       if (currentDetailId != null) shareNews(currentDetailId);
+    });
+
+    $("#themeSeg").addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-theme-pref]");
+      if (b) setTheme(b.dataset.themePref);
     });
 
     // 搜索
