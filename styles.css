@@ -873,6 +873,21 @@ body {
 .week-game:active { opacity: 0.6; }
 .flash-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-4); padding: 6px 0 10px; }
 
+/* 发售表(复用 .digest 卡片) */
+.rel-date {
+  font-size: 0.72rem; font-weight: 700; color: var(--gold); letter-spacing: 0.04em;
+  padding: 12px 0 4px; border-top: 1px solid var(--hairline);
+}
+.release .digest-head + .rel-date, .rel-date:first-of-type { border-top: none; }
+.rel-days { color: var(--ink-4); font-weight: 500; margin-left: 8px; }
+.rel-row {
+  display: flex; width: 100%; justify-content: space-between; align-items: baseline; gap: 10px;
+  background: none; border: none; padding: 8px 0; font-family: inherit; cursor: pointer; text-align: left;
+}
+.rel-row:active { opacity: 0.6; }
+.rel-game { font-size: 0.9rem; color: var(--ink); font-weight: 600; line-height: 1.4; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rel-src { font-size: 0.72rem; color: var(--ink-4); flex-shrink: 0; }
+
 /* 各家怎么说(多源同报聚合) */
 .src-panel {
   margin-top: 24px;

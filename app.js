@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v35 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v36 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -1031,6 +1031,7 @@
       })
       .join("");
     renderWeekly();
+    renderReleases();
   }
 
   /* ---------- 周度风向报告:对已加载的近 7 天数据做纯前端统计(总量/分区占比/热议/高频游戏) ---------- */
@@ -1116,6 +1117,72 @@
       (stories ? `<div class="digest-label">本周热议</div>${stories}` : "") +
       (games ? `<div class="digest-label">高频游戏</div><div class="week-games">${games}</div>` : "") +
       `</div>`;
+  }
+
+  /* ---------- 发售表:从新闻标题/摘要抽「《游戏》+ 日期 + 发售类动词」做发售日历(纯前端) ---------- */
+  const REL_KW = /发售|发行|上线|登[陆陸]|推出|上市|开售|解锁|首发|公测|开测|不删档|定档|跳票|延期|延后|抢先体验|发售日|正式版/;
+  // 《》里常见的非游戏(杂志/音乐会/原声/书刊/影视),从发售表里剔掉
+  const NON_GAME = /周刊|杂志|Jump|演唱会|音乐会|concert|orchestra|live recording|原声|OST|画集|设定集|小说|漫画|剧场版|番剧|蓝光/i;
+  const RELEASE_MS_AHEAD = 540 * 864e5;
+
+  function extractReleases(items) {
+    const now = Date.now();
+    const curY = new Date(now + 8 * 3600 * 1000).getUTCFullYear();
+    const byGame = new Map(); // 游戏键 → 该游戏最新被报道的发售条目(避免同游戏多日期冲突)
+    const seenKey = new Set();
+    for (const n of items) {
+      const k = itemKey(n);
+      if (seenKey.has(k)) continue;
+      seenKey.add(k);
+      const text = (n.title || "") + "　" + (n.summary || "");
+      const gpos = [...text.matchAll(/《([^》]+)》/g)].map((m) => ({ name: m[1].trim(), idx: m.index }));
+      if (!gpos.length) continue;
+      const dateRe = /(?:(\d{4})\s*年)?\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日/g;
+      let m;
+      while ((m = dateRe.exec(text))) {
+        const ctx = text.slice(Math.max(0, m.index - 12), m.index + m[0].length + 12);
+        if (!REL_KW.test(ctx)) continue; // 日期附近须有发售类动词,否则多是无关日期
+        const mo = +m[2], d = +m[3];
+        if (mo < 1 || mo > 12 || d < 1 || d > 31) continue;
+        let y = m[1] ? +m[1] : curY;
+        if (!m[1] && Date.UTC(curY, mo - 1, d) - 8 * 3600 * 1000 < now - 45 * 864e5) y = curY + 1; // 未写年份且已过去较久→明年
+        const ts = Date.UTC(y, mo - 1, d) - 8 * 3600 * 1000;
+        if (ts < now - 21 * 864e5 || ts > now + RELEASE_MS_AHEAD) continue;
+        // 把日期配给文本中位置最近的《游戏》(正确处理"《A》8月发售,《B》9月上线")
+        let g = gpos[0], best = Infinity;
+        for (const gp of gpos) { const dist = Math.abs(gp.idx - m.index); if (dist < best) { best = dist; g = gp; } }
+        if (NON_GAME.test(g.name) || g.name.length > 20) continue; // 滤掉非游戏/超长(多为音乐会/特典名)
+        const gk = threadKeyOf(normT(g.name));
+        if (gk.length < 2) continue;
+        const prev = byGame.get(gk);
+        if (!prev || (n.ts || 0) > prev.newsTs) byGame.set(gk, { game: g.name, gk, ts, dateKey: `${y}-${String(mo).padStart(2, "0")}-${String(d).padStart(2, "0")}`, source: n.source || "", newsTs: n.ts || 0 });
+      }
+    }
+    return [...byGame.values()].sort((a, b) => a.ts - b.ts);
+  }
+
+  function renderReleases() {
+    const el = $("#releaseCal");
+    if (!el) return;
+    const now = Date.now();
+    const t = new Date(now + 8 * 3600 * 1000);
+    const todayStart = Date.UTC(t.getUTCFullYear(), t.getUTCMonth(), t.getUTCDate()) - 8 * 3600 * 1000;
+    const list = extractReleases([...D.news, ...history.flatMap((g) => g.items)]).filter((r) => r.ts >= todayStart - 864e5);
+    if (!list.length) { el.innerHTML = ""; return; }
+    const shown = list.slice(0, 16);
+    let rows = "", lastDate = "";
+    for (const r of shown) {
+      if (r.dateKey !== lastDate) {
+        lastDate = r.dateKey;
+        const days = Math.round((r.ts - todayStart) / 864e5);
+        const when = days <= 0 ? "今天" : days === 1 ? "明天" : `${days} 天后`;
+        rows += `<div class="rel-date">${esc(formatDay(r.dateKey))}<span class="rel-days">${when}</span></div>`;
+      }
+      rows += `<button class="rel-row" data-game="${esc(r.game)}"><span class="rel-game">《${esc(r.game)}》</span><span class="rel-src">${esc(r.source)}</span></button>`;
+    }
+    el.innerHTML =
+      `<div class="digest release"><div class="digest-head"><span class="digest-tag">🗓 近期发售</span>` +
+      `<span class="digest-date">${list.length} 款在即</span></div>${rows}</div>`;
   }
 
   // 高频游戏点按:回首页按该游戏名筛选信息流
@@ -1754,6 +1821,12 @@
     $("#weeklyReport").addEventListener("click", (e) => {
       const chip = e.target.closest(".week-game[data-game]");
       if (chip) searchGame(chip.dataset.game);
+    });
+
+    // 发售表行 → 回首页按该游戏筛选
+    $("#releaseCal").addEventListener("click", (e) => {
+      const row = e.target.closest(".rel-row[data-game]");
+      if (row) searchGame(row.dataset.game);
     });
 
     // 事件脉络的进展行(<a data-key>,无 href,被上面的 body 委托忽略),按 itemKey 解析并优先窗口副本
