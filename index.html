@@ -82,6 +82,7 @@
         </div>
         <div class="search-row hidden" id="searchRow">
           <input id="searchInput" type="search" placeholder="搜索游戏、厂商、关键词…">
+          <button id="searchFollow" class="hidden">☆ 关注</button>
           <button id="searchClear">取消</button>
         </div>
         <div id="feedList"></div>
@@ -138,6 +139,14 @@
         <div class="me-stat"><b id="meStreak">1</b><span>连续追新(天)</span></div>
         <div class="me-stat"><b id="meRead">0</b><span>累计已读</span></div>
         <div class="me-stat"><b id="meFavs">0</b><span>收藏</span></div>
+      </div>
+      <div class="me-block">
+        <h4>关注</h4>
+        <p class="me-tip" style="margin-top:0">关注的游戏/来源会进首页「★ 关注」分区。关注游戏:在快讯页本周风向/近期发售点开某游戏,顶部点「★ 关注」。</p>
+        <p class="me-sub-label">已关注游戏</p>
+        <div class="me-pills" id="meFollowGames"></div>
+        <p class="me-sub-label">关注来源(点击开关)</p>
+        <div class="me-pills" id="meFollowSources"></div>
       </div>
       <div class="me-block">
         <h4>新闻来源(最近一轮抓取条数)</h4>

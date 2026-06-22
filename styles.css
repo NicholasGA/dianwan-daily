@@ -888,6 +888,21 @@ body {
 .rel-game { font-size: 0.9rem; color: var(--ink); font-weight: 600; line-height: 1.4; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rel-src { font-size: 0.72rem; color: var(--ink-4); flex-shrink: 0; }
 
+/* 关注 */
+#searchFollow {
+  border: none; background: var(--surface-2); color: var(--gold); font-family: inherit;
+  font-size: 0.8rem; font-weight: 600; padding: 0 12px; border-radius: var(--radius-md);
+  flex-shrink: 0; cursor: pointer; white-space: nowrap;
+}
+#searchFollow.on { background: var(--gold); color: var(--on-gold); }
+.me-sub-label { font-size: 0.72rem; color: var(--ink-4); margin: 12px 0 8px; letter-spacing: 0.06em; }
+.me-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.me-empty { font-size: 0.78rem; color: var(--ink-4); line-height: 1.5; }
+.src-pill.follow-chip { cursor: pointer; color: var(--gold); }
+.src-pill.src-toggle { cursor: pointer; }
+.src-pill.src-toggle.followed { background: var(--gold); color: var(--on-gold); }
+.src-pill.follow-chip:active, .src-pill.src-toggle:active { opacity: 0.6; }
+
 /* 各家怎么说(多源同报聚合) */
 .src-panel {
   margin-top: 24px;

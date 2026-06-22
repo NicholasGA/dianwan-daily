@@ -5,11 +5,11 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v36 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v37 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
-  const CATEGORIES = ["全部", "业界", "主机", "PC", "手游"];
+  const CATEGORIES = ["全部", "关注", "业界", "主机", "PC", "手游"];
   const PALETTES = [
     { c1: "#3D5BF5", c2: "#1B2A8A", fg: "#fff" },
     { c1: "#E60012", c2: "#8E000B", fg: "#fff" },
@@ -209,6 +209,54 @@
     store.set(THEME_KEY, pref);
     applyTheme(pref);
     renderMe();
+  }
+
+  /* ---------- 关注(游戏 / 来源)---------- */
+  const FOLLOW_KEY = "dwFollow";
+  const _follow = store.get(FOLLOW_KEY, {});
+  const followGames = new Map(Array.isArray(_follow.games) ? _follow.games : []);   // 归一化键 → 展示原名
+  const followSources = new Set(Array.isArray(_follow.sources) ? _follow.sources : []); // 来源名
+  const persistFollow = () => store.set(FOLLOW_KEY, { games: [...followGames.entries()], sources: [...followSources] });
+  const followCount = () => followGames.size + followSources.size;
+  // 条目是否命中关注:关注的来源,或标题里有关注的《游戏》
+  function itemFollowed(n) {
+    if (followSources.has(n.source)) return true;
+    if (followGames.size) {
+      for (const m of (n.title || "").matchAll(/《([^》]+)》/g)) {
+        if (followGames.has(threadKeyOf(normT(m[1])))) return true;
+      }
+    }
+    return false;
+  }
+  function toggleFollowGame(name) {
+    const k = threadKeyOf(normT(name || ""));
+    if (k.length < 2) return;
+    if (followGames.has(k)) { followGames.delete(k); toast(`已取消关注《${name}》`); }
+    else { followGames.set(k, name); toast(`已关注《${name}》`); }
+    persistFollow();
+    renderChips();
+    if (activeTab === "home" && activeCategory === "关注") renderFeed();
+    if (activeTab === "me") renderMe();
+    renderSearchFollow();
+  }
+  function toggleFollowSource(name) {
+    if (followSources.has(name)) followSources.delete(name);
+    else followSources.add(name);
+    persistFollow();
+    renderChips();
+    if (activeTab === "home" && activeCategory === "关注") renderFeed();
+    renderMe();
+  }
+  function unfollowGameKey(k) {
+    if (!followGames.has(k)) return;
+    const name = followGames.get(k);
+    followGames.delete(k);
+    persistFollow();
+    toast(`已取消关注《${name}》`);
+    renderChips();
+    if (activeTab === "home" && activeCategory === "关注") renderFeed();
+    renderMe();
+    renderSearchFollow();
   }
 
   const readSet = new Set(store.get(READ_KEY, []));
@@ -701,8 +749,9 @@
 
   function renderChips() {
     $("#chipsRow").innerHTML = CATEGORIES.map((cat) => {
-      const count = cat === "全部" ? D.news.length : D.news.filter((n) => n.category === cat).length;
-      return `<button class="chip${cat === activeCategory ? " chip-on" : ""}" data-cat="${cat}">${cat}<span class="chip-count">${count}</span></button>`;
+      const count =
+        cat === "全部" ? D.news.length : cat === "关注" ? D.news.filter(itemFollowed).length : D.news.filter((n) => n.category === cat).length;
+      return `<button class="chip${cat === activeCategory ? " chip-on" : ""}" data-cat="${cat}">${cat === "关注" ? "★ 关注" : cat}<span class="chip-count">${count}</span></button>`;
     }).join("");
   }
 
@@ -947,7 +996,7 @@
   function renderFeed() {
     const q = searchQuery.toLowerCase();
     const match = (n) =>
-      (activeCategory === "全部" || n.category === activeCategory) &&
+      (activeCategory === "全部" || (activeCategory === "关注" ? itemFollowed(n) : n.category === activeCategory)) &&
       (!q || (n.title + " " + n.summary + " " + n.source).toLowerCase().includes(q));
     const seenK = new Set();
     const river = [];
@@ -1000,6 +1049,8 @@
       html += newsItemHtml(n);
     }
     if (!html && q) html = `<p class="feed-empty">没有找到包含「${esc(searchQuery)}」的新闻<br><span>搜索范围是已加载的新闻,下滑加载更多历史后可再搜</span></p>`;
+    else if (!html && activeCategory === "关注")
+      html = `<p class="feed-empty">${followCount() ? "关注的内容暂无新报道" : "还没关注任何游戏或来源"}<br><span>在「快讯」页的本周风向 / 近期发售点开某游戏,顶部点「★ 关注」;或在「我的」页关注来源</span></p>`;
     $("#feedList").innerHTML = html;
   }
 
@@ -1185,9 +1236,11 @@
       `<span class="digest-date">${list.length} 款在即</span></div>${rows}</div>`;
   }
 
-  // 高频游戏点按:回首页按该游戏名筛选信息流
+  // 高频游戏点按:回首页按该游戏名筛选信息流,并露出「★ 关注《X》」按钮
+  let searchGameName = null; // 当前是否在按某个游戏筛选(决定是否显示关注按钮)
   function searchGame(name) {
     searchQuery = name;
+    searchGameName = name;
     activeCategory = "全部";
     switchTab("home");
     const row = $("#searchRow");
@@ -1196,6 +1249,29 @@
     if (inp) inp.value = name;
     renderChips();
     renderFeed();
+    renderSearchFollow();
+  }
+
+  // 切换分区时清掉搜索筛选,避免"分区 ∩ 上次搜索"导致的意外空结果
+  function clearSearchFilter() {
+    if (!searchQuery && !searchGameName) return;
+    searchQuery = "";
+    searchGameName = null;
+    const inp = $("#searchInput");
+    if (inp) inp.value = "";
+    $("#searchRow")?.classList.add("hidden");
+    renderSearchFollow();
+  }
+
+  // 搜索栏里的关注按钮:仅当在按某游戏筛选时显示
+  function renderSearchFollow() {
+    const btn = $("#searchFollow");
+    if (!btn) return;
+    if (!searchGameName) { btn.classList.add("hidden"); return; }
+    const followed = followGames.has(threadKeyOf(normT(searchGameName)));
+    btn.classList.remove("hidden");
+    btn.classList.toggle("on", followed);
+    btn.textContent = followed ? "★ 已关注" : "☆ 关注";
   }
 
   function renderFavs() {
@@ -1250,6 +1326,20 @@
 
     const seg = $("#themeSeg");
     if (seg) seg.querySelectorAll("button").forEach((b) => b.classList.toggle("seg-on", b.dataset.themePref === themePref));
+
+    // 关注管理:已关注游戏(点 ✕ 取消)+ 来源开关
+    const fg = $("#meFollowGames");
+    if (fg)
+      fg.innerHTML = followGames.size
+        ? [...followGames].map(([k, name]) => `<span class="src-pill follow-chip" data-unfollow-game="${esc(k)}">《${esc(name)}》 ✕</span>`).join("")
+        : `<span class="me-empty">还没关注游戏 · 在快讯页点开某游戏后点「★ 关注」</span>`;
+    const fs = $("#meFollowSources");
+    if (fs) {
+      const allSrc = stats ? Object.keys(stats) : ["游民星空", "3DM", "机核", "游研社", "触乐", "17173", "indienova", "IGN", "GameSpot", "Steam"];
+      fs.innerHTML = allSrc
+        .map((s) => `<span class="src-pill src-toggle${followSources.has(s) ? " followed" : ""}" data-follow-src="${esc(s)}">${followSources.has(s) ? "★ " : ""}${esc(s)}</span>`)
+        .join("");
+    }
   }
 
   function saveWorker() {
@@ -1800,6 +1890,7 @@
       const chip = e.target.closest(".chip");
       if (!chip) return;
       activeCategory = chip.dataset.cat;
+      clearSearchFilter();
       renderChips();
       renderFeed();
     });
@@ -1890,12 +1981,16 @@
       if (!row.classList.contains("hidden")) $("#searchInput").focus();
       else {
         searchQuery = "";
+        searchGameName = null;
         $("#searchInput").value = "";
+        renderSearchFollow();
         renderFeed();
       }
     });
     let searchTimer = null;
     $("#searchInput").addEventListener("input", (e) => {
+      searchGameName = null; // 手动输入不再是"按游戏筛选",隐藏关注按钮
+      renderSearchFollow();
       clearTimeout(searchTimer);
       searchTimer = setTimeout(() => {
         searchQuery = e.target.value.trim();
@@ -1904,9 +1999,24 @@
     });
     $("#searchClear").addEventListener("click", () => {
       searchQuery = "";
+      searchGameName = null;
       $("#searchInput").value = "";
       $("#searchRow").classList.add("hidden");
+      renderSearchFollow();
       renderFeed();
+    });
+    $("#searchFollow").addEventListener("click", () => {
+      if (searchGameName) toggleFollowGame(searchGameName);
+    });
+
+    // 关注管理:取消关注游戏 / 切换关注来源
+    $("#meFollowGames").addEventListener("click", (e) => {
+      const chip = e.target.closest("[data-unfollow-game]");
+      if (chip) unfollowGameKey(chip.dataset.unfollowGame);
+    });
+    $("#meFollowSources").addEventListener("click", (e) => {
+      const chip = e.target.closest("[data-follow-src]");
+      if (chip) toggleFollowSource(chip.dataset.followSrc);
     });
 
     $("#meWorkerSave").addEventListener("click", saveWorker);
@@ -1992,6 +2102,7 @@
   function switchCategory(cat, dir) {
     if (cat === activeCategory) return;
     activeCategory = cat;
+    clearSearchFilter();
     renderChips();
     const fl = $("#feedList");
     fl.classList.remove("slide-l", "slide-r");
