@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v33 · 2026-06-17"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v34 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -1006,6 +1006,105 @@
       </div>`;
       })
       .join("");
+    renderWeekly();
+  }
+
+  /* ---------- 周度风向报告:对已加载的近 7 天数据做纯前端统计(总量/分区占比/热议/高频游戏) ---------- */
+  const WEEK_MS = 7 * 864e5;
+  const CAT_COLOR = { 业界: "#8A8FB0", 主机: "#E0607A", PC: "#6FB7FF", 手游: "#16C79A" };
+
+  function buildWeekly() {
+    const weekAgo = Date.now() - WEEK_MS;
+    const seen = new Set();
+    const week = [];
+    for (const n of [...D.news, ...history.flatMap((g) => g.items)]) {
+      const k = itemKey(n);
+      if (seen.has(k)) continue;
+      seen.add(k);
+      if ((n.ts || 0) >= weekAgo) week.push(n);
+    }
+    if (week.length < 8) return null; // 数据太少不出报告
+    week.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+
+    // 覆盖日期范围(用归档日键直接取月.日,避免"近 8 天"这类因滚动窗跨日产生的歧义)
+    const mdOf = (ts) => { const p = dayKeyOf(ts || 0).split("-"); return `${+p[1]}.${+p[2]}`; };
+    const range = `${mdOf(week[week.length - 1].ts)}–${mdOf(week[0].ts)}`;
+
+    const catCount = { 业界: 0, 主机: 0, PC: 0, 手游: 0 };
+    week.forEach((n) => { if (catCount[n.category] != null) catCount[n.category]++; });
+    const cats = Object.entries(catCount).filter(([, c]) => c > 0).sort((a, b) => b[1] - a[1]);
+
+    // 本周热议:多源同报(hot>1)按热度排序,同事件去重,取前 5
+    const topStories = [];
+    for (const n of week.filter((n) => (n.hot || 0) > 1).sort((a, b) => (b.hot || 0) - (a.hot || 0))) {
+      if (topStories.some((s) => sameStoryClient(s, n))) continue;
+      topStories.push(n);
+      if (topStories.length >= 5) break;
+    }
+
+    // 高频游戏:《》实体计数(归一键去重,保留首见原名展示),≥2 次,取前 8
+    const games = new Map();
+    for (const n of week) {
+      const seenKeys = new Set();
+      for (const m of (n.title || "").matchAll(/《([^》]+)》/g)) {
+        const orig = m[1].trim();
+        const key = threadKeyOf(normT(orig));
+        if (key.length < 2 || seenKeys.has(key)) continue;
+        seenKeys.add(key);
+        const cur = games.get(key) || { count: 0, display: orig };
+        cur.count++;
+        games.set(key, cur);
+      }
+    }
+    const topGames = [...games.values()].filter((g) => g.count >= 2).sort((a, b) => b.count - a.count).slice(0, 8);
+
+    return { total: week.length, range, cats, topStories, topGames };
+  }
+
+  function renderWeekly() {
+    const el = $("#weeklyReport");
+    if (!el) return;
+    const w = buildWeekly();
+    if (!w) { el.innerHTML = ""; return; }
+
+    const bar = w.cats
+      .map(([c, n]) => `<span class="week-seg" style="flex:${n};background:${CAT_COLOR[c] || "#8A8FB0"}"></span>`)
+      .join("");
+    const legend = w.cats
+      .map(([c, n]) => `<span class="week-leg"><i style="background:${CAT_COLOR[c] || "#8A8FB0"}"></i>${c} ${Math.round((n / w.total) * 100)}%</span>`)
+      .join("");
+
+    const stories = w.topStories
+      .map(
+        (n) =>
+          `<button class="digest-pick" data-id="${n.id}"><b>${esc(n.title)}</b><span>🔥 ${n.hotSources ? esc(n.hotSources.join("、")) : n.hot + " 家媒体"} 同报</span></button>`
+      )
+      .join("");
+
+    const games = w.topGames
+      .map((g) => `<span class="src-pill week-game" data-game="${esc(g.display)}">《${esc(g.display)}》 <b>${g.count}</b></span>`)
+      .join("");
+
+    el.innerHTML =
+      `<div class="digest weekly">` +
+      `<div class="digest-head"><span class="digest-tag">▲ 本周风向</span><span class="digest-date">${w.range} · ${w.total} 条</span></div>` +
+      `<div class="week-bar">${bar}</div><div class="week-legend">${legend}</div>` +
+      (stories ? `<div class="digest-label">本周热议</div>${stories}` : "") +
+      (games ? `<div class="digest-label">高频游戏</div><div class="week-games">${games}</div>` : "") +
+      `</div>`;
+  }
+
+  // 高频游戏点按:回首页按该游戏名筛选信息流
+  function searchGame(name) {
+    searchQuery = name;
+    activeCategory = "全部";
+    switchTab("home");
+    const row = $("#searchRow");
+    if (row) row.classList.remove("hidden");
+    const inp = $("#searchInput");
+    if (inp) inp.value = name;
+    renderChips();
+    renderFeed();
   }
 
   function renderFavs() {
@@ -1482,6 +1581,7 @@
     $("#view-flash").classList.toggle("hidden", tab !== "flash");
     $("#view-favs").classList.toggle("hidden", tab !== "favs");
     $("#view-me").classList.toggle("hidden", tab !== "me");
+    if (tab === "flash") renderFlash(); // 重算本周风向(历史可能已增长)
     if (tab === "favs") renderFavs();
     if (tab === "me") renderMe();
     window.scrollTo(0, 0);
@@ -1509,6 +1609,12 @@
       }
       const card = e.target.closest("[data-id]");
       if (card && !e.target.closest(".chip")) openDetail(Number(card.dataset.id));
+    });
+
+    // 周度风向「高频游戏」胶囊 → 回首页按该游戏筛选(热议行带 data-id,由上面的 body 委托接管)
+    $("#weeklyReport").addEventListener("click", (e) => {
+      const chip = e.target.closest(".week-game[data-game]");
+      if (chip) searchGame(chip.dataset.game);
     });
 
     // 事件脉络的进展行(<a data-key>,无 href,被上面的 body 委托忽略),按 itemKey 解析并优先窗口副本

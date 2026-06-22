@@ -862,6 +862,17 @@ body {
 }
 .digest-pick:active { opacity: 0.6; }
 
+/* 周度风向报告(复用 .digest 卡片 + .src-pill 胶囊) */
+.week-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin: 2px 0 10px; }
+.week-seg { display: block; min-width: 3px; }
+.week-legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-bottom: 4px; }
+.week-leg { font-size: 0.72rem; color: var(--ink-3); display: inline-flex; align-items: center; gap: 5px; font-variant-numeric: tabular-nums; }
+.week-leg i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+.week-games { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 0 6px; }
+.week-game { cursor: pointer; }
+.week-game:active { opacity: 0.6; }
+.flash-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; color: var(--ink-4); padding: 6px 0 10px; }
+
 /* 各家怎么说(多源同报聚合) */
 .src-panel {
   margin-top: 24px;
