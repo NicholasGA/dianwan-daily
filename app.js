@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v39 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v40 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -365,7 +365,7 @@
     const proxied = shouldStartProxied(orig);
     return `<img class="${cls}" src="${esc(imgSrc(orig, kind))}" loading="lazy" referrerpolicy="no-referrer"` +
       ` data-orig="${esc(orig)}" data-w="${w}" data-stage="${proxied ? 1 : 0}"` +
-      (glyph ? ` data-glyph="${esc(glyph)}"` : "") + ` onerror="dwImgError(this)">`;
+      (glyph ? ` data-glyph="${esc(glyph)}"` : "") + ` onload="this.dataset.loaded=1" onerror="dwImgError(this)">`;
   }
 
   // 全局错误处理:沿 PROXIES 逐级降级,耗尽后占位

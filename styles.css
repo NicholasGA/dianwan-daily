@@ -15,8 +15,8 @@
   --hi: rgba(244, 241, 234, 0.05); /* 受光顶边高光 */
   --ink: #F4F1EA;          /* 象牙白 */
   --ink-2: #D9D5CA;
-  --ink-3: #8E8B82;
-  --ink-4: #6E6B63;
+  --ink-3: #A2A199;        /* 提亮过 AA(原 #8E8B82 在 #0C0C0F 上仅 ~4.2:1) */
+  --ink-4: #88857C;        /* 信息流 meta(来源·时间)用,原 #6E6B63 仅 ~2.8:1 */
   --gold: #C8A96A;         /* 香槟金 — 全 App 唯一强调色,集中在英雄时刻 */
   --gold-deep: #A8884B;
   --gold-hi: #D4B879;      /* 金徽渐变高光端 */
@@ -1095,6 +1095,26 @@ body {
 #feedList.slide-l { animation: slideL 0.22s ease; }
 #feedList.slide-r { animation: slideR 0.22s ease; }
 
+/* 图片骨架微光:加载中显示流光占位,load 后(data-loaded)撤掉;无图条目走字形不受影响 */
+.thumb-img, .cover-img, .detail-cover-img, .detail-img {
+  background: linear-gradient(100deg, var(--surface-1) 25%, var(--surface-2) 50%, var(--surface-1) 75%);
+  background-size: 220% 100%;
+  animation: imgShimmer 1.5s ease-in-out infinite;
+}
+.thumb-img[data-loaded], .cover-img[data-loaded], .detail-cover-img[data-loaded], .detail-img[data-loaded] {
+  background: none;
+  animation: none;
+}
+@keyframes imgShimmer { 0% { background-position: 120% 0; } 100% { background-position: -120% 0; } }
+
+/* 无障碍:键盘/读屏焦点环(触控隐形,聚焦才显) */
+.act:focus-visible, .chip:focus-visible, .tab:focus-visible, .src-link:focus-visible,
+.detail-back:focus-visible, .refresh-btn:focus-visible, .search-btn:focus-visible,
+.seg button:focus-visible, .news-item:focus-visible, .digest-pick:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -1136,8 +1156,8 @@ body {
   --hi: rgba(0, 0, 0, 0.05);
   --ink: #1B1813;
   --ink-2: #46423A;
-  --ink-3: #74716A;
-  --ink-4: #9C988D;
+  --ink-3: #6E6B63;
+  --ink-4: #86837A;        /* 校到 AA(原 #9C988D 在奶白底上仅 ~2.5:1) */
   --gold: #A8843E;          /* 校暖:找回香槟暖度,与暗色情绪一致 */
   --gold-deep: #876730;
   --gold-hi: #C19A4C;
