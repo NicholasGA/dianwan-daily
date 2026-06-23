@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v38 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v39 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 

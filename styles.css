@@ -5,20 +5,29 @@
    ============================================================ */
 
 :root {
-  --bg-page: #0A0A0C;      /* 桌面留白区 */
-  --bg-app: #0E0E11;       /* L0 页面 */
-  --surface-1: #17171C;    /* L1 卡片 */
-  --surface-2: #1F1F26;    /* L2 浮起 */
-  --surface-3: #2C2C35;    /* L3 占位图 */
-  --hairline: #26262E;
+  /* 鎏金曜石:更深的黑 + 更分明的海拔阶梯,让卡片真正浮起、少数金点更跳 */
+  --bg-page: #08080A;      /* 桌面留白区 */
+  --bg-app: #0C0C0F;       /* L0 页面 */
+  --surface-1: #18181E;    /* L1 基础卡片 */
+  --surface-2: #23232B;    /* L2 浮起面板 */
+  --surface-3: #2E2E38;    /* L3 占位图 */
+  --hairline: #2A2A33;     /* 唯一发丝线:只分隔同级条目,不描卡片轮廓 */
+  --hi: rgba(244, 241, 234, 0.05); /* 受光顶边高光 */
   --ink: #F4F1EA;          /* 象牙白 */
   --ink-2: #D9D5CA;
   --ink-3: #8E8B82;
   --ink-4: #6E6B63;
-  --gold: #C8A96A;         /* 香槟金 — 全 App 唯一强调色 */
+  --gold: #C8A96A;         /* 香槟金 — 全 App 唯一强调色,集中在英雄时刻 */
   --gold-deep: #A8884B;
+  --gold-hi: #D4B879;      /* 金徽渐变高光端 */
   --on-gold: #141009;
+  --scrim: rgba(8, 8, 11, 0.94);
   --serif: "Songti SC", "Noto Serif SC", "STSong", Georgia, serif;
+  /* 字号阶(消除 0.9/0.92/0.95 散值) */
+  --fs-xs: 0.72rem; --fs-sm: 0.78rem; --fs-md: 0.84rem; --fs-lg: 0.92rem; --fs-xl: 1rem;
+  /* 间距阶(4/8pt 基线) */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
+  --eyebrow-ls: 0.14em; /* 统一眉标字距(原 0.28em 过宽显廉价) */
   --radius-xl: 20px;
   --radius-lg: 14px;
   --radius-md: 10px;
@@ -122,8 +131,8 @@ body {
 .featured-title {
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 0.28em;
+  color: var(--ink-3);
+  letter-spacing: var(--eyebrow-ls);
 }
 .featured-pager { font-size: 0.78rem; color: var(--ink-4); font-weight: 500; }
 .featured-pager em { font-style: normal; color: var(--ink-3); }
@@ -328,8 +337,8 @@ body {
 .feed-title {
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 0.28em;
+  color: var(--ink-3);
+  letter-spacing: var(--eyebrow-ls);
   margin-bottom: 4px;
 }
 .search-btn {
@@ -377,7 +386,7 @@ body {
   display: flex;
   gap: 12px;
   padding: 15px 0;
-  border-bottom: 1px solid var(--surface-1);
+  border-bottom: 1px solid var(--hairline);
   cursor: pointer;
 }
 .news-item:last-child { border-bottom: none; }
@@ -394,41 +403,20 @@ body {
   margin-bottom: 6px;
   letter-spacing: 0.08em;
 }
-.hot-badge {
+/* 一套徽章语法:每条至多一枚 filled 金徽(hot),官方=中性,脉络=金描边(关系) */
+.hot-badge, .off-badge, .thread-badge {
   display: inline-block;
   font-size: 0.62rem;
   font-weight: 700;
-  color: var(--on-gold);
-  background: var(--gold);
+  letter-spacing: 0.06em;
   border-radius: 4px;
-  padding: 2px 7px;
+  padding: 2px 8px;
   margin: 0 0 6px 6px;
-  letter-spacing: 0.02em;
 }
+.hot-badge { color: var(--on-gold); background: linear-gradient(180deg, var(--gold-hi), var(--gold)); }
 .hot-meta { color: var(--gold); font-weight: 600; }
-.off-badge {
-  display: inline-block;
-  font-size: 0.62rem;
-  font-weight: 700;
-  color: #0E0E11;
-  background: #6FB7FF;
-  border-radius: 4px;
-  padding: 2px 7px;
-  margin: 0 0 6px 6px;
-  letter-spacing: 0.04em;
-}
-.thread-badge {
-  display: inline-block;
-  font-size: 0.62rem;
-  font-weight: 700;
-  color: var(--gold);
-  background: transparent;
-  border: 1px solid var(--gold);
-  border-radius: 4px;
-  padding: 1px 6px;
-  margin: 0 0 6px 6px;
-  letter-spacing: 0.02em;
-}
+.off-badge { color: var(--ink-2); background: var(--surface-2); }
+.thread-badge { color: var(--gold); background: transparent; border: 1px solid var(--gold-deep); padding: 1px 7px; }
 .news-title {
   font-size: 0.95rem;
   font-weight: 600;
@@ -494,7 +482,7 @@ body {
   content: "";
   flex: 1;
   height: 1px;
-  background: var(--surface-2);
+  background: var(--hairline);
 }
 .feed-more {
   text-align: center;
@@ -514,9 +502,9 @@ body {
 .flash-item { display: flex; gap: 14px; position: relative; padding: 0 0 24px 0; }
 .flash-time {
   flex: 0 0 44px;
-  font-size: 0.78rem;
+  font-size: var(--fs-xs);
   font-weight: 700;
-  color: var(--gold);
+  color: var(--ink-4);
   font-variant-numeric: tabular-nums;
 }
 .flash-line {
@@ -529,7 +517,7 @@ body {
   flex: 0 0 9px;
   width: 9px; height: 9px;
   border-radius: 50%;
-  background: var(--gold);
+  background: var(--ink-3);
   margin-top: 6px;
   z-index: 1;
 }
@@ -671,7 +659,7 @@ body {
   background: var(--bg-app);
   z-index: 100;
   overflow-y: auto;
-  animation: slideUp 0.28s cubic-bezier(0.22, 0.9, 0.3, 1);
+  animation: slideUp 0.32s cubic-bezier(0.22, 0.9, 0.3, 1);
   touch-action: pan-y;
 }
 @keyframes slideUp {
@@ -804,13 +792,14 @@ body {
 .src-link span { font-weight: 500; font-size: 0.74rem; opacity: 0.7; }
 .src-link:active { opacity: 0.85; }
 
-/* AI 主编简报卡 */
+/* 浮起报告卡(AI 主编 / 本周风向 / 近期发售):金色材质 + 受光顶边,取代离调紫渐变 */
 .digest {
-  background: linear-gradient(165deg, #1C1A2E, var(--surface-1));
+  background: linear-gradient(165deg, rgba(200, 169, 106, 0.06), var(--surface-2));
   border: 1px solid var(--hairline);
+  border-top-color: var(--hi);
   border-radius: var(--radius-lg);
-  padding: 16px 16px 8px;
-  margin: 4px 0 22px;
+  padding: var(--sp-4) var(--sp-4) var(--sp-2);
+  margin: var(--sp-1) 0 22px;
 }
 .digest-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .digest-tag {
@@ -829,7 +818,7 @@ body {
 .digest-label {
   font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: var(--eyebrow-ls);
   color: var(--ink-4);
   padding: 8px 0 4px;
   border-top: 1px solid var(--hairline);
@@ -947,10 +936,10 @@ body {
   padding: 6px 14px 8px;
 }
 .src-panel-h {
-  font-size: 0.72rem;
+  font-size: var(--fs-xs);
   font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 0.16em;
+  color: var(--ink-3);
+  letter-spacing: var(--eyebrow-ls);
   padding: 12px 0 8px;
 }
 .src-row {
@@ -997,8 +986,8 @@ body {
   display: block;
   font-size: 0.64rem;
   font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 0.22em;
+  color: var(--ink-3);
+  letter-spacing: var(--eyebrow-ls);
   margin-bottom: 5px;
 }
 .next-card b {
@@ -1086,8 +1075,13 @@ body {
 .news-item:active { transform: scale(0.985); opacity: 0.75; }
 .cover:active, .topic-cover:active { transform: scale(0.97); }
 .act:active, .search-btn:active { transform: scale(0.94); }
-.tab:active { transform: scale(0.9); }
-.refresh-btn:active { transform: scale(0.88); }
+.tab:active { transform: scale(0.94); }
+.refresh-btn:active { transform: scale(0.9); }
+/* 主按钮:按下回弹(轻微 overshoot),少数英雄交互更有质感 */
+.src-link, .worker-row button, #meWorkerSave, #searchFollow {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.15s ease, opacity 0.15s ease;
+}
+.src-link:active, .worker-row button:active, #meWorkerSave:active, #searchFollow:active { transform: scale(0.96); }
 .next-card:active { transform: scale(0.98); }
 
 .view { animation: viewIn 0.22s ease; }
@@ -1139,16 +1133,18 @@ body {
   --surface-2: #FFFFFF;
   --surface-3: #E7E2D6;
   --hairline: #E0DACB;
+  --hi: rgba(0, 0, 0, 0.05);
   --ink: #1B1813;
   --ink-2: #46423A;
   --ink-3: #74716A;
   --ink-4: #9C988D;
-  --gold: #9A7B3C;
-  --gold-deep: #7E6330;
+  --gold: #A8843E;          /* 校暖:找回香槟暖度,与暗色情绪一致 */
+  --gold-deep: #876730;
+  --gold-hi: #C19A4C;
   --on-gold: #FFF8EA;
   color-scheme: light;
 }
 /* 暗色硬编码处在浅色下的修正(其余靠 var 自适应,封面色块刻意保持彩色) */
-:root[data-theme="light"] .digest { background: linear-gradient(165deg, #F0EAD9, var(--surface-1)); }
+:root[data-theme="light"] .digest { background: linear-gradient(165deg, rgba(168, 132, 62, 0.10), var(--surface-2)); }
 :root[data-theme="light"] .src-pill.src-dead { background: #F3DADA; color: #A23B3B; }
 :root[data-theme="light"] .ptr-ready { color: var(--gold-deep); }
