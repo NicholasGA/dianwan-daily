@@ -903,6 +903,42 @@ body {
 .src-pill.src-toggle.followed { background: var(--gold); color: var(--on-gold); }
 .src-pill.follow-chip:active, .src-pill.src-toggle:active { opacity: 0.6; }
 
+/* 图集横滑轮播 */
+.gallery { position: relative; margin: 0 0 6px; }
+.gallery-track {
+  display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+  border-radius: var(--radius-md); -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.gallery-track::-webkit-scrollbar { display: none; }
+.gallery-slide { flex: 0 0 100%; scroll-snap-align: center; }
+.gallery-slide .gallery-img { width: 100%; display: block; margin: 0; border-radius: 0; }
+.gallery-count {
+  position: absolute; right: 10px; bottom: 10px; pointer-events: none;
+  background: rgba(0, 0, 0, 0.6); color: #fff; font-size: 0.72rem; font-weight: 600;
+  padding: 3px 10px; border-radius: 999px; font-variant-numeric: tabular-nums;
+}
+
+/* 收藏 / 稍后读:工具栏 + 单条移除 */
+.fav-seg { display: flex; width: 100%; margin: 4px 0 12px; }
+.fav-seg button { flex: 1; }
+.fav-search-row { margin-bottom: 10px; }
+.fav-search-row input {
+  width: 100%; border: none; background: var(--surface-1); color: var(--ink);
+  border-radius: var(--radius-md); padding: 11px 14px; font-size: 0.9rem; font-family: inherit; outline: none; -webkit-appearance: none;
+}
+.fav-search-row input::placeholder { color: var(--ink-4); }
+.fav-chips { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none; }
+.fav-chips::-webkit-scrollbar { display: none; }
+.fav-chips:empty { display: none; }
+.saved-wrap { position: relative; }
+.saved-rm {
+  position: absolute; top: 8px; right: 6px; z-index: 2; width: 30px; height: 30px;
+  border-radius: 50%; border: none; background: rgba(0, 0, 0, 0.5); color: #fff;
+  font-size: 0.82rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.saved-rm:active { background: rgba(0, 0, 0, 0.78); }
+.saved-rm:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
 /* 各家怎么说(多源同报聚合) */
 .src-panel {
   margin-top: 24px;

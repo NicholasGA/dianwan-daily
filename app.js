@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v37 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v38 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -182,6 +182,7 @@
   const CACHE_KEY = "dianwanCache"; // 上次成功拉取的数据(秒开用)
   const READ_KEY = "dianwanRead";   // 已读
   const FAV_KEY = "dianwanFavs";    // 收藏
+  const LATER_KEY = "dwLater";      // 稍后读队列
   const VISIT_KEY = "dianwanVisits";// 打卡日期
   const WORKER_KEY = "dwWorker";    // 用户自建图片代理(Cloudflare Worker)网址
   const THEME_KEY = "dwTheme";      // 主题:auto | light | dark
@@ -1274,12 +1275,62 @@
     btn.textContent = followed ? "★ 已关注" : "☆ 关注";
   }
 
+  let favMode = "fav";    // "fav" | "later"
+  let favSearch = "";
+  let favGroup = "全部";  // 按《游戏》分组的归一键
+  let galTrackKey = null; // 当前图集所属文章 key + 其横向滚动位置(重渲时保留)
+  let galTrackScroll = 0;
+
   function renderFavs() {
-    const favs = getFavs();
-    favViewItems = [...favs].reverse().map((f, i) => normalizeItem(f, 200000 + i));
-    $("#favsList").innerHTML = favViewItems.map(newsItemHtml).join("");
-    $("#favsEmpty").classList.toggle("hidden", favViewItems.length > 0);
-    $("#favsCount").textContent = favViewItems.length ? `${favViewItems.length} 条收藏` : "长按保存喜欢的新闻";
+    const raw = favMode === "fav" ? getFavs() : getLater();
+    const all = [...raw].reverse().map((f, i) => normalizeItem(f, 200000 + i));
+    favViewItems = all; // findNews 据此解析点开
+
+    // 分组 chips:全部 + 出现的游戏(按次数 top 8)
+    const games = new Map();
+    for (const n of all)
+      for (const m of (n.title || "").matchAll(/《([^》]+)》/g)) {
+        const k = threadKeyOf(normT(m[1]));
+        if (k.length < 2) continue;
+        const cur = games.get(k) || { name: m[1].trim(), n: 0 };
+        cur.n++;
+        games.set(k, cur);
+      }
+    if (favGroup !== "全部" && !games.has(favGroup)) favGroup = "全部"; // 切模式后失效则回退
+    const tops = [...games.entries()].sort((a, b) => b[1].n - a[1].n).slice(0, 8);
+    const fc = $("#favChips");
+    if (fc)
+      fc.innerHTML = tops.length
+        ? [`<button class="chip fav-chip${favGroup === "全部" ? " chip-on" : ""}" data-fav-group="全部">全部</button>`]
+            .concat(tops.map(([k, v]) => `<button class="chip fav-chip${favGroup === k ? " chip-on" : ""}" data-fav-group="${esc(k)}">《${esc(v.name)}》</button>`))
+            .join("")
+        : "";
+
+    // 过滤:搜索 + 分组
+    let items = all;
+    const q = favSearch.toLowerCase();
+    if (q) items = items.filter((n) => (n.title + " " + n.summary + " " + n.source).toLowerCase().includes(q));
+    if (favGroup !== "全部")
+      items = items.filter((n) => [...(n.title || "").matchAll(/《([^》]+)》/g)].some((m) => threadKeyOf(normT(m[1])) === favGroup));
+
+    $("#favsList").innerHTML = items
+      .map((n) => `<div class="saved-wrap">${newsItemHtml(n)}<button class="saved-rm" data-rm-key="${esc(itemKey(n))}" aria-label="移除">✕</button></div>`)
+      .join("");
+    $("#favsEmpty").innerHTML =
+      all.length === 0
+        ? (favMode === "fav" ? "还没有收藏<br>打开任意新闻,点底部「⭐ 收藏」" : "稍后读是空的<br>打开新闻点底部「🕘 稍后」,攒起来慢慢看")
+        : "没有匹配的条目<br>换个关键词或分组试试";
+    $("#favsEmpty").classList.toggle("hidden", items.length > 0); // 按"筛选后"为空判断,避免搜索无结果时空白
+    $("#favsCount").textContent = all.length
+      ? `${favMode === "fav" ? "收藏" : "稍后读"} · ${q || favGroup !== "全部" ? items.length + "/" : ""}${all.length} 条`
+      : favMode === "fav" ? "打开新闻点「⭐ 收藏」保存" : "打开新闻点「🕘 稍后」攒起来";
+    $("#favSeg")?.querySelectorAll("button").forEach((b) => b.classList.toggle("seg-on", b.dataset.favMode === favMode));
+  }
+
+  function removeSaved(key) {
+    const K = favMode === "fav" ? FAV_KEY : LATER_KEY;
+    store.set(K, store.get(K, []).filter((f) => itemKey(f) !== key));
+    renderFavs();
   }
 
   function renderMe() {
@@ -1600,17 +1651,42 @@
 
   function renderDetailBody(n) {
     if (n.blocks) {
-      const imgs = n.blocks.filter((b) => b.t === "img").length;
-      const rt = `<p class="read-time">约 ${readMinutes(n)} 分钟读完${imgs ? ` · ${imgs} 图` : ""}</p>`;
-      $("#detailContent").innerHTML =
-        rt +
-        n.blocks
-          .map((b) => {
-            if (b.t === "img") return imgTag("detail-img", b.v, "detail", "");
-            if (b.t === "h") return `<h3 class="detail-h">${esc(b.v)}</h3>`;
-            return `<p>${esc(b.v)}</p>`;
-          })
+      const imgBlocks = n.blocks.filter((b) => b.t === "img");
+      const textBlocks = n.blocks.filter((b) => b.t !== "img");
+      const rt = `<p class="read-time">约 ${readMinutes(n)} 分钟读完${imgBlocks.length ? ` · ${imgBlocks.length} 图` : ""}</p>`;
+      const renderBlock = (b) =>
+        b.t === "img" ? imgTag("detail-img", b.v, "detail", "") : b.t === "h" ? `<h3 class="detail-h">${esc(b.v)}</h3>` : `<p>${esc(b.v)}</p>`;
+      // 图集(图多文少:≥3 图且正文段落 ≤2):横滑轮播 + 1/N 计数,文字附下方;否则照常竖排
+      if (imgBlocks.length >= 3 && textBlocks.length <= 2) {
+        const slides = imgBlocks
+          .map((b) => `<div class="gallery-slide">${imgTag("detail-img gallery-img", b.v, "detail", "")}</div>`)
           .join("");
+        // 同一篇被重渲(刷新/注水补全)时,保留图集横向滚动位置,别跳回第一张;换文章则归零
+        if (galTrackKey !== itemKey(n)) { galTrackKey = itemKey(n); galTrackScroll = 0; }
+        const keepScroll = galTrackScroll;
+        const startN = keepScroll ? Math.min(imgBlocks.length, Math.round(keepScroll / Math.max(1, $("#detailContent").clientWidth || 1)) + 1) : 1;
+        $("#detailContent").innerHTML =
+          rt +
+          `<div class="gallery"><div class="gallery-track" id="galleryTrack">${slides}</div>` +
+          `<div class="gallery-count" id="galleryCount">${startN} / ${imgBlocks.length}</div></div>` +
+          textBlocks.map(renderBlock).join("");
+        const track = $("#galleryTrack");
+        if (track) {
+          if (keepScroll) track.scrollLeft = keepScroll;
+          track.addEventListener(
+            "scroll",
+            () => {
+              galTrackScroll = track.scrollLeft;
+              const i = Math.min(imgBlocks.length, Math.round(track.scrollLeft / Math.max(1, track.clientWidth)) + 1);
+              const c = $("#galleryCount");
+              if (c) c.textContent = `${i} / ${imgBlocks.length}`;
+            },
+            { passive: true }
+          );
+        }
+      } else {
+        $("#detailContent").innerHTML = rt + n.blocks.map(renderBlock).join("");
+      }
       $("#detailLink").innerHTML = n.url
         ? `<a class="origin-link" href="${esc(n.url)}" target="_blank" rel="noopener">内容整理自 ${esc(n.source)} · 查看原文 ↗</a>`
         : "";
@@ -1692,6 +1768,7 @@
       : "";
     $("#actLike").classList.remove("acted");
     $("#actFav").classList.toggle("acted", isFaved(n));
+    $("#actLater").classList.toggle("acted", isLater(n));
     // 标记已读
     const key = itemKey(n);
     if (!readSet.has(key)) {
@@ -1722,6 +1799,13 @@
 
   const isFaved = (n) => getFavs().some((f) => itemKey(f) === itemKey(n));
 
+  // 存进收藏/稍后读用的精简快照
+  const snapshotItem = (n) => ({
+    title: n.title, titleEn: n.titleEn, summary: n.summary, source: n.source, url: n.url,
+    image: n.image, isVideo: n.isVideo, ts: n.ts, category: n.category, content: n.blocks,
+    fullArchived: n.fullArchived || undefined,
+  });
+
   function toggleFav(id) {
     const n = findNews(id);
     if (!n) return;
@@ -1731,25 +1815,34 @@
       favs = favs.filter((f) => itemKey(f) !== key);
       toast("已取消收藏");
     } else {
-      favs.push({
-        title: n.title,
-        titleEn: n.titleEn,
-        summary: n.summary,
-        source: n.source,
-        url: n.url,
-        image: n.image,
-        isVideo: n.isVideo,
-        ts: n.ts,
-        category: n.category,
-        content: n.blocks,
-        fullArchived: n.fullArchived || undefined,
-      });
+      favs.push(snapshotItem(n));
       favs = favs.slice(-100);
       toast("已收藏,可在「收藏」页查看");
     }
     store.set(FAV_KEY, favs);
     $("#actFav").classList.toggle("acted", favs.some((f) => itemKey(f) === key));
     renderHero();
+    if (!$("#view-favs").classList.contains("hidden")) renderFavs();
+  }
+
+  /* ---------- 稍后读 ---------- */
+  const getLater = () => store.get(LATER_KEY, []);
+  const isLater = (n) => getLater().some((f) => itemKey(f) === itemKey(n));
+  function toggleLater(id) {
+    const n = findNews(id);
+    if (!n) return;
+    let list = getLater();
+    const key = itemKey(n);
+    if (list.some((f) => itemKey(f) === key)) {
+      list = list.filter((f) => itemKey(f) !== key);
+      toast("已移出稍后读");
+    } else {
+      list.push(snapshotItem(n));
+      list = list.slice(-100);
+      toast("已加入稍后读");
+    }
+    store.set(LATER_KEY, list);
+    $("#actLater").classList.toggle("acted", list.some((f) => itemKey(f) === key));
     if (!$("#view-favs").classList.contains("hidden")) renderFavs();
   }
 
@@ -1905,7 +1998,7 @@
         return;
       }
       const card = e.target.closest("[data-id]");
-      if (card && !e.target.closest(".chip")) openDetail(Number(card.dataset.id));
+      if (card && !e.target.closest(".chip") && !e.target.closest(".saved-rm")) openDetail(Number(card.dataset.id));
     });
 
     // 周度风向「高频游戏」胶囊 → 回首页按该游戏筛选(热议行带 data-id,由上面的 body 委托接管)
@@ -1959,6 +2052,10 @@
     $("#actFav").addEventListener("click", (e) => {
       e.stopPropagation();
       if (currentDetailId != null) toggleFav(currentDetailId);
+    });
+    $("#actLater").addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (currentDetailId != null) toggleLater(currentDetailId);
     });
     $("#actSpeak").addEventListener("click", (e) => {
       e.stopPropagation();
@@ -2019,6 +2116,30 @@
       if (chip) toggleFollowSource(chip.dataset.followSrc);
     });
 
+    // 收藏页:收藏/稍后读切换 + 搜索 + 分组 + 单条移除
+    $("#favSeg").addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-fav-mode]");
+      if (!b) return;
+      favMode = b.dataset.favMode;
+      favGroup = "全部";
+      favSearch = "";
+      $("#favSearch").value = "";
+      renderFavs();
+    });
+    let favTimer = null;
+    $("#favSearch").addEventListener("input", (e) => {
+      clearTimeout(favTimer);
+      favTimer = setTimeout(() => { favSearch = e.target.value.trim(); renderFavs(); }, 150);
+    });
+    $("#favChips").addEventListener("click", (e) => {
+      const c = e.target.closest("[data-fav-group]");
+      if (c) { favGroup = c.dataset.favGroup; renderFavs(); }
+    });
+    $("#favsList").addEventListener("click", (e) => {
+      const rm = e.target.closest(".saved-rm[data-rm-key]");
+      if (rm) { e.stopPropagation(); removeSaved(rm.dataset.rmKey); }
+    });
+
     $("#meWorkerSave").addEventListener("click", saveWorker);
 
     const cc = $("#meCacheClear");
@@ -2050,7 +2171,8 @@
         sx = t.clientX;
         sy = t.clientY;
         dx = 0;
-        mode = null;
+        // 起点在横滑图集里 → 标记为 scroll,把左右滑让给图集,不触发返回
+        mode = e.target.closest(".gallery-track") ? "scroll" : null;
       },
       { passive: true }
     );

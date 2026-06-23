@@ -118,9 +118,15 @@
       <div class="flash-head">
         <h1 class="headline headline-sm">收藏</h1>
       </div>
-      <p class="flash-sub" id="favsCount">长按保存喜欢的新闻</p>
+      <p class="flash-sub" id="favsCount">打开新闻点「⭐ 收藏」保存</p>
     </header>
     <main class="sheet sheet-flash">
+      <div class="seg fav-seg" id="favSeg">
+        <button data-fav-mode="fav" class="seg-on">收藏</button>
+        <button data-fav-mode="later">稍后读</button>
+      </div>
+      <div class="fav-search-row"><input id="favSearch" type="search" placeholder="搜索收藏…"></div>
+      <div class="chips fav-chips" id="favChips"></div>
       <div id="favsList"></div>
       <p class="feed-more hidden" id="favsEmpty">还没有收藏<br>打开任意新闻,点底部「⭐ 收藏」</p>
     </main>
@@ -225,6 +231,7 @@
       <div class="detail-actions">
         <button class="act" id="actLike">👍 <span>点赞</span></button>
         <button class="act" id="actFav">⭐ <span>收藏</span></button>
+        <button class="act" id="actLater">🕘 <span>稍后</span></button>
         <button class="act" id="actSpeak">🔊 <span>朗读</span></button>
         <button class="act" id="actShare">↗️ <span>分享</span></button>
       </div>
