@@ -1056,7 +1056,7 @@ body {
   left: 50%;
   transform: translateX(-50%);
   background: var(--ink);
-  color: #141218;
+  color: var(--bg-app); /* 跟随主题反相:暗色=深字浅丸,浅色=浅字深丸,两边都可读 */
   font-size: 0.82rem;
   font-weight: 600;
   padding: 10px 20px;
