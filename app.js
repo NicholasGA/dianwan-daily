@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v41 · 2026-06-22"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v42 · 2026-06-23"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -875,6 +875,7 @@
   const threadKeyOf = (name) => normNameOf(name).trim();
 
   function rebuildThreads() {
+    rebuildRiver(); // 同一数据变化点顺带重算规范长河,renderFeed 之后只做轻量筛选
     threadIndexByKey = new Map();
     if (!D || !D.news) return;
     // 1) 按 itemKey 去重(窗口副本优先,带 blocks),按 ts 降序
@@ -993,46 +994,46 @@
     el.innerHTML = `<div class="src-panel thread-panel"><div class="src-panel-h">事件脉络 · ${thread.total} 条进展</div>${rows}${more}</div>`;
   }
 
-  // 窗口 + 已加载归档合并成一条连续时间长河(去重,按时间倒序,按天分隔)
-  function renderFeed() {
-    const q = searchQuery.toLowerCase();
-    const match = (n) =>
-      (activeCategory === "全部" || (activeCategory === "关注" ? itemFollowed(n) : n.category === activeCategory)) &&
-      (!q || (n.title + " " + n.summary + " " + n.source).toLowerCase().includes(q));
+  // 规范长河:窗口∪已加载归档 → itemKey 去重 → 时间倒序 → 72h 同题合并(并入来源计 🔥)。
+  // 只在数据变化时(刷新/翻历史/注水/清缓存)重算;搜索/切区/滑动只做轻量筛选,丝滑很多。
+  let _river = null;
+  function rebuildRiver() {
+    if (!D || !D.news) { _river = []; return; }
     const seenK = new Set();
-    const river = [];
+    const arr = [];
     for (const n of [...D.news, ...history.flatMap((g) => g.items)]) {
       const k = itemKey(n);
       if (seenK.has(k)) continue;
       seenK.add(k);
-      if (match(n)) river.push(n);
+      arr.push(n);
     }
-    river.sort((a, b) => (b.ts || 0) - (a.ts || 0));
-
-    // 跨轮次同题合并:72 小时内的同一事件只显示一条,被并入的来源计入🔥
+    arr.sort((a, b) => (b.ts || 0) - (a.ts || 0));
     const deduped = [];
-    for (const n of river) {
+    for (const n of arr) {
       let dup = null;
       for (let i = deduped.length - 1; i >= 0; i--) {
         const k = deduped[i];
         if ((k.ts || 0) - (n.ts || 0) > 72 * 3600 * 1000) break;
-        if (sameStoryClient(k, n)) {
-          dup = k;
-          break;
-        }
+        if (sameStoryClient(k, n)) { dup = k; break; }
       }
       if (dup) {
         dup.hotSources = dup.hotSources || [dup.source];
-        if (!dup.hotSources.includes(n.source)) {
-          dup.hotSources.push(n.source);
-          dup.hot = dup.hotSources.length;
-        }
+        if (!dup.hotSources.includes(n.source)) { dup.hotSources.push(n.source); dup.hot = dup.hotSources.length; }
         continue;
       }
       deduped.push(n);
     }
-    river.length = 0;
-    river.push(...deduped);
+    _river = deduped;
+  }
+
+  // 窗口 + 已加载归档合并成一条连续时间长河(去重,按时间倒序,按天分隔)
+  function renderFeed() {
+    if (!_river) rebuildRiver();
+    const q = searchQuery.toLowerCase();
+    const match = (n) =>
+      (activeCategory === "全部" || (activeCategory === "关注" ? itemFollowed(n) : n.category === activeCategory)) &&
+      (!q || (n.title + " " + n.summary + " " + n.source).toLowerCase().includes(q));
+    const river = _river.filter(match);
     riverOrder = river; // 详情页「下一篇」按当前信息流顺序
 
     const todayKey = dayKeyOf(Date.now());
