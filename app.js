@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v42 · 2026-06-23"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v43 · 2026-06-29"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -308,7 +308,7 @@
      国外被墙 / 单代理(Cloudflare 在华)失效 四种失败模式。
      国外源与 http-only 源直连必失败,直接从代理起跳(proxyByDefaultHosts)。 */
 
-  const FOREIGN_RE = /ignimgs\.com|gamespot|cbsistatic\.com|chuapp\.com/i;
+  const FOREIGN_RE = /ignimgs\.com|gamespot|cbsistatic\.com|chuapp\.com|futurecdn|pushsquare\.com|nintendolife\.com/i;
   const IMG_W = { thumb: 360, cover: 720, detail: 900, full: 1280 };
 
   // 旧数据可能已把图改写成 wsrv 链接,还原出原始 URL

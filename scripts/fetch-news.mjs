@@ -288,22 +288,26 @@ async function fetchSteam(feed) {
   return out.sort((a, b) => b.ts - a.ts).slice(0, feed.max);
 }
 
-// 供给量全面放开:RSS 取整源,游民翻 5 页,3DM 整页(约 65 条)
+// 供给量全面放开:RSS 取整源,游民翻 6 页,3DM 整页(约 20 条,站点无近期翻页),
+// 17173 加深;再补 PC/PS/Switch 三家平台向英文源(自动翻译),扩大覆盖广度。
 const FEEDS = [
-  { source: "游民星空", fetcher: fetchGamersky, pages: 5, max: 90 },
+  { source: "游民星空", fetcher: fetchGamersky, pages: 6, max: 110 },
   { source: "3DM", fetcher: fetch3DM, max: 60 },
   { source: "机核", fetcher: fetchRss, url: "https://www.gcores.com/rss", skip: /\/radios\// },
   { source: "游研社", fetcher: fetchRss, url: "https://www.yystv.cn/rss/feed" },
   { source: "触乐", fetcher: fetchRss, url: "http://www.chuapp.com/feed" },
-  { source: "17173", fetcher: fetch17173, max: 25 },
+  { source: "17173", fetcher: fetch17173, max: 40 },
   { source: "indienova", fetcher: fetchRss, url: "https://indienova.com/feed/", fullDesc: true },
   { source: "IGN", fetcher: fetchRss, url: "https://feeds.ign.com/ign/games-all", fullDesc: true },
   { source: "GameSpot", fetcher: fetchRss, url: "https://www.gamespot.com/feeds/game-news/", fullDesc: true },
+  { source: "PC Gamer", fetcher: fetchRss, url: "https://www.pcgamer.com/rss/", fullDesc: true, max: 12 },
+  { source: "Push Square", fetcher: fetchRss, url: "https://www.pushsquare.com/feed", fullDesc: true, max: 10 },
+  { source: "Nintendo Life", fetcher: fetchRss, url: "https://www.nintendolife.com/feed", fullDesc: true, max: 10 },
   { source: "Steam", fetcher: fetchSteam, max: 10 },
 ];
 
 // 同题去重时的来源优先级:中文源有全文优先保留;英文/官方源需翻译,略降
-const PRIORITY = { 游民星空: 0, "3DM": 0, 机核: 0, 游研社: 0, 触乐: 0, "17173": 0, indienova: 0, IGN: 1, GameSpot: 1, Steam: 1 };
+const PRIORITY = { 游民星空: 0, "3DM": 0, 机核: 0, 游研社: 0, 触乐: 0, "17173": 0, indienova: 0, IGN: 1, GameSpot: 1, "PC Gamer": 1, "Push Square": 1, "Nintendo Life": 1, Steam: 1 };
 
 /* ---------- 全文提取 ---------- */
 
