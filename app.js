@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v43 · 2026-06-29"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v44 · 2026-06-30"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -726,8 +726,9 @@
     $("#streakTitle").textContent = `${streakDays >= 7 ? "🔥 " : ""}连续追新 ${streakDays} 天`;
     $("#streakSub").textContent = `已读 ${readSet.size} 篇 · 收藏 ${getFavs().length} 条`;
     $("#flashDate").textContent = `${D.date || ""} · 实时业界动态速递`;
+    const srcCount = D.sourceStats ? Object.keys(D.sourceStats).length : 0;
     const note = D.generatedAt
-      ? `来源:游民星空 / 3DM / 机核 / 游研社 / 触乐 / indienova / IGN / GameSpot · 更新于 ${new Date(D.generatedAt).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" })}`
+      ? `来源:${srcCount ? srcCount + " 家媒体" : "多家媒体"} · 更新于 ${new Date(D.generatedAt).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" })}`
       : "演示数据 · 下拉刷新获取真实新闻";
     $$(".demo-note").forEach((el) => (el.textContent = note));
   }
@@ -1349,7 +1350,7 @@
               `<span class="src-pill${count === 0 ? " src-dead" : ""}">${esc(name)} <b>${count}</b></span>`
           )
           .join("")
-      : "游民星空 · 3DM · 机核 · 游研社 · 触乐 · indienova · IGN · GameSpot";
+      : "游民星空 · 3DM · 游侠网 · A9VG · 机核 · 游研社 · 触乐 · 17173 · indienova · IGN · GameSpot · PC Gamer · Push Square · Nintendo Life · Steam";
     const wi = $("#meWorker");
     if (wi) wi.value = WORKER_PROXY;
     const ws = $("#meWorkerState");
@@ -1387,7 +1388,7 @@
         : `<span class="me-empty">还没关注游戏 · 在快讯页点开某游戏后点「★ 关注」</span>`;
     const fs = $("#meFollowSources");
     if (fs) {
-      const allSrc = stats ? Object.keys(stats) : ["游民星空", "3DM", "机核", "游研社", "触乐", "17173", "indienova", "IGN", "GameSpot", "Steam"];
+      const allSrc = stats ? Object.keys(stats) : ["游民星空", "3DM", "游侠网", "A9VG", "机核", "游研社", "触乐", "17173", "indienova", "IGN", "GameSpot", "PC Gamer", "Push Square", "Nintendo Life", "Steam"];
       fs.innerHTML = allSrc
         .map((s) => `<span class="src-pill src-toggle${followSources.has(s) ? " followed" : ""}" data-follow-src="${esc(s)}">${followSources.has(s) ? "★ " : ""}${esc(s)}</span>`)
         .join("");

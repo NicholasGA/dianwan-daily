@@ -218,6 +218,89 @@ async function fetch17173(feed) {
   return out;
 }
 
+/* ---------- 元数据收集:游侠网(列表页解析,无 RSS) ---------- */
+
+async function fetchYouxia(feed) {
+  const html = await get("https://www.ali213.net/news/");
+  const out = [];
+  const seenUrl = new Set();
+  // 列表项:<a class="item ..." href="...news/html/YYYY-M/NNN.html" title="标题"> 内含
+  // <img data-original> 缩略图、<div class="i3">YYYY/M/D</div> 日期、<div class="desbox"><p>摘要</p></div>
+  for (const m of html.matchAll(/<a class="item[^"]*"([^>]*)>([\s\S]*?)<\/a>/g)) {
+    const attrs = m[1];
+    const block = m[2];
+    const hrefM = attrs.match(/href="(https:\/\/www\.ali213\.net\/news\/html\/\d{4}-\d{1,2}\/\d{5,}\.html)"/);
+    if (!hrefM) continue; // 跳过游戏库/专题等非新闻 item
+    const url = hrefM[1];
+    if (seenUrl.has(url)) continue;
+    seenUrl.add(url);
+    const titleM = attrs.match(/title="([^"]*)"/);
+    const title = titleM ? decode(titleM[1]).trim() : "";
+    if (!title) continue;
+    const img = block.match(/data-original="([^"]+)"/);
+    const desM = block.match(/<div class="desbox">\s*<p>([\s\S]*?)<\/p>/);
+    const dM = block.match(/<div class="i3">\s*(\d{4})\/(\d{1,2})\/(\d{1,2})\s*<\/div>/);
+    // 列表仅给到日期(无时分):取北京当天中午;同日条目按列表顺序(新→旧)在当天内微调次序
+    let ts;
+    if (dM) {
+      const day = `${dM[1]}-${String(dM[2]).padStart(2, "0")}-${String(dM[3]).padStart(2, "0")}`;
+      ts = (Date.parse(`${day}T12:00:00+08:00`) || Date.now()) + (200 - out.length) * 30000;
+    } else {
+      ts = Date.now();
+    }
+    out.push({
+      title,
+      summary: desM ? stripTags(desM[1]).slice(0, 110) : "",
+      source: feed.source,
+      url,
+      image: img ? decode(img[1]) : null,
+      isVideo: false,
+      ts,
+    });
+    if (feed.max && out.length >= feed.max) break;
+  }
+  return out;
+}
+
+/* ---------- 元数据收集:A9VG(主机向,列表页解析) ---------- */
+
+async function fetchA9vg(feed) {
+  const html = await get("https://www.a9vg.com/list/news");
+  const out = [];
+  const seenUrl = new Set();
+  // 卡片:<a href="/article/NNN" class="vd-card a9-rich-card-list_item ..."> 内含
+  // <img class="a9-rich-card-list_image" alt src> 缩略图、<div class="...a9-rich-card-list_label...">标题</div>、行内 "YYYY-M-D HH:MM" 时间
+  for (const m of html.matchAll(/<a\b[^>]*href="(\/article\/\d+)"[^>]*class="[^"]*a9-rich-card-list_item[^"]*"[^>]*>([\s\S]*?)<\/a>/g)) {
+    const url = "https://www.a9vg.com" + m[1];
+    if (seenUrl.has(url)) continue;
+    seenUrl.add(url);
+    const block = m[2];
+    const imgTag = (block.match(/<img\b[^>]*a9-rich-card-list_image[^>]*>/) || block.match(/<img\b[^>]*>/) || [""])[0];
+    const srcM = imgTag.match(/src="([^"]+)"/);
+    let image = srcM ? decode(srcM[1]) : null;
+    if (image && image.startsWith("//")) image = "https:" + image;
+    const altM = imgTag.match(/alt="([^"]*)"/);
+    const labelM = block.match(/a9-rich-card-list_label[^"]*">\s*([\s\S]*?)<\/div>/);
+    const title = labelM ? stripTags(labelM[1]) : altM ? decode(altM[1]).trim() : "";
+    if (!title) continue;
+    const dM = block.match(/(20\d{2})-(\d{1,2})-(\d{1,2})\s+(\d{1,2}):(\d{2})/);
+    const ts = dM
+      ? Date.parse(`${dM[1]}-${String(dM[2]).padStart(2, "0")}-${String(dM[3]).padStart(2, "0")}T${String(dM[4]).padStart(2, "0")}:${dM[5]}:00+08:00`) || Date.now()
+      : Date.now();
+    out.push({
+      title,
+      summary: "",
+      source: feed.source,
+      url,
+      image,
+      isVideo: false,
+      ts,
+    });
+    if (feed.max && out.length >= feed.max) break;
+  }
+  return out;
+}
+
 /* ---------- 官方源:Steam 新闻 API(无需密钥,一手公告/更新) ---------- */
 
 // 追踪的 appid(主流单机/3A/服务型 + 国产标杆),只展示近三周有更新的
@@ -293,6 +376,8 @@ async function fetchSteam(feed) {
 const FEEDS = [
   { source: "游民星空", fetcher: fetchGamersky, pages: 6, max: 110 },
   { source: "3DM", fetcher: fetch3DM, max: 60 },
+  { source: "游侠网", fetcher: fetchYouxia, max: 50 },
+  { source: "A9VG", fetcher: fetchA9vg, max: 30 },
   { source: "机核", fetcher: fetchRss, url: "https://www.gcores.com/rss", skip: /\/radios\// },
   { source: "游研社", fetcher: fetchRss, url: "https://www.yystv.cn/rss/feed" },
   { source: "触乐", fetcher: fetchRss, url: "http://www.chuapp.com/feed" },
@@ -307,7 +392,7 @@ const FEEDS = [
 ];
 
 // 同题去重时的来源优先级:中文源有全文优先保留;英文/官方源需翻译,略降
-const PRIORITY = { 游民星空: 0, "3DM": 0, 机核: 0, 游研社: 0, 触乐: 0, "17173": 0, indienova: 0, IGN: 1, GameSpot: 1, "PC Gamer": 1, "Push Square": 1, "Nintendo Life": 1, Steam: 1 };
+const PRIORITY = { 游民星空: 0, "3DM": 0, 游侠网: 0, A9VG: 0, 机核: 0, 游研社: 0, 触乐: 0, "17173": 0, indienova: 0, IGN: 1, GameSpot: 1, "PC Gamer": 1, "Push Square": 1, "Nintendo Life": 1, Steam: 1 };
 
 /* ---------- 全文提取 ---------- */
 
@@ -316,7 +401,7 @@ const PLACEHOLDER_IMG = /blank\.(png|gif|jpe?g)|loading|placeholder|grey\.gif|sp
 
 // 从单个 <img> 标签里挑出"真实大图":懒加载属性优先于占位 src
 function pickImgUrl(tag) {
-  const attrs = ["data-large", "data-origin", "sourceimageurl", "data-original", "data-src", "contentimageurl", "original", "src"];
+  const attrs = ["data-large", "data-origin", "sourceimageurl", "data-original", "data-src", "contentimageurl", "original", "zoomfile", "file", "src"];
   for (const a of attrs) {
     const m = tag.match(new RegExp(a + '\\s*=\\s*["\']([^"\']+)["\']', "i"));
     if (m && m[1] && !PLACEHOLDER_IMG.test(m[1])) return decode(m[1]);
@@ -353,6 +438,12 @@ function htmlToBlocks(html) {
 const CONTAINERS = {
   "17173.com": /<div class="gb-final-mod-article[^"]*"[^>]*>([\s\S]*?)(?:gb-final-pn|gb-final-mod-recommend|猜你喜欢|class="mod-side-qrcode|class="mod-share|免责声明|<footer|$)/,
   "3dmgame.com": /<div class="news_warp_center">([\s\S]*?)(?:class="bq|<footer|$)/,
+  // 游侠网正文在 <div class="n_show box-shadow" id="Content">;翻页脚本/精品专栏/上下篇/评论块作结束标记
+  "ali213.net": /<div class="n_show[^"]*"\s+id="Content">([\s\S]*?)(?:page-break-after|<div class="jpzl|<div class="news_gt|<div class="ng_pl|责任编辑|<footer|$)/,
+  // A9VG 正文在 <div class="c-article-main_contentraw">;标签/互动/评论区作结束标记
+  "a9vg.com": /<div class="c-article-main_contentraw">([\s\S]*?)(?:<div class="[^"]*c-article-main_tag|<div class="[^"]*c-article-main_behavior|<div class="[^"]*c-comment|<footer|$)/,
+  // A9VG 部分 /article/N 实为社区(Discuz 论坛)贴的跳转,正文在首楼 <td class="t_f" id="postmessage_N">
+  "bbs.a9vg.com": /<td[^>]*id="postmessage_\d+"[^>]*>([\s\S]*?)(?:<div class="pstl|<div id="comment|<div class="pattl|<dl class="bbda|<div class="tip\b|<\/td>)/,
   "gamersky.com": /<div class="Mid2L_con">([\s\S]*?)(?:<span id="pe100_page_contentpage|<!--文章内容导航|<a class="diggBtn|<div class="Mid2L_extra|$)/,
   // 游民社区(club)话题贴:部分"趣闻/话题"新闻只是个跳转壳,真身在这里
   "club.gamersky.com": /<div class="qzcmt-content-txt GSContent">([\s\S]*?)(?:<div class="qzcmt-bot1|<div class="qzcmt-action|<\/div>\s*<\/div>\s*<div|$)/,
@@ -405,6 +496,15 @@ async function extractContent(item) {
         url = decode(redir[1]);
         html = await get(url);
       }
+    }
+
+    // A9VG:部分 /article/N 是社区贴的跳转(get 已跟随 302 到 bbs.a9vg.com),按 Discuz 首楼容器提取
+    if (domain === "a9vg.com" && !html.includes("c-article-main_contentraw") && /postmessage_\d+/.test(html)) {
+      const bm = html.match(CONTAINERS["bbs.a9vg.com"]);
+      if (!bm) return null;
+      // Discuz 首楼是 <br> 分隔的纯文本(无 <p>),先转成段落再走通用块解析
+      const pseudo = "<p>" + bm[1].replace(/(<br\s*\/?>\s*)+/gi, "</p><p>") + "</p>";
+      return finalizeBlocks(htmlToBlocks(pseudo));
     }
 
     const cdomain = matchDomain(url) || domain;
