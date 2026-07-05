@@ -8,7 +8,7 @@
    无第三方依赖,Node 18+ 自带 fetch。
    ============================================================ */
 
-import { writeFileSync } from "node:fs";
+import { writeFileSync, readFileSync } from "node:fs";
 
 const MAX_ITEMS = 25;         // 每次最多收录条数
 const RECENT_DAYS = 14;       // 只收录近 N 天的文章
@@ -101,8 +101,17 @@ async function main() {
   }
 
   if (!items.length) { console.error("未抓到任何篝火文章,保留旧缓存不覆盖"); process.exit(1); }
+  // 文章内容无变化则不重写(仅 generatedAt 变动不算),避免每日空提交撑大 git 历史
+  const file = new URL("./gouhuo-cache.json", import.meta.url);
+  try {
+    const prev = JSON.parse(readFileSync(file, "utf8"));
+    if (JSON.stringify(prev.items) === JSON.stringify(items)) {
+      console.log(`\n篝火内容无变化(${items.length} 篇),缓存保持不变,不提交。`);
+      return;
+    }
+  } catch {}
   const out = { generatedAt: new Date().toISOString(), source: "篝火营地", items };
-  writeFileSync(new URL("./gouhuo-cache.json", import.meta.url), JSON.stringify(out), "utf8");
+  writeFileSync(file, JSON.stringify(out), "utf8");
   console.log(`\ngouhuo-cache.json 已写入:${items.length} 篇(全文)`);
 }
 main();

@@ -3,3 +3,7 @@ _cdn_*
 
 # 本地预览工具(仅开发用,不部署)
 .claude/
+
+# 篝火本地刷新器(机器相关,含本机路径)+ 其运行日志
+refresh-gouhuo.ps1
+gouhuo-refresh.log
