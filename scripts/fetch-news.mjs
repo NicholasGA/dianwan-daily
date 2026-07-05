@@ -301,6 +301,36 @@ async function fetchA9vg(feed) {
   return out;
 }
 
+/* ---------- 国内一手源:篝火营地(读本地缓存,不联网) ----------
+   篝火(gouhuo.qq.com)对海外 IP 地理封锁,Actions 美国节点直连/公共代理均不可达。
+   由【国内机器】跑 scripts/fetch-gouhuo.mjs 抓好正文写入 gouhuo-cache.json 并提交,
+   本函数只读该缓存把篝火并入信息流(正文已内联在 descBlocks,step5 不再联网抓)。
+   缓存缺失或全部过期则返回空(优雅降级,不报错)。 */
+
+function fetchGouhuo(feed) {
+  let cache;
+  try {
+    cache = JSON.parse(readFileSync(new URL("./gouhuo-cache.json", import.meta.url), "utf8"));
+  } catch {
+    return [];
+  }
+  const cutoff = Date.now() - (feed.recentDays || 14) * 86400000;
+  return (cache.items || [])
+    .filter((it) => it && it.title && it.ts && it.ts >= cutoff)
+    .sort((a, b) => b.ts - a.ts)
+    .slice(0, feed.max || 25)
+    .map((it) => ({
+      title: it.title,
+      summary: it.summary || "",
+      source: feed.source,
+      url: it.url,
+      image: it.image || null,
+      isVideo: false,
+      ts: it.ts,
+      descBlocks: Array.isArray(it.content) && it.content.length ? it.content : undefined,
+    }));
+}
+
 /* ---------- 官方源:Steam 新闻 API(无需密钥,一手公告/更新) ---------- */
 
 // 追踪的 appid(主流单机/3A/服务型 + 国产标杆),只展示近三周有更新的
@@ -378,6 +408,7 @@ const FEEDS = [
   { source: "3DM", fetcher: fetch3DM, max: 60 },
   { source: "游侠网", fetcher: fetchYouxia, max: 50 },
   { source: "A9VG", fetcher: fetchA9vg, max: 30 },
+  { source: "篝火营地", fetcher: fetchGouhuo, max: 25, recentDays: 14 },
   { source: "机核", fetcher: fetchRss, url: "https://www.gcores.com/rss", skip: /\/radios\// },
   { source: "游研社", fetcher: fetchRss, url: "https://www.yystv.cn/rss/feed" },
   { source: "触乐", fetcher: fetchRss, url: "http://www.chuapp.com/feed" },
@@ -392,7 +423,7 @@ const FEEDS = [
 ];
 
 // 同题去重时的来源优先级:中文源有全文优先保留;英文/官方源需翻译,略降
-const PRIORITY = { 游民星空: 0, "3DM": 0, 游侠网: 0, A9VG: 0, 机核: 0, 游研社: 0, 触乐: 0, "17173": 0, indienova: 0, IGN: 1, GameSpot: 1, "PC Gamer": 1, "Push Square": 1, "Nintendo Life": 1, Steam: 1 };
+const PRIORITY = { 游民星空: 0, "3DM": 0, 游侠网: 0, A9VG: 0, 篝火营地: 0, 机核: 0, 游研社: 0, 触乐: 0, "17173": 0, indienova: 0, IGN: 1, GameSpot: 1, "PC Gamer": 1, "Push Square": 1, "Nintendo Life": 1, Steam: 1 };
 
 /* ---------- 全文提取 ---------- */
 
