@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v44 · 2026-06-30"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v45 · 2026-07-05"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -178,7 +178,8 @@
     } catch {}
   }
 
-  const SEEN_KEY = "dianwanSeen";   // 手动刷新时已见过的新闻(算"新增"用)
+  const SEEN_KEY = "dianwanSeen";   // 已见过的新闻 key(用于"新增 N 条"与"上次看到这里"锚点)
+  const SEEN_TS_KEY = "dianwanSeenTs"; // 上次记账时间戳,判定是否为"新会话"
   const CACHE_KEY = "dianwanCache"; // 上次成功拉取的数据(秒开用)
   const READ_KEY = "dianwanRead";   // 已读
   const FAV_KEY = "dianwanFavs";    // 收藏
@@ -608,6 +609,17 @@
   /* ---------- 刷新 ---------- */
 
   let refreshing = false;
+  // 「上次看到这里」锚点:prevSessionSeen = 上个会话结束时已见的 key 集合;
+  // 本次会话新抓到、且不在该集合里的条目排在锚点线之上。
+  let prevSessionSeen = null;
+  let lastActiveTs = Date.now();
+  const NEW_SESSION_GAP = 30 * 60000; // 离开超过 30 分钟视为新会话,重划锚点
+  function snapshotSeenBoundary() {
+    // 仅当距上次记账确实超过一个会话间隔,才把"已见"快照为上次会话边界;否则不显示锚线
+    const lastTs = store.get(SEEN_TS_KEY, 0);
+    const seen = store.get(SEEN_KEY, []);
+    prevSessionSeen = lastTs && Date.now() - lastTs > NEW_SESSION_GAP && seen.length ? new Set(seen) : new Set();
+  }
   async function refresh(silent) {
     if (refreshing) return;
     refreshing = true;
@@ -662,13 +674,14 @@
         }
       }
 
-      // 新增统计:只在手动刷新时记账(启动静默刷新不算"看过")
+      // 记账"已见"key(每次刷新都记,供信息流「上次看到这里」锚点);toast/回顶仅手动刷新
+      const keys = combinedNews.map(itemKey);
+      const prev = store.get(SEEN_KEY, []);
+      const prevSet = new Set(prev);
+      const freshCount = keys.filter((k) => !prevSet.has(k)).length;
+      store.set(SEEN_KEY, [...new Set([...keys, ...prev])].slice(0, 600));
+      store.set(SEEN_TS_KEY, Date.now());
       if (!silent) {
-        const keys = combinedNews.map(itemKey);
-        const prev = store.get(SEEN_KEY, []);
-        const prevSet = new Set(prev);
-        const freshCount = keys.filter((k) => !prevSet.has(k)).length;
-        store.set(SEEN_KEY, [...new Set([...keys, ...prev])].slice(0, 600));
         toast(
           prev.length === 0
             ? `已更新 · ${combinedNews.length} 条新闻`
@@ -676,12 +689,8 @@
               ? `比上次刷新新增 ${freshCount} 条`
               : "已是最新,没有新内容"
         );
-        // 抓到新内容时回到顶部、切回全部,确保新条目可见
-        if (freshCount > 0 && activeTab === "home") {
-          activeCategory = "全部";
-          searchQuery = "";
-          renderChips();
-          renderFeed();
+        // 有新内容且正处默认视图(全部·无搜索)时才回顶;分区/搜索语境保留给用户,不再强制切回全部
+        if (freshCount > 0 && activeTab === "home" && activeCategory === "全部" && !searchQuery) {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
       }
@@ -1039,9 +1048,17 @@
 
     const todayKey = dayKeyOf(Date.now());
     const yesterdayKey = dayKeyOf(Date.now() - 86400000);
+    // 会话锚点「上次看到这里」:仅默认视图(全部·无搜索)显示,其上方即本次新增
+    const showSeenLine = activeCategory === "全部" && !searchQuery && prevSessionSeen && prevSessionSeen.size;
     let lastDay = null;
+    let seenPlaced = false;
+    let placedItems = 0;
     let html = "";
     for (const n of river) {
+      if (showSeenLine && !seenPlaced && placedItems > 0 && prevSessionSeen.has(itemKey(n))) {
+        html += `<div class="feed-day feed-seen">上次看到这里</div>`;
+        seenPlaced = true;
+      }
       const d = n.ts ? dayKeyOf(n.ts) : todayKey;
       if (d !== lastDay) {
         lastDay = d;
@@ -1050,6 +1067,7 @@
         }
       }
       html += newsItemHtml(n);
+      placedItems++;
     }
     if (!html && q) html = `<p class="feed-empty">没有找到包含「${esc(searchQuery)}」的新闻<br><span>搜索范围是已加载的新闻,下滑加载更多历史后可再搜</span></p>`;
     else if (!html && activeCategory === "关注")
@@ -1253,6 +1271,9 @@
     renderChips();
     renderFeed();
     renderSearchFollow();
+    // 落点直接到「最新资讯」区,让筛选结果与搜索栏可见,而非停在首页顶部
+    const feed = document.querySelector("#view-home .feed");
+    if (feed) window.scrollTo(0, Math.max(0, feed.getBoundingClientRect().top + window.scrollY - 56));
   }
 
   // 切换分区时清掉搜索筛选,避免"分区 ∩ 上次搜索"导致的意外空结果
@@ -1731,10 +1752,13 @@
     $("#detailTitle").textContent = n.title;
     $("#detailTitleEn").textContent = n.titleEn || "";
     $("#detailTitleEn").classList.toggle("hidden", !n.titleEn);
+    const followName = (n.title.match(/《([^》]+)》/) || [])[1] || "";
+    const followedGame = followName && followGames.has(threadKeyOf(normT(followName)));
     $("#detailMeta").innerHTML =
       `<span>${esc(n.source)}</span><span>${esc(n.time)}</span>` +
       (n.official ? `<span class="hot-meta">官方公告</span>` : "") +
-      (n.hot > 1 ? `<span class="hot-meta">🔥 ${n.hotSources ? esc(n.hotSources.join("、")) : n.hot + " 家媒体"}同报</span>` : "");
+      (n.hot > 1 ? `<span class="hot-meta">🔥 ${n.hotSources ? esc(n.hotSources.join("、")) : n.hot + " 家媒体"}同报</span>` : "") +
+      (followName ? `<span class="meta-follow${followedGame ? " on" : ""}" data-follow-game="${esc(followName)}">${followedGame ? "★ 已关注" : "☆ 关注"}《${esc(followName)}》</span>` : "");
     renderDetailBody(n);
     // 无全文时的三级管道:当日归档 → 现场抓原文(代理/机核 API) → 摘要兜底
     if (!n.blocks && (n.fullArchived || canFetchFullText(n))) {
@@ -1961,11 +1985,13 @@
   /* ---------- 标签栏 ---------- */
 
   let activeTab = "home";
+  const tabScroll = {}; // 各 tab 的滚动位置,切走记住、切回还原
   function switchTab(tab) {
     if (tab === activeTab) {
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
+    tabScroll[activeTab] = window.scrollY;
     activeTab = tab;
     $$(".tab").forEach((b) => b.classList.toggle("tab-active", b.dataset.tab === tab));
     $("#view-home").classList.toggle("hidden", tab !== "home");
@@ -1975,7 +2001,7 @@
     if (tab === "flash") renderFlash(); // 重算本周风向(历史可能已增长)
     if (tab === "favs") renderFavs();
     if (tab === "me") renderMe();
-    window.scrollTo(0, 0);
+    window.scrollTo(0, tabScroll[tab] || 0);
   }
 
   /* ---------- 事件绑定 ---------- */
@@ -1997,6 +2023,15 @@
         const orig = e.target.dataset.orig;
         $("#lightboxImg").src = orig ? imgSrc(orig, "full") : e.target.src;
         $("#lightbox").classList.remove("hidden");
+        return;
+      }
+      // 详情页 meta 里的「☆ 关注《游戏》」pill:就地关注 + 即时更新按钮态
+      const fg = e.target.closest("[data-follow-game]");
+      if (fg) {
+        toggleFollowGame(fg.dataset.followGame);
+        const on = followGames.has(threadKeyOf(normT(fg.dataset.followGame)));
+        fg.classList.toggle("on", on);
+        fg.textContent = `${on ? "★ 已关注" : "☆ 关注"}《${fg.dataset.followGame}》`;
         return;
       }
       const card = e.target.closest("[data-id]");
@@ -2455,6 +2490,7 @@
   /* ---------- 启动 ---------- */
 
   streakDays = updateVisits();
+  snapshotSeenBoundary(); // 冷启动先按上次会话划定「上次看到这里」锚点(须在首个 renderAll 前)
 
   // 本地缓存秒开(消除演示数据闪屏)。迁移后 CACHE_KEY 是瘦身镜像(无正文),正文由 IDB 注水补全
   const cached = store.get(CACHE_KEY, null);
@@ -2485,7 +2521,14 @@
   // iOS 从主屏幕唤醒 PWA 时常常不重新加载页面:
   // 回到前台主动检查新版本 + 静默刷新新闻,不依赖"重新打开"
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState !== "visible") return;
+    if (document.visibilityState !== "visible") { lastActiveTs = Date.now(); return; }
+    // 回到前台:补记打卡(iOS 保活不重载页面,跨天唤醒否则会漏签导致「连续追新」断签)
+    const away = Date.now() - lastActiveTs;
+    const s = updateVisits();
+    if (s !== streakDays) { streakDays = s; renderHero(); if (activeTab === "me") renderMe(); }
+    // 离开超过一个会话间隔再回来,重划「上次看到这里」锚点
+    if (away > NEW_SESSION_GAP) snapshotSeenBoundary();
+    lastActiveTs = Date.now();
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.getRegistration().then((r) => r && r.update()).catch(() => {});
     }

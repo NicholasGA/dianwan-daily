@@ -484,6 +484,9 @@ body {
   height: 1px;
   background: var(--hairline);
 }
+/* 「上次看到这里」会话锚点:金色分隔线,区别于灰色日期分隔 */
+.feed-seen { margin: 14px 0 6px; font-size: 0.7rem; }
+.feed-seen::before, .feed-seen::after { background: var(--gold); opacity: 0.4; }
 .feed-more {
   text-align: center;
   font-size: 0.76rem;
@@ -659,6 +662,7 @@ body {
   background: var(--bg-app);
   z-index: 100;
   overflow-y: auto;
+  overscroll-behavior: contain; /* 文章读到底后不把滚动链传给底层信息流,避免返回时列表位置漂移 */
   animation: slideUp 0.32s cubic-bezier(0.22, 0.9, 0.3, 1);
   touch-action: pan-y;
 }
@@ -740,6 +744,18 @@ body {
   display: flex; gap: 12px;
   flex-wrap: wrap;
 }
+/* 详情页 meta 里的「☆ 关注《游戏》」pill:就地关注入口 */
+.meta-follow {
+  color: var(--gold);
+  border: 1px solid var(--hairline);
+  border-radius: 999px;
+  padding: 1px 10px;
+  font-size: 0.72rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s, border-color 0.15s;
+}
+.meta-follow.on { background: rgba(200, 169, 106, 0.14); border-color: var(--gold); }
 .detail-content p {
   font-size: 1rem;
   line-height: 1.95;
