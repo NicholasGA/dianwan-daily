@@ -783,6 +783,19 @@ body {
   color: var(--ink-4) !important;
   padding: 8px 0;
 }
+.load-spin { width: 15px; height: 15px; vertical-align: -3px; margin-right: 6px; animation: rot 0.9s linear infinite; }
+.detail-loadfail { color: var(--ink-3) !important; line-height: 1.7; }
+.detail-retry {
+  margin-left: 6px;
+  padding: 2px 12px;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--gold);
+  font-size: 0.74rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
 .origin-link {
   display: block;
   text-align: center;

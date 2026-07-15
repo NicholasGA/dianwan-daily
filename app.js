@@ -5,7 +5,7 @@
    ============================================================ */
 
 (function () {
-  const APP_BUILD = "v45 · 2026-07-05"; // 与 sw.js 缓存版本同步更新
+  const APP_BUILD = "v46 · 2026-07-05"; // 与 sw.js 缓存版本同步更新
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
 
@@ -392,6 +392,21 @@
     }
   };
 
+  // 挂起看门狗:国内网络对未代理的国外图址常"黑洞"挂起 —— onerror 几十秒不触发甚至不触发,
+  // 缩略图会一直闪骨架、永远轮不到代理/字形兜底。6s 内既没 onload 也没自然报错就手动推进级联。
+  function armImgWatchdogs(root) {
+    (root || document).querySelectorAll("img[data-orig]:not([data-loaded]):not([data-wd])").forEach((img) => {
+      img.dataset.wd = "1";
+      const tick = () => {
+        if (!img.isConnected || img.dataset.loaded) return;
+        const stage = img.dataset.stage;
+        dwImgError(img); // 推进一级代理,或耗尽后落到字形占位
+        if (img.isConnected && !img.dataset.loaded && img.dataset.stage !== stage) setTimeout(tick, 6000);
+      };
+      setTimeout(tick, 6000);
+    });
+  }
+
   function coverMedia(n) {
     if (n.image) return imgTag("cover-img", n.image, "cover", n.cover.glyph);
     return `<span class="cover-deco">${esc(n.cover.glyph)}</span>`;
@@ -620,62 +635,88 @@
     const seen = store.get(SEEN_KEY, []);
     prevSessionSeen = lastTs && Date.now() - lastTs > NEW_SESSION_GAP && seen.length ? new Set(seen) : new Set();
   }
+  // 合并 news.json 与即时增量为统一数据集(按 URL/标题去重,整体按时间重排)
+  function buildCombined(remote, instantResult) {
+    const baseTitles = new Set(remote.news.map((n) => (n.title || "").slice(0, 18)));
+    const baseUrls = new Set(remote.news.map((n) => n.url));
+    const fresh = (instantResult || [])
+      .filter((n) => !baseUrls.has(n.url) && !baseTitles.has(n.title.slice(0, 18)))
+      .filter((n, i, arr) => arr.findIndex((x) => x.title.slice(0, 18) === n.title.slice(0, 18)) === i)
+      .slice(0, 40)
+      .map((n) => ({ ...n, category: categorizeClient(n.title + " " + n.summary), content: null }));
+    const combinedNews = [...fresh, ...remote.news]
+      .sort((a, b) => (b.ts || 0) - (a.ts || 0))
+      .map((n, i) => ({ ...n, id: i + 1 }));
+    return {
+      generatedAt: remote.generatedAt,
+      sources: remote.sources || null,
+      digest: remote.digest || null,
+      news: combinedNews,
+      flash: combinedNews.slice(0, 24).map((n) => ({ ts: n.ts, text: n.title, id: n.id })),
+    };
+  }
+
+  // 落地数据集:更新 D/脉络/缓存;仅当"可见数据(generatedAt+条数)确有变化"才重渲,
+  // 消除同数据反复整表重建导致的缩略图闪回占位、头条横滑架弹回。
+  let shownSig = null;
+  function applyCombined(combined, keepAnchor) {
+    renderGen++; // 网络数据优先:让在途的 IDB 注水自动作废
+    D = normalizeRemote(combined);
+    rebuildThreads();
+    const sig = (combined.generatedAt || "") + "#" + combined.news.length;
+    if (sig !== shownSig) {
+      shownSig = sig;
+      if (keepAnchor) {
+        renderHero(); renderFeatured(); renderChips(); renderDigest(); renderTopics(); renderFeedKeepAnchor(); renderFlash();
+      } else {
+        renderAll();
+      }
+    }
+    store.set(CACHE_KEY, slimSnapshot(combined)); // 瘦身镜像 → localStorage,秒开且不撑 5MB 配额
+    // 全量快照(含正文)落 IDB,仅 generatedAt 变化才写 ~1.2MB,避免前台切换反复写
+    if (combined.generatedAt && combined.generatedAt !== lastSnapshotGen) {
+      lastSnapshotGen = combined.generatedAt;
+      safeIdb(idb.put("snapshot", { ...combined, savedAt: Date.now(), schemaTag: SCHEMA }, "current"));
+      safeIdb(idb.put("meta", combined.generatedAt, "windowGeneratedAt"));
+    }
+    // 正在阅读的文章若在新数据里有了全文,就地补全
+    if (currentDetailKey && !$("#detail").classList.contains("hidden")) {
+      const freshItem = D.news.find((x) => itemKey(x) === currentDetailKey);
+      if (freshItem && freshItem.blocks) { currentDetailId = freshItem.id; renderDetailBody(freshItem); }
+    }
+  }
+
   async function refresh(silent) {
     if (refreshing) return;
     refreshing = true;
     $$(".refresh-btn svg").forEach((s) => s.classList.add("spin"));
     try {
-      const [res, instantResult] = await Promise.all([
-        fetch("news.json", { cache: "no-store" }),
-        fetchInstant().catch(() => []),
-      ]);
+      // 即时增量后台并行,不阻塞 news.json 首渲(否则要等最慢的直连源/代理超时 7-8s)
+      const instantP = fetchInstant().catch(() => []);
+      // no-cache:内容未变时 GitHub Pages 返 304,省掉整包重传+重解析;加超时防弱网挂死
+      const res = await fetch("news.json", { cache: "no-cache", signal: AbortSignal.timeout(15000) });
       if (!res.ok) throw new Error("HTTP " + res.status);
       const remote = await res.json();
       if (!remote.news || !remote.news.length) throw new Error("empty");
 
-      // 即时增量:全量合并(按 URL/标题去重),整体按时间重排
-      const baseTitles = new Set(remote.news.map((n) => (n.title || "").slice(0, 18)));
-      const baseUrls = new Set(remote.news.map((n) => n.url));
-      const fresh = instantResult
-        .filter((n) => !baseUrls.has(n.url) && !baseTitles.has(n.title.slice(0, 18)))
-        .filter((n, i, arr) => arr.findIndex((x) => x.title.slice(0, 18) === n.title.slice(0, 18)) === i)
-        .slice(0, 40)
-        .map((n) => ({ ...n, category: categorizeClient(n.title + " " + n.summary), content: null }));
+      // 第一段:仅用 news.json 立即上屏(≈1s),先让今日新闻可见
+      const scrolledHome = activeTab === "home" && window.scrollY > 300;
+      const combined0 = buildCombined(remote, []);
+      applyCombined(combined0, silent && scrolledHome);
 
-      const combinedNews = [...fresh, ...remote.news]
-        .sort((a, b) => (b.ts || 0) - (a.ts || 0))
-        .map((n, i) => ({ ...n, id: i + 1 }));
-      const combined = {
-        generatedAt: remote.generatedAt,
-        sources: remote.sources || null,
-        digest: remote.digest || null,
-        news: combinedNews,
-        flash: combinedNews.slice(0, 24).map((n) => ({ ts: n.ts, text: n.title, id: n.id })),
-      };
-      renderGen++; // 网络数据优先:让任何在途的 IDB 启动注水自动作废
-      D = normalizeRemote(combined);
-      rebuildThreads(); // 数据变化点重算事件脉络(在 renderAll 之前,使徽章/脉络面板即时正确)
-      renderAll();
-      store.set(CACHE_KEY, slimSnapshot(combined)); // 瘦身镜像 → localStorage,秒开且不撑 5MB 配额
-      // 全量快照(含正文)落 IndexedDB,断网时供秒开;失败被 safeIdb 吞掉,不影响渲染。
-      // 仅当流水线数据真的更新(generatedAt 变化)才写 ~1.2MB,避免前台切换静默刷新时反复写
-      if (combined.generatedAt && combined.generatedAt !== lastSnapshotGen) {
-        lastSnapshotGen = combined.generatedAt;
-        safeIdb(idb.put("snapshot", { ...combined, savedAt: Date.now(), schemaTag: SCHEMA }, "current"));
-        safeIdb(idb.put("meta", combined.generatedAt, "windowGeneratedAt"));
-      }
-
-      // 正在阅读的文章若在新数据里有了全文,就地补全
-      if (currentDetailKey && !$("#detail").classList.contains("hidden")) {
-        const freshItem = D.news.find((x) => itemKey(x) === currentDetailKey);
-        if (freshItem && freshItem.blocks) {
-          currentDetailId = freshItem.id;
-          renderDetailBody(freshItem);
+      // 第二段:即时增量到了再补(可能为空或全重复);二次渲染一律保锚,避免正在读时跳动
+      const instantResult = await instantP;
+      let finalCombined = combined0;
+      if (instantResult.length) {
+        const combined1 = buildCombined(remote, instantResult);
+        if (combined1.news.length !== combined0.news.length) {
+          applyCombined(combined1, true);
+          finalCombined = combined1;
         }
       }
 
       // 记账"已见"key(每次刷新都记,供信息流「上次看到这里」锚点);toast/回顶仅手动刷新
-      const keys = combinedNews.map(itemKey);
+      const keys = finalCombined.news.map(itemKey);
       const prev = store.get(SEEN_KEY, []);
       const prevSet = new Set(prev);
       const freshCount = keys.filter((k) => !prevSet.has(k)).length;
@@ -684,12 +725,12 @@
       if (!silent) {
         toast(
           prev.length === 0
-            ? `已更新 · ${combinedNews.length} 条新闻`
+            ? `已更新 · ${finalCombined.news.length} 条新闻`
             : freshCount > 0
               ? `比上次刷新新增 ${freshCount} 条`
               : "已是最新,没有新内容"
         );
-        // 有新内容且正处默认视图(全部·无搜索)时才回顶;分区/搜索语境保留给用户,不再强制切回全部
+        // 有新内容且正处默认视图(全部·无搜索)时才回顶;分区/搜索语境保留给用户
         if (freshCount > 0 && activeTab === "home" && activeCategory === "全部" && !searchQuery) {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -743,9 +784,11 @@
   }
 
   function renderFeatured() {
+    const row = $("#featuredRow");
+    const keepLeft = row ? row.scrollLeft : 0;
     const items = D.featuredIds.map(findNews).filter(Boolean);
     $("#featuredCount").textContent = items.length;
-    $("#featuredRow").innerHTML = items
+    row.innerHTML = items
       .map(
         (n) => `
       <div class="cover${n.image ? " has-img" : ""}" style="${coverStyle(n.cover)}" data-id="${n.id}">
@@ -756,6 +799,7 @@
       </div>`
       )
       .join("");
+    if (keepLeft) row.scrollLeft = keepLeft; // 重渲后保留头条横滑位置,不弹回第一张
   }
 
   function renderChips() {
@@ -1073,6 +1117,7 @@
     else if (!html && activeCategory === "关注")
       html = `<p class="feed-empty">${followCount() ? "关注的内容暂无新报道" : "还没关注任何游戏或来源"}<br><span>在「快讯」页的本周风向 / 近期发售点开某游戏,顶部点「★ 关注」;或在「我的」页关注来源</span></p>`;
     $("#feedList").innerHTML = html;
+    armImgWatchdogs(); // 全局武装未完成的缩略图(含头条/专题/hero,均在文档内)
   }
 
   // 加载历史后保持视口锚点,避免上方插入内容导致跳动
@@ -1510,8 +1555,11 @@
           dayItems = cachedDay.items; // 命中 IDB:离线可用 + 免重复下载
           touchDay(next);
         } else if (!navigator.onLine) {
-          loadedDates.add(next); // 离线且未缓存该天:跳过,避免空转重试
-          continue;
+          // 离线且未缓存该天:不永久标记 loadedDates(否则联网后本会话再也补不回这些天),
+          // 停下给诚实提示;errored 置真避免 rAF 自动续拉空转,联网后用户下滑会再触发
+          more.textContent = "离线中 · 更早的新闻需联网后加载";
+          errored = true;
+          return;
         } else {
           const r = await fetch(`archive/${next}.json`);
           if (!r.ok) throw new Error("HTTP " + r.status);
@@ -1733,6 +1781,31 @@
         `</div>`
       : "";
     renderDetailThread(n); // 事件脉络面板(随 body 一起渲染,覆盖所有重渲路径)
+    armImgWatchdogs(); // 正文/封面图挂起也能兜底降级,不永久闪骨架
+  }
+
+  // 全文三级管道(当日归档 → 现场抓原文 → 摘要兜底);抽成独立函数以便"重试"复用
+  async function loadFullText(n, wantId) {
+    $("#detailLoading")?.remove();
+    $("#detailContent").insertAdjacentHTML(
+      "beforeend",
+      '<p class="detail-loading" id="detailLoading"><svg class="load-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 12a8 8 0 1 1-2.34-5.66"/></svg>正在加载全文…</p>'
+    );
+    let blocks = null;
+    if (n.fullArchived) { try { blocks = await contentFromArchive(n); } catch {} }
+    if (!blocks && canFetchFullText(n)) { try { blocks = await fetchFullText(n); } catch {} }
+    if (currentDetailId !== wantId) return; // 已切走
+    const sb = sanitizeBlocks(blocks);
+    if (sb) { n.blocks = sb; renderDetailBody(n); return; }
+    const el = $("#detailLoading");
+    if (!el) return;
+    el.classList.add("detail-loadfail");
+    // 离线时不再承诺"15 分钟自动补全"(bot 更新到不了本机),文案诚实 + 提供重试
+    el.innerHTML =
+      (!navigator.onLine
+        ? "离线中 · 此篇全文尚未缓存,联网后可重试"
+        : "原文暂时取不到 · 全文会在 15 分钟内随自动更新补全,可先看摘要或跳转原文") +
+      ' <button class="detail-retry" id="detailRetry">重试</button>';
   }
 
   function openDetail(id) {
@@ -1760,32 +1833,8 @@
       (n.hot > 1 ? `<span class="hot-meta">🔥 ${n.hotSources ? esc(n.hotSources.join("、")) : n.hot + " 家媒体"}同报</span>` : "") +
       (followName ? `<span class="meta-follow${followedGame ? " on" : ""}" data-follow-game="${esc(followName)}">${followedGame ? "★ 已关注" : "☆ 关注"}《${esc(followName)}》</span>` : "");
     renderDetailBody(n);
-    // 无全文时的三级管道:当日归档 → 现场抓原文(代理/机核 API) → 摘要兜底
-    if (!n.blocks && (n.fullArchived || canFetchFullText(n))) {
-      $("#detailContent").insertAdjacentHTML("beforeend", '<p class="detail-loading" id="detailLoading">正在加载全文…</p>');
-      const wantId = id;
-      (async () => {
-        let blocks = null;
-        if (n.fullArchived) {
-          try {
-            blocks = await contentFromArchive(n);
-          } catch {}
-        }
-        if (!blocks && canFetchFullText(n)) {
-          try {
-            blocks = await fetchFullText(n);
-          } catch {}
-        }
-        const sb = sanitizeBlocks(blocks);
-        if (sb) {
-          n.blocks = sb;
-          if (currentDetailId === wantId) renderDetailBody(n);
-        } else if (currentDetailId === wantId) {
-          const el = $("#detailLoading");
-          if (el) el.textContent = "原文暂时取不到 · 全文将在 15 分钟内随自动更新补全,可先看摘要或跳转原文";
-        }
-      })();
-    }
+    // 无全文时走三级管道(可重试)
+    if (!n.blocks && (n.fullArchived || canFetchFullText(n))) loadFullText(n, id);
     // 下一篇(按当前信息流顺序)
     const idx = riverOrder.findIndex((r) => r.id === id);
     const next = idx >= 0 ? riverOrder[idx + 1] : null;
@@ -2023,6 +2072,12 @@
         const orig = e.target.dataset.orig;
         $("#lightboxImg").src = orig ? imgSrc(orig, "full") : e.target.src;
         $("#lightbox").classList.remove("hidden");
+        return;
+      }
+      // 详情页全文加载失败后的「重试」
+      if (e.target.closest("#detailRetry")) {
+        const cur = findNews(currentDetailId);
+        if (cur) loadFullText(cur, currentDetailId);
         return;
       }
       // 详情页 meta 里的「☆ 关注《游戏》」pill:就地关注 + 即时更新按钮态
@@ -2451,9 +2506,11 @@
       (!D.generatedAt || !snap.generatedAt || snap.generatedAt >= D.generatedAt)
     ) {
       try {
+        const snapSig = (snap.generatedAt || "") + "#" + snap.news.length;
         D = normalizeRemote(snap);
         rebuildThreads();
-        renderAll();
+        // 仅当可见数据确有变化才重渲;与已渲相同(通常只是补了正文块)则跳过,避免整表重建+缩略图闪回
+        if (snapSig !== shownSig) { shownSig = snapSig; renderAll(); }
         // 注水前若已打开某篇详情(那时还只有摘要),正文到了就地补全
         if (currentDetailId != null && !$("#detail").classList.contains("hidden")) {
           const upgraded = findNews(currentDetailId);
@@ -2502,6 +2559,8 @@
 
   rebuildThreads();
   renderAll();
+  // 记下当前屏上数据签名:后续 hydrate/refresh 若拿到 generatedAt+条数相同的数据,只更新 D(补正文)不再重渲
+  shownSig = D && D.news ? (D.generatedAt || "") + "#" + D.news.length : null;
   bindEvents();
   bindSwipeBack();
   bindPullRefresh();
